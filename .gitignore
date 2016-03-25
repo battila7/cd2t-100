@@ -1,0 +1,7 @@
+/target/
+dependency-reduced-pom.xml
+.classpath
+.settings/
+.idea
+.project
+*.iml
