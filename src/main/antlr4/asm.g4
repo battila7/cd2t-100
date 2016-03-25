@@ -13,7 +13,7 @@ program_line
   ;
 
 preprocessor_rule
-  : '@' rule_name (WHITESPACE argument)* (WHITESPACE? comment)? NEWLINE
+  : '!' rule_name (WHITESPACE argument)* (WHITESPACE? comment)? NEWLINE
   ;
 
 label
