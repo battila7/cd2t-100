@@ -1,9 +1,9 @@
 package hu.progtech.cd2t100.computation;
 
-public class Argument {
-  private String value;
+public final class Argument {
+  private final String value;
 
-  private ArgumentType argumentType;
+  private final ArgumentType argumentType;
 
   public Argument(String value, ArgumentType argumentType) {
     this.value = value;

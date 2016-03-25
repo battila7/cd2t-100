@@ -1,12 +1,11 @@
 package hu.progtech.cd2t100.computation;
 
-/**
-*/
 public final class InstructionBuilder {
 	private String opcode;
 	private Argument[] args;
 
-	public InstructionBuilder addArg(Argument argument) {
+	public InstructionBuilder addArg(Argument argument)
+		throws InvalidArgumentTypeException {
 		return this;
 	}
 
