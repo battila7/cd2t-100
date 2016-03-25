@@ -5,7 +5,7 @@ public final class InstructionBuilder {
 	private Argument[] args;
 
 	public InstructionBuilder addArg(Argument argument)
-		throws InvalidArgumentTypeException {
+		throws Exception, InvalidArgumentTypeException {
 		return this;
 	}
 
