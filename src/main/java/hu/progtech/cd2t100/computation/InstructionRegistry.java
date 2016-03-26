@@ -8,7 +8,7 @@ public final class InstructionRegistry {
   private final Map<String, InstructionInfo> instructionMap;
 
   public InstructionRegistry() {
-    instructionMap = new HashMap();
+    instructionMap = new HashMap<>();
   }
 
   public void registerInstruction(String opcode, InstructionInfo instructionInfo)

@@ -9,14 +9,17 @@ public final class InstructionBuilder {
 
 	private String opcode;
 
-	private Argument[] args;
+	private ArgumentChecker argumentChecker;
 
 	private InstructionRegistry instructionRegistry;
 
-	public InstructionBuilder(InstructionRegistry instructionRegistry) {
+	public InstructionBuilder(InstructionRegistry instructionRegistry,
+														ArgumentChecker argumentChecker) {
 		instructionInfo = null;
 
 		this.instructionRegistry = instructionRegistry;
+
+		this.argumentChecker = argumentChecker;
 	}
 
 	public InstructionBuilder addArg(Argument argument)
@@ -34,10 +37,10 @@ public final class InstructionBuilder {
 			instructionRegistry.getInstructionInfoFor(opcode);
 
 		if (!instructionInfoOpt.isPresent()) {
-			instructionInfo = instructionInfoOpt.get();
-		} else {
 			throw new Exception("Unknown opcode: " + opcode);
 		}
+
+		instructionInfo = instructionInfoOpt.get();
 
 		return this;
 	}
