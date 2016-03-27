@@ -7,8 +7,6 @@ cache:
     - $HOME/.m2
     - $HOME/jpm
 before_install:
-  - curl -sL http://bit.ly/jpm4j > jpm4j.jar
-  - java -jar jpm4j.jar -u init
-  - $HOME/jpm/bin/jpm install com.codacy:codacy-coverage-reporter:assembly
+  - ./install_jpm.sh
 after_script:
   - $HOME/jpm/bin/codacy-coverage-reporter -l Java -r $JACOCO_REPORT_FILE
