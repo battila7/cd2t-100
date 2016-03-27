@@ -1,8 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 
 set -ex
 
-if [ ! -d  "$HOME/jpm" ]; then
+if [[ ! -d  "$HOME/jpm" ]] ; then
   echo "Installing jpm and codacy-coverage-reporter..."
 
   curl -sL http://bit.ly/jpm4j > jpm4j.jar
