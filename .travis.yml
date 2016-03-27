@@ -1,14 +1,14 @@
 language: java
 jdk:
   - oraclejdk8
-sudo: required
+sudo: false
 cache:
   directories:
     - $HOME/.m2
-    - /var/jpm
+    - $HOME/jpm
 before_install:
   - curl -sL http://bit.ly/jpm4j > jpm4j.jar
-  - sudo java -jar jpm4j.jar -g init
-  - sudo jpm install com.codacy:codacy-coverage-reporter:assembly
+  - java -jar jpm4j.jar -u init
+  - $HOME/jpm/bin/jpm install com.codacy:codacy-coverage-reporter:assembly
 after_script:
-  - codacy-coverage-reporter -l Java -r $JACOCO_REPORT_FILE
+  - $HOME/jpm/bin/codacy-coverage-reporter -l Java -r $JACOCO_REPORT_FILE
