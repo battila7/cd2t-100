@@ -8,6 +8,6 @@ cache:
     - $HOME/jpm
 before_install:
   - chmod +x install-jpm.sh
-  - ./install-jpm.sh
+  - bash install-jpm.sh
 after_script:
   - $HOME/jpm/bin/codacy-coverage-reporter -l Java -r $JACOCO_REPORT_FILE
