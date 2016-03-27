@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 import hu.progtech.cd2t100.asm.CodeFactory;
-import hu.progtech.cd2t100.asm.CodeElementSet;
 
 public class App {
 

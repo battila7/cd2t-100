@@ -12,7 +12,6 @@ import org.antlr.v4.runtime.Token;
 
 import org.javatuples.Pair;
 
-import hu.progtech.cd2t100.computation.Argument;
 import hu.progtech.cd2t100.computation.ArgumentType;
 
 class AsmListenerImpl extends AsmBaseListener {

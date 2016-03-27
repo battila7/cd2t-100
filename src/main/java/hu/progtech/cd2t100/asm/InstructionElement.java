@@ -1,7 +1,5 @@
 package hu.progtech.cd2t100.asm;
 
-import hu.progtech.cd2t100.computation.Argument;
-
 public class InstructionElement extends LineNumberedElement {
   private final String opcode;
 

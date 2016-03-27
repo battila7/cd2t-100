@@ -1,8 +1,6 @@
 package hu.progtech.cd2t100.asm;
 
 import java.util.Map;
-import java.util.HashMap;
-import java.util.ArrayList;
 import java.util.Set;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
