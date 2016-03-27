@@ -14,7 +14,7 @@ public final class InstructionBuilder {
 	private InstructionRegistry instructionRegistry;
 
 	public InstructionBuilder(InstructionRegistry instructionRegistry,
-														ArgumentChecker argumentChecker) {
+	                          ArgumentChecker argumentChecker) {
 		instructionInfo = null;
 
 		this.instructionRegistry = instructionRegistry;
