@@ -11,4 +11,4 @@ before_install:
   - sudo java -jar jpm4j.jar -g init
   - sudo jpm install com.codacy:codacy-coverage-reporter:assembly
 after_script:
-  - codacy-coverage-reporter -l Java -r coverage.xml
+  - codacy-coverage-reporter -l Java -r $JACOCO_REPORT_FILE
