@@ -1,4 +1,5 @@
 # CD2T-100
+[![Build Status](https://travis-ci.org/battila7/cd2t-100.svg?branch=master)](https://travis-ci.org/battila7/cd2t-100)
 **C**ompletely **D**ifferent **T**han **T**IS**-100**
  
 ## Brief
