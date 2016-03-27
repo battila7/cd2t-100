@@ -34,9 +34,7 @@ public final class CodeFactory {
     AsmParser asmParser = new AsmParser(new CommonTokenStream(asmLexer));
 
     AsmListenerImpl asmListener =
-      new AsmListenerImpl(registerNameSet, portNameSet, ruleMap,
-                          new HashMap<String, Integer>(),
-                          new ArrayList<InstructionElement>());
+      new AsmListenerImpl(registerNameSet, portNameSet);
 
     /*
      *  Remove the default error listener which prints messages to STDERR.

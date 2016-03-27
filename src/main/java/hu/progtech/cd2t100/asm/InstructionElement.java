@@ -2,31 +2,26 @@ package hu.progtech.cd2t100.asm;
 
 import hu.progtech.cd2t100.computation.Argument;
 
-public class InstructionElement {
-  private final int lineNumber;
-
+public class InstructionElement extends LineNumberedElement {
   private final String opcode;
 
-  private final Argument[] arguments;
+  private final ArgumentElement[] argumentElements;
 
-  public InstructionElement(int lineNumber, String opcode,
-                            Argument[] arguments)
+  public InstructionElement(int lineNumber, int columnNumber, String opcode,
+                            ArgumentElement[] argumentElements)
   {
-    this.lineNumber = lineNumber;
-    this.opcode = opcode;
-    this.arguments = arguments;
-  }
+    super(lineNumber, columnNumber);
 
-  public int getLineNumber() {
-    return lineNumber;
+    this.opcode = opcode;
+    this.argumentElements = argumentElements;
   }
 
   public String getOpcode() {
     return opcode;
   }
 
-  public Argument[] getArguments() {
-    return arguments;
+  public ArgumentElement[] getArgumentElements() {
+    return argumentElements;
   }
 
   @Override
@@ -35,10 +30,10 @@ public class InstructionElement {
 
     result += " l:" + lineNumber + ", ";
 
-    int argsNum = arguments.length;
+    int argsNum = argumentElements.length;
 
     for (int i = 0; i < argsNum; ++i) {
-      result += arguments[i].toString();
+      result += argumentElements[i].toString();
 
       if (i < argsNum - 1) {
         result += ", ";

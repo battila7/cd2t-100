@@ -7,11 +7,17 @@ import java.util.HashMap;
 import java.util.Set;
 
 import org.antlr.v4.runtime.misc.NotNull;
+import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.Token;
+
+import org.javatuples.Pair;
 
 import hu.progtech.cd2t100.computation.Argument;
 import hu.progtech.cd2t100.computation.ArgumentType;
 
 class AsmListenerImpl extends AsmBaseListener {
+  private List<LineNumberedException> exceptionList;
+
   private List<InstructionElement> instructionList;
 
   private Map<String, Integer> labelMap;
@@ -23,14 +29,14 @@ class AsmListenerImpl extends AsmBaseListener {
   private Set<String> portNameSet;
 
   public AsmListenerImpl(Set<String> registerNameSet,
-                         Set<String> portNameSet,
-                         Map<String, String> ruleMap,
-                         Map<String, Integer> labelMap,
-                         List<InstructionElement> instructionList) {
+                         Set<String> portNameSet) {
+    this.registerNameSet = registerNameSet;
     this.portNameSet = portNameSet;
-    this.labelMap = labelMap;
-    this.ruleMap = ruleMap;
-    this.instructionList = instructionList;
+
+    this.exceptionList = new ArrayList<>();
+    this.instructionList = new ArrayList<>();
+    this.labelMap = new HashMap<>();
+    this.ruleMap = new HashMap<>();
   }
 
   @Override
@@ -41,14 +47,22 @@ class AsmListenerImpl extends AsmBaseListener {
   @Override
   public void exitLabel(@NotNull AsmParser.LabelContext ctx) {
     if (!(ctx.getParent() instanceof AsmParser.InstructionContext)) {
-      addLabel(ctx.getText(), false);
+      try {
+        addLabel(ctx, false);
+      } catch (LineNumberedException e) {
+        exceptionList.add(e);
+      }
     }
   }
 
   @Override
   public void exitInstruction(@NotNull AsmParser.InstructionContext ctx) {
     if (ctx.label() != null) {
-      addLabel(ctx.label().getText(), true);
+      try {
+        addLabel(ctx.label(), false);
+      } catch (LineNumberedException e) {
+        exceptionList.add(e);
+      }
     }
 
     addInstruction(ctx);
@@ -59,14 +73,13 @@ class AsmListenerImpl extends AsmBaseListener {
   @Override
   public void exitProgram(@NotNull AsmParser.ProgramContext ctx) {
     for (InstructionElement elem : instructionList) {
-      Argument[] args = elem.getArguments();
+      ArgumentElement[] args = elem.getArgumentElements();
 
       for (int i = 0; i < args.length; ++i) {
-        try
-        {
-         args[i] = evaluateArgumentType(args[i]);
+        try {
+          args[i] = evaluateArgumentType(args[i]);
         } catch (UnknownArgumentTypeException e) {
-
+          exceptionList.add(e);
         }
       }
     }
@@ -74,30 +87,53 @@ class AsmListenerImpl extends AsmBaseListener {
     updateUnsetLabels(0);
   }
 
-  private void addLabel(String name, boolean isPositionKnown) {
+  private void addLabel(AsmParser.LabelContext ctx, boolean isPositionKnown)
+    throws DuplicateLabelNameException, LabelNameCollisionException {
+    Pair<Integer, Integer> pos = getLinePosition(ctx);
+
+    String name = ctx.getText();
+
     if (labelMap.containsKey(name)) {
-      // throw new Exception("Duplicate label name: " + name);
+      throw new DuplicateLabelNameException(pos.getValue0(),
+                                            pos.getValue1(),
+                                            name);
     } else if (portNameSet.contains(name)) {
-      // throw new Exception("Port (or register) and label name collision: " + name);
+      throw new LabelNameCollisionException(pos.getValue0(),
+                                            pos.getValue1(),
+                                            name);
     }
 
     labelMap.put(name, isPositionKnown ? instructionList.size() - 1 : -1);
   }
 
   private void addInstruction(AsmParser.InstructionContext ctx) {
-    int lineNumber = ctx.getStart().getLine();
+    Pair<Integer, Integer> pos = getLinePosition(ctx);
 
     String opcode = ctx.opcode().getText();
 
-    Argument[] args =
+    ArgumentElement[] args =
       ctx.argument().stream()
-          .map(arg -> new Argument(arg.getText(), ArgumentType.NOT_EVALUATED))
-          .toArray(Argument[]::new);
+          .map(arg -> {
+            Pair<Integer, Integer> argPos = getLinePosition(arg);
 
-    instructionList.add(new InstructionElement(lineNumber, opcode, args));
+            return new ArgumentElement(argPos.getValue0(),
+                                       argPos.getValue1(),
+                                       arg.getText());
+          })
+          .toArray(ArgumentElement[]::new);
+
+    instructionList.add(new InstructionElement(
+                          pos.getValue0(), pos.getValue1(),
+                          opcode, args));
   }
 
-  private Argument evaluateArgumentType(Argument arg)
+  private Pair<Integer, Integer> getLinePosition(ParserRuleContext ctx) {
+    Token start = ctx.getStart();
+
+    return new Pair<>(start.getLine(), start.getCharPositionInLine());
+  }
+
+  private ArgumentElement evaluateArgumentType(ArgumentElement arg)
     throws UnknownArgumentTypeException {
     ArgumentType argType = ArgumentType.NOT_EVALUATED;
 
@@ -110,17 +146,20 @@ class AsmListenerImpl extends AsmBaseListener {
     } else if (labelMap.keySet().contains(argValue)) {
       argType = ArgumentType.LABEL;
     } else {
-      try
-      {
+      try {
         Integer.parseInt(argValue);
 
         argType = ArgumentType.NUMBER;
       } catch (NumberFormatException e ) {
-        throw new UnknownArgumentTypeException(argValue);
+        throw new UnknownArgumentTypeException(arg.getLineNumber(),
+                                               arg.getColumnNumber(),
+                                               argValue);
       }
     }
 
-    return new Argument(argValue, argType);
+    return new ArgumentElement(arg.getLineNumber(),
+                               arg.getColumnNumber(),
+                               argValue, argType);
   }
 
   private void updateUnsetLabels(Integer value) {
