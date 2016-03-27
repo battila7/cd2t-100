@@ -1,5 +1,10 @@
 package hu.progtech.cd2t100.asm;
 
+import java.util.Map;
+import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Set;
+
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.ConsoleErrorListener;
@@ -18,14 +23,18 @@ public final class CodeFactory {
     return StringUtils.stripEnd(programText, null) + "\n";
   }
 
-  public static CodeElementSet createCodeElementSet(String programText) {
+  public static CodeElementSet createCodeElementSet(Set<String> portNameSet,
+                                                    Map<String, String> ruleMap,
+                                                    String programText) {
     String sanitized = sanitizeText(programText);
 
     AsmLexer asmLexer = new AsmLexer(new ANTLRInputStream(sanitized));
 
     AsmParser asmParser = new AsmParser(new CommonTokenStream(asmLexer));
 
-    AsmListenerImpl asmListener = new AsmListenerImpl();
+    AsmListenerImpl asmListener =
+      new AsmListenerImpl(portNameSet, ruleMap, new HashMap<String, Integer>(),
+                          new ArrayList<InstructionElement>());
 
     /*
      *  Remove the default error listener which prints messages to STDERR.

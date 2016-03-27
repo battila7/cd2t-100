@@ -1,12 +1,73 @@
 package hu.progtech.cd2t100.asm;
 
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Set;
+
 import org.antlr.v4.runtime.misc.NotNull;
 
 class AsmListenerImpl extends AsmBaseListener {
+  private List<InstructionElement> instructionList;
+
+  private Map<String, Integer> labelMap;
+
+  private Map<String, String> ruleMap;
+
+  private Set<String> portNameSet;
+
+  public AsmListenerImpl(Set<String> portNameSet,
+                         Map<String, String> ruleMap,
+                         Map<String, Integer> labelMap,
+                         List<InstructionElement> instructionList) {
+    this.portNameSet = portNameSet;
+    this.labelMap = labelMap;
+    this.ruleMap = ruleMap;
+    this.instructionList = instructionList;
+  }
+
   @Override
   public void exitPreprocessorRule(@NotNull AsmParser.PreprocessorRuleContext ctx) {
-    System.err.println(ctx.ruleName().getText());
+    ruleMap.put(ctx.ruleName().getText(), ctx.argument().getText());
+  }
 
-    System.err.println(ctx.argument().getText());
+  @Override
+  public void exitLabel(@NotNull AsmParser.LabelContext ctx) {
+    if (!(ctx.getParent() instanceof AsmParser.InstructionContext)) {
+      addLabel(ctx.getText(), false);
+    }
+  }
+
+  @Override
+  public void exitInstruction(@NotNull AsmParser.InstructionContext ctx) {
+    if (ctx.label() != null) {
+      addLabel(ctx.label().getText(), true);
+    }
+
+    updateUnsetLabels(instructionList.size() - 1);
+  }
+
+  @Override
+  public void exitProgram(@NotNull AsmParser.ProgramContext ctx) {
+    updateUnsetLabels(0);
+  }
+
+  private void addLabel(String name, boolean isPositionKnown) {
+    if (labelMap.containsKey(name)) {
+      // throw new Exception("Duplicate label name: " + name);
+    } else if (portNameSet.contains(name)) {
+      // throw new Exception("Port and label name collision: " + name);
+    }
+
+    labelMap.put(name, isPositionKnown ? instructionList.size() - 1 : -1);
+  }
+
+  private void updateUnsetLabels(Integer value) {
+    for (String key : labelMap.keySet()) {
+      if (labelMap.get(key) == -1) {
+        labelMap.put(key, value);
+      }
+    }
   }
 }
