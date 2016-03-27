@@ -6,8 +6,7 @@ import hu.progtech.cd2t100.asm.CodeElementSet;
 public class App {
 
 	public static void main(String[] args) {
-
-			System.out.println("Nothing yet");
+		CodeFactory.createCodeElementSet(args[0]);
 	}
 
 }

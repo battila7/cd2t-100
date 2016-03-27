@@ -22,7 +22,10 @@ public final class CodeFactory {
     String sanitized = sanitizeText(programText);
 
     AsmLexer asmLexer = new AsmLexer(new ANTLRInputStream(sanitized));
+
     AsmParser asmParser = new AsmParser(new CommonTokenStream(asmLexer));
+
+    AsmListenerImpl asmListener = new AsmListenerImpl();
 
     /*
      *  Remove the default error listener which prints messages to STDERR.
@@ -31,9 +34,7 @@ public final class CodeFactory {
 
     asmParser.addErrorListener(new AsmErrorListener());
 
-    asmParser.addParseListener(new AsmBaseListener() {
-
-    });
+    asmParser.addParseListener(asmListener);
 
     asmParser.program();
 

@@ -13,7 +13,7 @@ package hu.progtech.cd2t100.asm;
  * }
  */
 program
-  : preprocessor_rule* program_line*
+  : preprocessorRule* programLine*
   ;
 
 /**
@@ -24,16 +24,16 @@ program
  * zero: # ACC = 0
  * }
  */
-program_line
+programLine
   : WHITESPACE? (label | instruction)? (WHITESPACE? comment)? NEWLINE
   ;
 
 /**
  * Preprocessor rules must stand on their own optionally followed by
- * a comment.
+ * a comment. Only one argument is permitted per rule.
  */
-preprocessor_rule
-  : '!' rule_name (WHITESPACE argument)* (WHITESPACE? comment)? NEWLINE
+preprocessorRule
+  : '!' ruleName (WHITESPACE argument)? (WHITESPACE? comment)? NEWLINE
   ;
 
 label
@@ -76,7 +76,7 @@ opcode
   : WORD
   ;
 
-rule_name
+ruleName
   : WORD
   ;
 
