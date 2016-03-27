@@ -8,5 +8,9 @@ public enum ArgumentType {
   /*
    * Preprocessor rule arguments.
    */
-  RULE_VALUE
+  RULE_VALUE,
+  /*
+   *
+   */
+  NOT_EVALUATED
 }

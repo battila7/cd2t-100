@@ -8,6 +8,9 @@ import java.util.Set;
 
 import org.antlr.v4.runtime.misc.NotNull;
 
+import hu.progtech.cd2t100.computation.Argument;
+import hu.progtech.cd2t100.computation.ArgumentType;
+
 class AsmListenerImpl extends AsmBaseListener {
   private List<InstructionElement> instructionList;
 
@@ -45,11 +48,17 @@ class AsmListenerImpl extends AsmBaseListener {
       addLabel(ctx.label().getText(), true);
     }
 
+    addInstruction(ctx);
+
     updateUnsetLabels(instructionList.size() - 1);
   }
 
   @Override
   public void exitProgram(@NotNull AsmParser.ProgramContext ctx) {
+    for (InstructionElement elem : instructionList) {
+      System.err.println(elem);
+    }
+
     updateUnsetLabels(0);
   }
 
@@ -61,6 +70,19 @@ class AsmListenerImpl extends AsmBaseListener {
     }
 
     labelMap.put(name, isPositionKnown ? instructionList.size() - 1 : -1);
+  }
+
+  private void addInstruction(AsmParser.InstructionContext ctx) {
+    int lineNumber = ctx.getStart().getLine();
+
+    String opcode = ctx.opcode().getText();
+
+    Argument[] args =
+      ctx.argument().stream()
+          .map(arg -> new Argument(arg.getText(), ArgumentType.NOT_EVALUATED))
+          .toArray(Argument[]::new);
+
+    instructionList.add(new InstructionElement(lineNumber, opcode, args));
   }
 
   private void updateUnsetLabels(Integer value) {

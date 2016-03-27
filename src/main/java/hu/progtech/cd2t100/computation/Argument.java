@@ -18,4 +18,9 @@ public final class Argument {
   public ArgumentType getArgumentType() {
     return argumentType;
   }
+
+  @Override
+  public String toString() {
+    return argumentType.toString() + " - " + value; 
+  }
 }
