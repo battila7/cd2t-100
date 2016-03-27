@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -ex
+
 if [ ! -d  "$HOME/jpm" ]; then
   echo "Installing jpm and codacy-coverage-reporter..."
 
