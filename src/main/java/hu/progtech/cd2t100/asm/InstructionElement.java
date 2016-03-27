@@ -3,11 +3,11 @@ package hu.progtech.cd2t100.asm;
 import hu.progtech.cd2t100.computation.Argument;
 
 public class InstructionElement {
-  private int lineNumber;
+  private final int lineNumber;
 
-  private String opcode;
+  private final String opcode;
 
-  private Argument[] arguments;
+  private final Argument[] arguments;
 
   public InstructionElement(int lineNumber, String opcode,
                             Argument[] arguments)

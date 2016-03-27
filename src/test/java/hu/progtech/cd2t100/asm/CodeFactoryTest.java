@@ -10,11 +10,13 @@ import org.junit.Before;
 import org.junit.Assert;
 
 public class CodeFactoryTest {
+  private Set<String> registerNameSet;
   private Set<String> portNameSet;
   private Map<String, String> ruleMap;
 
   @Before
   public void initFixture() {
+    this.registerNameSet = new HashSet<>();
     this.portNameSet = new HashSet<>();
     this.ruleMap = new HashMap<>();
   }
@@ -22,7 +24,7 @@ public class CodeFactoryTest {
   @Test
   public void emptyInputTest() {
     CodeElementSet elementSet =
-      CodeFactory.createCodeElementSet(portNameSet, ruleMap, "");
+      CodeFactory.createCodeElementSet(registerNameSet, portNameSet, ruleMap, "");
 
     Assert.assertEquals("Empty input must produce empty element set.",
                         null, elementSet);

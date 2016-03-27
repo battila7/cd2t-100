@@ -18,9 +18,12 @@ class AsmListenerImpl extends AsmBaseListener {
 
   private Map<String, String> ruleMap;
 
+  private Set<String> registerNameSet;
+
   private Set<String> portNameSet;
 
-  public AsmListenerImpl(Set<String> portNameSet,
+  public AsmListenerImpl(Set<String> registerNameSet,
+                         Set<String> portNameSet,
                          Map<String, String> ruleMap,
                          Map<String, Integer> labelMap,
                          List<InstructionElement> instructionList) {
@@ -56,7 +59,16 @@ class AsmListenerImpl extends AsmBaseListener {
   @Override
   public void exitProgram(@NotNull AsmParser.ProgramContext ctx) {
     for (InstructionElement elem : instructionList) {
-      System.err.println(elem);
+      Argument[] args = elem.getArguments();
+
+      for (int i = 0; i < args.length; ++i) {
+        try
+        {
+         args[i] = evaluateArgumentType(args[i]);
+        } catch (UnknownArgumentTypeException e) {
+
+        }
+      }
     }
 
     updateUnsetLabels(0);
@@ -66,7 +78,7 @@ class AsmListenerImpl extends AsmBaseListener {
     if (labelMap.containsKey(name)) {
       // throw new Exception("Duplicate label name: " + name);
     } else if (portNameSet.contains(name)) {
-      // throw new Exception("Port and label name collision: " + name);
+      // throw new Exception("Port (or register) and label name collision: " + name);
     }
 
     labelMap.put(name, isPositionKnown ? instructionList.size() - 1 : -1);
@@ -83,6 +95,32 @@ class AsmListenerImpl extends AsmBaseListener {
           .toArray(Argument[]::new);
 
     instructionList.add(new InstructionElement(lineNumber, opcode, args));
+  }
+
+  private Argument evaluateArgumentType(Argument arg)
+    throws UnknownArgumentTypeException {
+    ArgumentType argType = ArgumentType.NOT_EVALUATED;
+
+    String argValue = arg.getValue();
+
+    if (portNameSet.contains(argValue)) {
+      argType = ArgumentType.PORT;
+    } else if (registerNameSet.contains(argValue)) {
+      argType = ArgumentType.REGISTER;
+    } else if (labelMap.keySet().contains(argValue)) {
+      argType = ArgumentType.LABEL;
+    } else {
+      try
+      {
+        Integer.parseInt(argValue);
+
+        argType = ArgumentType.NUMBER;
+      } catch (NumberFormatException e ) {
+        throw new UnknownArgumentTypeException(argValue);
+      }
+    }
+
+    return new Argument(argValue, argType);
   }
 
   private void updateUnsetLabels(Integer value) {

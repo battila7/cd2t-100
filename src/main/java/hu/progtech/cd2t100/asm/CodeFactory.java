@@ -23,7 +23,8 @@ public final class CodeFactory {
     return StringUtils.stripEnd(programText, null) + "\n";
   }
 
-  public static CodeElementSet createCodeElementSet(Set<String> portNameSet,
+  public static CodeElementSet createCodeElementSet(Set<String> registerNameSet,
+                                                    Set<String> portNameSet,
                                                     Map<String, String> ruleMap,
                                                     String programText) {
     String sanitized = sanitizeText(programText);
@@ -33,7 +34,8 @@ public final class CodeFactory {
     AsmParser asmParser = new AsmParser(new CommonTokenStream(asmLexer));
 
     AsmListenerImpl asmListener =
-      new AsmListenerImpl(portNameSet, ruleMap, new HashMap<String, Integer>(),
+      new AsmListenerImpl(registerNameSet, portNameSet, ruleMap,
+                          new HashMap<String, Integer>(),
                           new ArrayList<InstructionElement>());
 
     /*
