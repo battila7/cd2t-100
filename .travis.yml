@@ -9,6 +9,6 @@ cache:
 before_install:
   - curl -sL http://bit.ly/jpm4j > jpm4j.jar
   - sudo java -jar jpm4j.jar -g init
-  - jpm install com.codacy:codacy-coverage-reporter:assembly
+  - sudo jpm install com.codacy:codacy-coverage-reporter:assembly
 after_script:
   - codacy-coverage-reporter -l Java -r coverage.xml
