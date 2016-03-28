@@ -8,11 +8,11 @@ import hu.progtech.cd2t100.computation.Opcode;
 @Opcode("NEG")
 @CallSyntax({ })
 public class NegInstruction extends Instruction {
-  /**
-   * Node-interface is not yet completed, therefore apply is
-   * just a stub.
-   */
-  public void apply(Node node) {
 
+  public void apply(Node node) {
+    /**
+     * Node-interface is not yet completed, therefore apply is
+     * just a stub.
+     */
   }
 }
