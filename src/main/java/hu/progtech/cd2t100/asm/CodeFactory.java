@@ -23,7 +23,6 @@ public final class CodeFactory {
 
   public static CodeElementSet createCodeElementSet(Set<String> registerNameSet,
                                                     Set<String> portNameSet,
-                                                    Map<String, String> ruleMap,
                                                     String programText) {
     String sanitized = sanitizeText(programText);
 

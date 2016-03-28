@@ -58,4 +58,26 @@ public final class CodeElementSet {
   public Map<String, String> getRuleMap() {
     return ruleMap;
   }
+
+  public String toString() {
+    String msg = "Instructions:\n";
+
+    for (InstructionElement elem : instructionList) {
+      msg += "\t" + elem.toString() + "\n";
+    }
+
+    msg += "Labels:\n\t"
+         + labelMap.toString() + "\n";
+
+    msg += "Rules:\n\t"
+         + ruleMap.toString() + "\n";
+
+    msg += "Exceptions:\n";
+
+    for (LineNumberedException e : exceptionList) {
+      msg += "\t" + e.getMessage() + "\n";
+    }
+
+    return msg;
+  }
 }

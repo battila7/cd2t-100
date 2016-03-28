@@ -12,19 +12,17 @@ import org.junit.Assert;
 public class CodeFactoryTest {
   private Set<String> registerNameSet;
   private Set<String> portNameSet;
-  private Map<String, String> ruleMap;
 
   @Before
   public void initFixture() {
     this.registerNameSet = new HashSet<>();
     this.portNameSet = new HashSet<>();
-    this.ruleMap = new HashMap<>();
   }
 
   @Test
   public void emptyInputTest() {
     CodeElementSet elementSet =
-      CodeFactory.createCodeElementSet(registerNameSet, portNameSet, ruleMap, "");
+      CodeFactory.createCodeElementSet(registerNameSet, portNameSet, "");
 
     Assert.assertEquals("Empty input must produce empty exception list.",
                         0, elementSet.getExceptionList().size());
