@@ -86,6 +86,14 @@ class AsmListenerImpl extends AsmBaseListener {
     updateUnsetLabels(0);
   }
 
+  public boolean isExceptionOccurred() {
+    return exceptionList.size() > 0;
+  }
+
+  public List<LineNumberedException> getExceptionList() {
+    return exceptionList;
+  }
+
   private void addLabel(AsmParser.LabelContext ctx, boolean isPositionKnown)
     throws DuplicateLabelNameException, LabelNameCollisionException {
     Pair<Integer, Integer> pos = getLinePosition(ctx);
