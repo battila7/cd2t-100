@@ -34,17 +34,20 @@ public final class CodeFactory {
     AsmListenerImpl asmListener =
       new AsmListenerImpl(registerNameSet, portNameSet);
 
+    AsmErrorListener asmErrorListener =
+      new AsmErrorListener();
+
     /*
      *  Remove the default error listener which prints messages to STDERR.
      */
     asmParser.removeErrorListener(ConsoleErrorListener.INSTANCE);
 
-    asmParser.addErrorListener(new AsmErrorListener());
+    asmParser.addErrorListener(asmErrorListener);
 
     asmParser.addParseListener(asmListener);
 
     asmParser.program();
 
-    return null;
+    return CodeElementSet.fromListeners(asmListener, asmErrorListener);
   }
 }

@@ -26,7 +26,10 @@ public class CodeFactoryTest {
     CodeElementSet elementSet =
       CodeFactory.createCodeElementSet(registerNameSet, portNameSet, ruleMap, "");
 
-    Assert.assertEquals("Empty input must produce empty element set.",
-                        null, elementSet);
+    Assert.assertEquals("Empty input must produce empty exception list.",
+                        0, elementSet.getExceptionList().size());
+
+    Assert.assertEquals("If exception list is empty, no exception occurred.",
+                        false, elementSet.isExceptionOccurred());
   }
 }

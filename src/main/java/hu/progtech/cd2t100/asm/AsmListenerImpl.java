@@ -85,10 +85,6 @@ class AsmListenerImpl extends AsmBaseListener {
     updateUnsetLabels(0);
   }
 
-  public boolean isExceptionOccurred() {
-    return exceptionList.size() > 0;
-  }
-
   public List<LineNumberedException> getExceptionList() {
     return exceptionList;
   }
