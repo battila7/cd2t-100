@@ -1,6 +1,6 @@
 package hu.progtech.cd2t100.asm;
 
-final class LabelNameCollisionException extends LineNumberedException {
+public final class LabelNameCollisionException extends LineNumberedException {
   private String labelName;
 
   public LabelNameCollisionException(int lineNumber, int columnNumber,

@@ -1,9 +1,11 @@
 package hu.progtech.cd2t100.asm;
 
+import java.util.Optional;
+
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.RecognitionException;
 
-final class RecognitionWrapperException extends LineNumberedException {
+public final class RecognitionWrapperException extends LineNumberedException {
   private RecognitionException wrappedException;
 
   public RecognitionWrapperException(int lineNumber, int columnNumber,
@@ -18,15 +20,20 @@ final class RecognitionWrapperException extends LineNumberedException {
   }
 
   @Override
-  public String toString() {
+  public String getMessage() {
     String msg = super.getMessage();
 
-    Token token = wrappedException.getOffendingToken();
+    Optional<Token> token =
+      Optional.ofNullable(wrappedException.getOffendingToken());
 
-    msg += "Unexpected symbol. Expected "
-         + wrappedException.getExpectedTokens()
-           .toString(wrappedException.getRecognizer().getVocabulary())
-         + ".";
+    if (token.isPresent()) {
+      msg += "Unexpected symbol. Expected "
+           + wrappedException.getExpectedTokens()
+             .toString(wrappedException.getRecognizer().getVocabulary())
+           + ".";
+    } else {
+      msg += "Unexpected symbol. Please check your syntax.";
+    }
 
     return msg;
   }

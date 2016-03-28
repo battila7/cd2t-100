@@ -1,6 +1,6 @@
 package hu.progtech.cd2t100.asm;
 
-final class UnknownArgumentTypeException extends LineNumberedException {
+public final class UnknownArgumentTypeException extends LineNumberedException {
   private String argValue;
 
   public UnknownArgumentTypeException(int lineNumber, int columnNumber,

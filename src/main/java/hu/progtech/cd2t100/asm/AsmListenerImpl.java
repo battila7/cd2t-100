@@ -1,5 +1,6 @@
 package hu.progtech.cd2t100.asm;
 
+import java.util.Optional;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -10,6 +11,8 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
 
 import org.javatuples.Pair;
+
+import org.apache.commons.lang3.StringUtils;
 
 import hu.progtech.cd2t100.computation.ArgumentType;
 
@@ -39,7 +42,10 @@ class AsmListenerImpl extends AsmBaseListener {
 
   @Override
   public void exitPreprocessorRule(AsmParser.PreprocessorRuleContext ctx) {
-    ruleMap.put(ctx.ruleName().getText(), ctx.argument().getText());
+    Optional<AsmParser.ArgumentContext> arg = Optional.ofNullable(ctx.argument());
+
+    ruleMap.put(ctx.ruleName().getText(),
+                arg.isPresent() ? arg.get().getText() : "");
   }
 
   @Override
@@ -47,7 +53,7 @@ class AsmListenerImpl extends AsmBaseListener {
     if (!(ctx.getParent() instanceof AsmParser.InstructionContext)) {
       try {
         addLabel(ctx, false);
-      } catch (LineNumberedException e) {
+      } catch (DuplicateLabelNameException | LabelNameCollisionException e) {
         exceptionList.add(e);
       }
     }
@@ -58,7 +64,7 @@ class AsmListenerImpl extends AsmBaseListener {
     if (ctx.label() != null) {
       try {
         addLabel(ctx.label(), false);
-      } catch (LineNumberedException e) {
+      } catch (DuplicateLabelNameException | LabelNameCollisionException e) {
         exceptionList.add(e);
       }
     }
@@ -89,17 +95,29 @@ class AsmListenerImpl extends AsmBaseListener {
     return exceptionList;
   }
 
+  public List<InstructionElement> getInstructionList() {
+    return instructionList;
+  }
+
+  public Map<String, Integer> getLabelMap() {
+    return labelMap;
+  }
+
+  public Map<String, String> getRuleMap() {
+    return ruleMap;
+  }
+
   private void addLabel(AsmParser.LabelContext ctx, boolean isPositionKnown)
     throws DuplicateLabelNameException, LabelNameCollisionException {
     Pair<Integer, Integer> pos = getLinePosition(ctx);
 
-    String name = ctx.getText();
+    String name = StringUtils.chop(ctx.getText());
 
     if (labelMap.containsKey(name)) {
       throw new DuplicateLabelNameException(pos.getValue0(),
                                             pos.getValue1(),
                                             name);
-    } else if (portNameSet.contains(name)) {
+    } else if ((portNameSet.contains(name)) || (registerNameSet.contains(name))) {
       throw new LabelNameCollisionException(pos.getValue0(),
                                             pos.getValue1(),
                                             name);

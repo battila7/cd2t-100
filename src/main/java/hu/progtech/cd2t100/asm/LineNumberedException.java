@@ -1,6 +1,6 @@
 package hu.progtech.cd2t100.asm;
 
-abstract class LineNumberedException extends Exception {
+public abstract class LineNumberedException extends Exception {
   protected final int lineNumber;
 
   protected final int columnNumber;

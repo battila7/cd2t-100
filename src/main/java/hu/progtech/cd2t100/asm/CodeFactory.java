@@ -40,8 +40,10 @@ public final class CodeFactory {
     /*
      *  Remove the default error listener which prints messages to STDERR.
      */
+    asmLexer.removeErrorListener(ConsoleErrorListener.INSTANCE);
     asmParser.removeErrorListener(ConsoleErrorListener.INSTANCE);
 
+    asmLexer.addErrorListener(asmErrorListener);
     asmParser.addErrorListener(asmErrorListener);
 
     asmParser.addParseListener(asmListener);

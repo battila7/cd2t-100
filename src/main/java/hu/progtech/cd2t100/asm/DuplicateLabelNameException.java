@@ -1,6 +1,6 @@
 package hu.progtech.cd2t100.asm;
 
-final class DuplicateLabelNameException extends LineNumberedException {
+public final class DuplicateLabelNameException extends LineNumberedException {
   private String labelName;
 
   public DuplicateLabelNameException(int lineNumber, int columnNumber,

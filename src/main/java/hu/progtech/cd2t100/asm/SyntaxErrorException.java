@@ -2,7 +2,7 @@ package hu.progtech.cd2t100.asm;
 
 import java.util.Optional;
 
-final class SyntaxErrorException extends LineNumberedException {
+public final class SyntaxErrorException extends LineNumberedException {
   private Optional<Object> offendingSymbol;
 
   public SyntaxErrorException(int lineNumber, int columnNumber,
