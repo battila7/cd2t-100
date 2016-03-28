@@ -11,7 +11,7 @@ class AsmErrorListener extends BaseErrorListener {
   private List<LineNumberedException> exceptionList;
 
   public AsmErrorListener() {
-    exceptionList = new ArrayList();
+    exceptionList = new ArrayList<>();
   }
 
   @Override

@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Set;
 
-import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
 
@@ -39,12 +38,12 @@ class AsmListenerImpl extends AsmBaseListener {
   }
 
   @Override
-  public void exitPreprocessorRule(@NotNull AsmParser.PreprocessorRuleContext ctx) {
+  public void exitPreprocessorRule(AsmParser.PreprocessorRuleContext ctx) {
     ruleMap.put(ctx.ruleName().getText(), ctx.argument().getText());
   }
 
   @Override
-  public void exitLabel(@NotNull AsmParser.LabelContext ctx) {
+  public void exitLabel(AsmParser.LabelContext ctx) {
     if (!(ctx.getParent() instanceof AsmParser.InstructionContext)) {
       try {
         addLabel(ctx, false);
@@ -55,7 +54,7 @@ class AsmListenerImpl extends AsmBaseListener {
   }
 
   @Override
-  public void exitInstruction(@NotNull AsmParser.InstructionContext ctx) {
+  public void exitInstruction(AsmParser.InstructionContext ctx) {
     if (ctx.label() != null) {
       try {
         addLabel(ctx.label(), false);
@@ -70,7 +69,7 @@ class AsmListenerImpl extends AsmBaseListener {
   }
 
   @Override
-  public void exitProgram(@NotNull AsmParser.ProgramContext ctx) {
+  public void exitProgram(AsmParser.ProgramContext ctx) {
     for (InstructionElement elem : instructionList) {
       ArgumentElement[] args = elem.getArgumentElements();
 
