@@ -1,5 +1,14 @@
 package hu.progtech.cd2t100.asm;
 
+/**
+ * This exception type is used when the type of an argument cannot be
+ * determined. For example (assuming register named {@code EAX} does not exist):
+ * <pre>
+ * {@code
+ *  MOV 10 EAX
+ * }
+ * </pre>
+ */
 public final class UnknownArgumentTypeException extends LineNumberedException {
   private String argValue;
 

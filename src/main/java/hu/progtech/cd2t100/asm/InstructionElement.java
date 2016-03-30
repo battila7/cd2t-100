@@ -1,10 +1,26 @@
 package hu.progtech.cd2t100.asm;
 
+/**
+ * Represents an instruction in the source code. Stores the opcode, the arguments
+ * and the location of the instruction. During the parsing of the AST an instance
+ * is created for each instruction.
+ *
+ * @see ArgumentElement
+ */
 public class InstructionElement extends CodeElement {
   private final String opcode;
 
   private final ArgumentElement[] argumentElements;
 
+  /**
+   * Constructs an {@code InstructionElement} with the specified location, opcode
+   * and {@code argumentElement}s.
+   *
+   * @param location The location of the instruction in the source code.
+   * @param opcode The opcode of the instruction ({@code MOV}, {@code NEG}, etc.).
+   * @param argumentElements The {@code ArgumentElement} instances representing
+   *                         the arguments of the instruction.
+   */
   public InstructionElement(Location location, String opcode,
                             ArgumentElement[] argumentElements)
   {

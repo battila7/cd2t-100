@@ -1,5 +1,8 @@
 package hu.progtech.cd2t100.asm;
 
+/**
+ * This exception type stores the location of the erroneus code fragment.
+ */
 public abstract class LineNumberedException extends Exception {
   protected final Location location;
 

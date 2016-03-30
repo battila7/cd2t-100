@@ -7,9 +7,18 @@ import org.antlr.v4.runtime.BaseErrorListener;
 import org.antlr.v4.runtime.Recognizer;
 import org.antlr.v4.runtime.RecognitionException;
 
+/**
+ * The error listener class used during the parsing and lexing stage of the
+ * {@code Asm} grammar. Whenever an error occurs, the class wraps it
+ * into the corresponding exception. After lexing and parsing is done
+ * the exceptions can be retrieved and analyzed;
+ */
 class AsmErrorListener extends BaseErrorListener {
   private List<LineNumberedException> exceptionList;
 
+  /**
+   * Constructs a new listener with an empty exception list.
+   */
   public AsmErrorListener() {
     exceptionList = new ArrayList<>();
   }
@@ -26,6 +35,11 @@ class AsmErrorListener extends BaseErrorListener {
     }
   }
 
+  /**
+   * Gets the list of exceptions (hopefully empty).
+   *
+   * @return The list of exceptions occurred during the lexing and parsing.
+   */
   public List<LineNumberedException> getExceptionList() {
     return exceptionList;
   }

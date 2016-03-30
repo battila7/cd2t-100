@@ -4,6 +4,14 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 
+/**
+ * Stores the data extracted from a lexing and parsing stage. This data includes
+ * the exceptions, instruction, labels and rules. Exceptions include both
+ * syntactical and semantical input errors. Produced by the {@code CodeFactory}
+ * class.
+ *
+ * @see CodeFactory
+ */
 public final class CodeElementSet {
   private final List<LineNumberedException> exceptionList;
 
@@ -13,6 +21,14 @@ public final class CodeElementSet {
 
   private final Map<String, String> ruleMap;
 
+  /**
+   * Constructs a new element set holding the specified data.
+   *
+   * @param exceptionList The exceptions to be stored.
+   * @param instructionList The instructions to be stored.
+   * @param labelMap The labels to be stored.
+   * @param ruleMap The rules to be stored.
+   */
   CodeElementSet(List<LineNumberedException> exceptionList,
                  List<InstructionElement> instructionList,
                  Map<String, Integer> labelMap,
@@ -26,6 +42,16 @@ public final class CodeElementSet {
     this.ruleMap = ruleMap;
   }
 
+  /**
+   * Creates a new element set from the data fetched from the specified
+   * listeners. This method provides a more comfortable way to create a new
+   * {@code CodeElementSet}.
+   *
+   * @param listener The listener.
+   * @param errorListener The error listener.
+   *
+   * @return The {@code CodeElementSet} instance storing the data extracted from the listeners.
+   */
   public static CodeElementSet fromListeners(AsmListenerImpl listener,
                                              AsmErrorListener errorListener) {
     List<LineNumberedException> lst = new ArrayList<>();
@@ -39,6 +65,11 @@ public final class CodeElementSet {
                               listener.getRuleMap());
   }
 
+  /**
+   * Returns whether any exception has occurred.
+   *
+   * @return {@code true} if no exception has occurred.
+   */
   public boolean isExceptionOccurred() {
     return exceptionList.size() > 0;
   }

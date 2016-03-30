@@ -11,6 +11,20 @@ import org.apache.commons.lang3.StringUtils;
 
 import hu.progtech.cd2t100.computation.ArgumentType;
 
+/**
+ * The real workhorse class of analyzing the AST produced by ANTLR and spotting
+ * various input errors. As the AST gets processed, it extracts the data
+ * from the ANTLR rule contexts and makes it available for further processing.
+ * The class is able to perceive different semantical error types to prevent erroneus input
+ * from reaching the next processing stage. These error types are collected using
+ * the following exceptions:
+ * <ul>
+ *  <li>{@link DuplicateLabelNameException}</li>
+ *  <li>{@link LabelNameCollisionException}</li>
+ *  <li>{@link UnknownArgumentTypeException}</li>
+ * </ul>
+ * This class is only used by the {@link CodeFactory}.
+ */
 class AsmListenerImpl extends AsmBaseListener {
   private List<LineNumberedException> exceptionList;
 
@@ -24,6 +38,13 @@ class AsmListenerImpl extends AsmBaseListener {
 
   private Set<String> portNameSet;
 
+  /**
+   * Constructs a new listener with the given register and port set. Referencing
+   * other registers and/or ports than these ones results an appropiate exception.
+   *
+   * @param registerNameSet A set containing the usable register names.
+   * @param portNameSet A set containing the usable existing port names.
+   */
   public AsmListenerImpl(Set<String> registerNameSet,
                          Set<String> portNameSet) {
     this.registerNameSet = registerNameSet;
@@ -102,6 +123,31 @@ class AsmListenerImpl extends AsmBaseListener {
     return ruleMap;
   }
 
+  /**
+   * Extract the underlying label from the specified {@code AsmParser.LabelContext}
+   * then adds it to the {code labelMap} if the label was unique and non-colliding.
+   * Also checks if the extracted label name collides with a register or
+   * port name or if its duplicated in the processed source code.
+   *
+   * The value of {@code isPositionKnown} must be {@code false} for example
+   * when processing the AST of the following code:
+   *  <pre>
+   * {@code
+   *  start:
+   *    MOV 10
+   * }
+   *  </pre>
+   *
+   * @param ctx The context that contains the label to be extracted.
+   * @param isPositionKnown Whether the position of the instruction that follows
+   *                        label is known.
+   *
+   * @throws DuplicateLabelNameException If the underlying label of {@code ctx}
+   *                                     already exists.
+   * @throws LabelNameCollisionException If the underlying label of {@code ctx}
+   *                                     collides with either a register or a
+   *                                     port name.
+   */
   private void addLabel(AsmParser.LabelContext ctx, boolean isPositionKnown)
     throws DuplicateLabelNameException, LabelNameCollisionException {
 
@@ -118,6 +164,18 @@ class AsmListenerImpl extends AsmBaseListener {
     labelMap.put(name, isPositionKnown ? instructionList.size() - 1 : -1);
   }
 
+  /**
+   * Extract the underlying instruction of the specified {@code AsmParser.InstructionContext}
+   * then adds a new {@code InstructionElement} representing the extracted instruction.
+   * Since the {@code InstructionElement} must contain {@code ArgumentElement}s
+   * corresponding to its arguments, the method also inspects the
+   * {@code ArgumentContext}s of {@code ctx}.
+   *
+   * @param ctx The context that contains the instruction to be extracted.
+   *
+   * @see ArgumentElement
+   * @see InstructionElement
+   */
   private void addInstruction(AsmParser.InstructionContext ctx) {
     String opcode = ctx.opcode().getText();
 
@@ -134,6 +192,30 @@ class AsmListenerImpl extends AsmBaseListener {
                           opcode, args));
   }
 
+  /**
+   * The type of the {@code ArgumentElement}s may not be evaluated right at
+   * the creation of an {@code InstructionElement}. Such situation occurs
+   * when a label is forward-referenced, just like this:
+   *  <pre>
+   * {@code
+   *  JMP zero
+   *  # additional instructions
+   *  zero: NEG
+   * }
+   *  </pre>
+   *
+   * @param arg The {@code ArgumentElement} to be re-evaluated.
+   *
+   * @return The new {@code ArgumentElement} with the same type as {@code arg}
+   *         but with the evaluated type.
+   *
+   * @throws UnknownArgumentTypeException When the type of the argument cannot be
+   *                                      be determined. For example, when it
+   *                                      references an unexistant register or port.
+   *
+   * @see ArgumentType
+   * @see ArgumentElement
+   */
   private ArgumentElement evaluateArgumentType(ArgumentElement arg)
     throws UnknownArgumentTypeException {
     ArgumentType argType = ArgumentType.NOT_EVALUATED;
@@ -161,6 +243,22 @@ class AsmListenerImpl extends AsmBaseListener {
                                argValue, argType);
   }
 
+  /**
+   *  Sets the mapped values of labels mapped to -1 to the given {@code value}.
+   *  This is necessary, because not-yet referenced labels are mapped to
+   *  -1 in the {@code labelMap}. Multiple unreferenced labels may exist
+   *  when parsing the AST produced by the following code snippet:
+   *  <pre>
+   *  {@code
+   *    start1:
+   *    start2:
+   *    start3:
+   *      MOV LEFT UP
+   *  }
+   *  </pre>
+   *
+   *  @param value The new mapped value of the entries with value -1.
+   */
   private void updateUnsetLabels(Integer value) {
     for (String key : labelMap.keySet()) {
       if (labelMap.get(key) == -1) {

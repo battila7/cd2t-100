@@ -1,7 +1,10 @@
 package hu.progtech.cd2t100.asm;
 
 import java.util.Optional;
-
+/**
+ * This exception type represents a general syntactical error in the
+ * input.
+ */
 public final class SyntaxErrorException extends LineNumberedException {
   private Optional<Object> offendingSymbol;
 

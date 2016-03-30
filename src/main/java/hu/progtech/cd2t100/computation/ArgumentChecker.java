@@ -6,7 +6,7 @@ package hu.progtech.cd2t100.computation;
 public class ArgumentChecker {
 
   /**
-   *  TODO: Inject set preprocessorRules, ports, etc. -> the context
+   *  TODO: Inject set preprocessorRules, ports, etc.  the context
    */
   public ArgumentChecker() {
 
