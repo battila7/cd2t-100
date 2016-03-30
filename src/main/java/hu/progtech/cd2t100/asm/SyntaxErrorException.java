@@ -5,9 +5,8 @@ import java.util.Optional;
 public final class SyntaxErrorException extends LineNumberedException {
   private Optional<Object> offendingSymbol;
 
-  public SyntaxErrorException(int lineNumber, int columnNumber,
-                              Object offendingSymbol) {
-    super(lineNumber, columnNumber);
+  public SyntaxErrorException(Location location, Object offendingSymbol) {
+    super(location);
 
     this.offendingSymbol = Optional.ofNullable(offendingSymbol);
   }

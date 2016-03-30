@@ -3,9 +3,8 @@ package hu.progtech.cd2t100.asm;
 public final class LabelNameCollisionException extends LineNumberedException {
   private String labelName;
 
-  public LabelNameCollisionException(int lineNumber, int columnNumber,
-                                     String labelName) {
-    super(lineNumber, columnNumber);
+  public LabelNameCollisionException(Location location, String labelName) {
+    super(location);
 
     this.labelName = labelName;
   }

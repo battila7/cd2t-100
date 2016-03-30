@@ -3,9 +3,8 @@ package hu.progtech.cd2t100.asm;
 public final class DuplicateLabelNameException extends LineNumberedException {
   private String labelName;
 
-  public DuplicateLabelNameException(int lineNumber, int columnNumber,
-                                     String labelName) {
-    super(lineNumber, columnNumber);
+  public DuplicateLabelNameException(Location location, String labelName) {
+    super(location);
 
     this.labelName = labelName;
   }

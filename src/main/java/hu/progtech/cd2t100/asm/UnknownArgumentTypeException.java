@@ -3,9 +3,8 @@ package hu.progtech.cd2t100.asm;
 public final class UnknownArgumentTypeException extends LineNumberedException {
   private String argValue;
 
-  public UnknownArgumentTypeException(int lineNumber, int columnNumber,
-                                      String argValue) {
-    super(lineNumber, columnNumber);
+  public UnknownArgumentTypeException(Location location,  String argValue) {
+    super(location);
 
     this.argValue = argValue;
   }

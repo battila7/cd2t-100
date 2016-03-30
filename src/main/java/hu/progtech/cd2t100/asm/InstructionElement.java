@@ -1,14 +1,14 @@
 package hu.progtech.cd2t100.asm;
 
-public class InstructionElement extends LineNumberedElement {
+public class InstructionElement extends CodeElement {
   private final String opcode;
 
   private final ArgumentElement[] argumentElements;
 
-  public InstructionElement(int lineNumber, int columnNumber, String opcode,
+  public InstructionElement(Location location, String opcode,
                             ArgumentElement[] argumentElements)
   {
-    super(lineNumber, columnNumber);
+    super(location);
 
     this.opcode = opcode;
     this.argumentElements = argumentElements;
@@ -26,7 +26,7 @@ public class InstructionElement extends LineNumberedElement {
   public String toString() {
     String result = opcode;
 
-    result += " l:" + lineNumber + ", ";
+    result += " l:" + location.getLine() + ", ";
 
     int argsNum = argumentElements.length;
 

@@ -18,11 +18,11 @@ class AsmErrorListener extends BaseErrorListener {
   public void syntaxError(Recognizer<?,?> recognizer, Object offendingSymbol, int line,
               int charPositionInLine, String msg, RecognitionException e) {
     if (e == null) {
-      exceptionList.add(new SyntaxErrorException(line, charPositionInLine,
+      exceptionList.add(new SyntaxErrorException(new Location(line, charPositionInLine),
                                                  offendingSymbol));
     } else {
-      exceptionList.add(new RecognitionWrapperException(line,
-                                                        charPositionInLine, e));
+      exceptionList.add(
+        new RecognitionWrapperException(new Location(line, charPositionInLine), e));
     }
   }
 

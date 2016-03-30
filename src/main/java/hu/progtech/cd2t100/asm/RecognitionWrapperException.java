@@ -8,9 +8,8 @@ import org.antlr.v4.runtime.RecognitionException;
 public final class RecognitionWrapperException extends LineNumberedException {
   private RecognitionException wrappedException;
 
-  public RecognitionWrapperException(int lineNumber, int columnNumber,
-                                     RecognitionException exception) {
-    super(lineNumber, columnNumber);
+  public RecognitionWrapperException(Location location, RecognitionException exception) {
+    super(location);
 
     this.wrappedException = exception;
   }

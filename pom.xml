@@ -54,11 +54,6 @@
     	<version>1.7.19</version>
 			<artifactId>slf4j-simple</artifactId>
 		</dependency>
-		<dependency>
-    	<groupId>org.javatuples</groupId>
-    	<artifactId>javatuples</artifactId>
-    	<version>1.2</version>
-		</dependency>
 
 		<dependency>
 			<groupId>junit</groupId>
