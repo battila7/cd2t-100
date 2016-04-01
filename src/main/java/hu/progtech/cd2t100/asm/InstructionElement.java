@@ -1,5 +1,8 @@
 package hu.progtech.cd2t100.asm;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 /**
  * Represents an instruction in the source code. Stores the opcode, the arguments
  * and the location of the instruction. During the parsing of the AST an instance
@@ -55,5 +58,32 @@ public class InstructionElement extends CodeElement {
     }
 
     return result;
+  }
+
+  public boolean equals(Object o) {
+    if (o == this) {
+      return true;
+    }
+
+    if (!(o instanceof InstructionElement)) {
+      return false;
+    }
+
+    InstructionElement inst = (InstructionElement)o;
+
+    return new EqualsBuilder()
+            .appendSuper(super.equals(o))
+            .append(inst.opcode, opcode)
+            .append(inst.argumentElements, argumentElements)
+            .isEquals();
+  }
+
+  @Override
+  public int hashCode() {
+    return new HashCodeBuilder(17, 47)
+            .appendSuper(super.hashCode())
+            .append(opcode)
+            .append(argumentElements)
+            .toHashCode();
   }
 }

@@ -1,0 +1,81 @@
+[
+  {
+    "description": "Empty input, resulting element set should be empty.",
+    "code": [
+      ""
+    ],
+    "registers": [],
+    "ports": [],
+    "expected": {
+      "labels": {},
+      "rules": {},
+      "instructions": [],
+      "exceptions": []
+    }
+  },
+  {
+    "description": "Multiline empty input, resulting element set should be empty.",
+    "code": [
+      "",
+      "",
+      "",
+      ""
+    ],
+    "registers": [],
+    "ports": [],
+    "expected": {
+      "labels": {},
+      "rules": {},
+      "instructions": [],
+      "exceptions": []
+    }
+  },
+  {
+    "description": "Only comment input, resulting element set should be empty.",
+    "code": [
+      "# comment",
+      "   # comment",
+      "     #comment"
+    ],
+    "registers": [],
+    "ports": [],
+    "expected": {
+      "labels": {},
+      "rules": {},
+      "instructions": [],
+      "exceptions": []
+    }
+  },
+  {
+    "description": "One label input, resulting element set should contain one label with matching data.",
+    "code": [
+      "start:"
+    ],
+    "registers": [],
+    "ports": [],
+    "expected": {
+      "labels": {
+        "start": 0
+      },
+      "rules": {},
+      "instructions": [],
+      "exceptions": []
+    }
+  },
+  {
+    "description": "One rule input, resulting element set should contain one rule with matching data.",
+    "code": [
+      "!clampat 9999"
+    ],
+    "registers": [],
+    "ports": [],
+    "expected": {
+      "labels": {},
+      "rules": {
+        "clampat": "9999"
+      },
+      "instructions": [],
+      "exceptions": []
+    }
+  }
+]

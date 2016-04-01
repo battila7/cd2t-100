@@ -2,6 +2,9 @@ package hu.progtech.cd2t100.asm;
 
 import hu.progtech.cd2t100.computation.ArgumentType;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 /**
  * Represents an argument of an instruction in the {@code asm} source code.
  * Stores the value and the type of the argument.
@@ -61,5 +64,33 @@ public final class ArgumentElement extends CodeElement {
   @Override
   public String toString() {
     return argumentType.toString() + " - " + value;
+  }
+
+
+  public boolean equals(Object o) {
+    if (o == this) {
+      return true;
+    }
+
+    if (!(o instanceof ArgumentElement)) {
+      return false;
+    }
+
+    ArgumentElement arg = (ArgumentElement)o;
+
+    return new EqualsBuilder()
+            .appendSuper(super.equals(o))
+            .append(arg.value, value)
+            .append(arg.argumentType, argumentType)
+            .isEquals();
+  }
+
+  @Override
+  public int hashCode() {
+    return new HashCodeBuilder(13, 33)
+            .appendSuper(super.hashCode())
+            .append(value)
+            .append(argumentType)
+            .toHashCode();
   }
 }
