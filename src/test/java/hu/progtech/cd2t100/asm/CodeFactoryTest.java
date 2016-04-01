@@ -29,7 +29,49 @@ import org.apache.commons.lang3.StringUtils;
 @RunWith(Parameterized.class)
 public class CodeFactoryTest {
   private static String CODE_FILE = "test-code.json";
+
   private static int PARAMETER_COUNT = 5;
+
+  @Parameter
+  public String inputDescription;
+
+  @Parameter(value = 1)
+  public String inputSourceCode;
+
+  @Parameter(value = 2)
+  public Set<String> inputRegisterNameSet;
+
+  @Parameter(value = 3)
+  public Set<String> inputPortNameSet;
+
+  @Parameter(value = 4)
+  public ExpectedElementSet inputExpectedElementSet;
+
+  @Parameters
+  public static Collection<Object[]> data() {
+    Gson gson = constructGson();
+
+    InputStream is =
+      CodeFactoryTest.class.getClassLoader().getResourceAsStream(CODE_FILE);
+
+    JsonArray root =
+      gson.fromJson(new InputStreamReader(is), JsonElement.class)
+          .getAsJsonArray();
+
+    return extractTestData(gson, root);
+  }
+
+  @Test
+  public void test() {
+    CodeElementSet elementSet =
+      CodeFactory.createCodeElementSet(
+          inputRegisterNameSet,
+          inputPortNameSet,
+          inputSourceCode);
+
+    assertTrue(inputDescription,
+               inputExpectedElementSet.compareToElementSet(elementSet));
+  }
 
   private static Gson constructGson() {
     return new GsonBuilder()
@@ -70,46 +112,5 @@ public class CodeFactoryTest {
     }
 
     return testData;
-  }
-
-  @Parameters
-  public static Collection<Object[]> data() {
-    Gson gson = constructGson();
-
-    InputStream is =
-      CodeFactoryTest.class.getClassLoader().getResourceAsStream(CODE_FILE);
-
-    JsonArray root =
-      gson.fromJson(new InputStreamReader(is), JsonElement.class)
-          .getAsJsonArray();
-
-    return extractTestData(gson, root);
-  }
-
-  @Parameter
-  public String inputDescription;
-
-  @Parameter(value = 1)
-  public String inputSourceCode;
-
-  @Parameter(value = 2)
-  public Set<String> inputRegisterNameSet;
-
-  @Parameter(value = 3)
-  public Set<String> inputPortNameSet;
-
-  @Parameter(value = 4)
-  public ExpectedElementSet inputExpectedElementSet;
-
-  @Test
-  public void test() {
-    CodeElementSet elementSet =
-      CodeFactory.createCodeElementSet(
-          inputRegisterNameSet,
-          inputPortNameSet,
-          inputSourceCode);
-
-    assertTrue(inputDescription,
-               inputExpectedElementSet.compareToElementSet(elementSet));
   }
 }

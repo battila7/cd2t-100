@@ -39,11 +39,7 @@ final class ExpectedElementSet {
       return false;
     }
 
-    if (!ruleMap.equals(elementSet.getRuleMap())) {
-      return false;
-    }
-
-    return true;
+    return ruleMap.equals(elementSet.getRuleMap());
   }
 
   private boolean compareExceptionList(List<LineNumberedException> lst) {
@@ -51,7 +47,7 @@ final class ExpectedElementSet {
       ExceptionDescriptor d = exceptionList.get(i);
       LineNumberedException e = lst.get(i);
 
-      if (!(e.getClass().getSimpleName() != d.getName())) {
+      if (e.getClass().getSimpleName() != d.getName()) {
         return false;
       }
 
