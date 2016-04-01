@@ -31,6 +31,15 @@ final class ExpectedElementSet {
       return false;
     }
 
+    long fatalErrorCount = elementSet.getExceptionList().stream()
+      .filter(x -> (x.getClass() == SyntaxErrorException.class) ||
+                   (x.getClass() == RecognitionWrapperException.class))
+      .count();
+
+    if (fatalErrorCount > 0) {
+      return true;
+    }
+
     if (!instructionList.equals(elementSet.getInstructionList())) {
       return false;
     }
@@ -47,7 +56,7 @@ final class ExpectedElementSet {
       ExceptionDescriptor d = exceptionList.get(i);
       LineNumberedException e = lst.get(i);
 
-      if (e.getClass().getSimpleName() != d.getName()) {
+      if (!(e.getClass().getSimpleName().equals(d.getName()))) {
         return false;
       }
 

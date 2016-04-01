@@ -20,7 +20,7 @@ public final class SyntaxErrorException extends LineNumberedException {
 
   @Override
   public String getMessage() {
-    String msg = super.getMessage() + "Syntax error";
+    String msg = super.getMessage() + "Syntax error ";
 
     if (offendingSymbol.isPresent()) {
       return msg + "near \""

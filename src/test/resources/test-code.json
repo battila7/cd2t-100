@@ -13,6 +13,7 @@
       "exceptions": []
     }
   },
+
   {
     "description": "Multiline empty input, resulting element set should be empty.",
     "code": [
@@ -30,6 +31,7 @@
       "exceptions": []
     }
   },
+
   {
     "description": "Only comment input, resulting element set should be empty.",
     "code": [
@@ -46,6 +48,7 @@
       "exceptions": []
     }
   },
+
   {
     "description": "One label input, resulting element set should contain one label with matching data.",
     "code": [
@@ -62,6 +65,7 @@
       "exceptions": []
     }
   },
+
   {
     "description": "One rule input, resulting element set should contain one rule with matching data.",
     "code": [
@@ -76,6 +80,640 @@
       },
       "instructions": [],
       "exceptions": []
+    }
+  },
+
+  {
+    "description": "One instruction input without registers, ports or arguments.",
+    "code": [
+      "NEG"
+    ],
+    "registers": [],
+    "ports": [],
+    "expected": {
+      "labels": {},
+      "rules": {},
+      "instructions": [
+        {
+          "opcode": "NEG",
+          "location": {
+            "line": 1,
+            "charPositionInLine": 0
+          },
+          "argumentElements": []
+        }
+      ],
+      "exceptions": []
+    }
+  },
+
+  {
+    "description": "Multi instruction input without registers, ports or arguments.",
+    "code": [
+      "SAV",
+      "SWP"
+    ],
+    "registers": [],
+    "ports": [],
+    "expected": {
+      "labels": {},
+      "rules": {},
+      "instructions": [
+        {
+          "opcode": "SAV",
+          "location": {
+            "line": 1,
+            "charPositionInLine": 0
+          },
+          "argumentElements": []
+        },
+        {
+          "opcode": "SWP",
+          "location": {
+            "line": 2,
+            "charPositionInLine": 0
+          },
+          "argumentElements": []
+        }
+      ],
+      "exceptions": []
+    }
+  },
+
+  {
+    "description": "One instruction input with one NUMBER argument without registers or ports.",
+    "code": [
+      "ADD 10"
+    ],
+    "registers": [],
+    "ports": [],
+    "expected": {
+      "labels": {},
+      "rules": {},
+      "instructions": [
+        {
+          "opcode": "ADD",
+          "location": {
+            "line": 1,
+            "charPositionInLine": 0
+          },
+          "argumentElements": [
+            {
+              "value": "10",
+              "location": {
+                "line": 1,
+                "charPositionInLine": 4
+              },
+              "argumentType": "NUMBER"
+            }
+          ]
+        }
+      ],
+      "exceptions": []
+    }
+  },
+
+  {
+    "description": "One instruction input with a REGISTER and a NUMBER argument.",
+    "code": [
+      "MOV 10 ACC"
+    ],
+    "registers": [
+      "ACC"
+    ],
+    "ports": [],
+    "expected": {
+      "labels": {},
+      "rules": {},
+      "instructions": [
+        {
+          "opcode": "MOV",
+          "location": {
+            "line": 1,
+            "charPositionInLine": 0
+          },
+          "argumentElements": [
+            {
+              "value": "10",
+              "location": {
+                "line": 1,
+                "charPositionInLine": 4
+              },
+              "argumentType": "NUMBER"
+            },
+            {
+              "value": "ACC",
+              "location": {
+                "line": 1,
+                "charPositionInLine": 8
+              },
+              "argumentType": "REGISTER"
+            }
+          ]
+        }
+      ],
+      "exceptions": []
+    }
+  },
+
+  {
+    "description": "Multi instruction input with REGISTER, PORT and NUMBER arguments.",
+    "code": [
+      "MOV UP LEFT",
+      "MOV UP ACC",
+      "MOV 10 LEFT"
+    ],
+    "registers": [
+      "ACC"
+    ],
+    "ports": [
+      "UP", "RIGHT", "DOWN", "LEFT"
+    ],
+    "expected": {
+      "labels": {},
+      "rules": {},
+      "instructions": [
+        {
+          "opcode": "MOV",
+          "location": {
+            "line": 1,
+            "charPositionInLine": 0
+          },
+          "argumentElements": [
+            {
+              "value": "UP",
+              "location": {
+                "line": 1,
+                "charPositionInLine": 4
+              },
+              "argumentType": "PORT"
+            },
+            {
+              "value": "LEFT",
+              "location": {
+                "line": 1,
+                "charPositionInLine": 7
+              },
+              "argumentType": "PORT"
+            }
+          ]
+        },
+        {
+          "opcode": "MOV",
+          "location": {
+            "line": 2,
+            "charPositionInLine": 0
+          },
+          "argumentElements": [
+            {
+              "value": "UP",
+              "location": {
+                "line": 2,
+                "charPositionInLine": 4
+              },
+              "argumentType": "PORT"
+            },
+            {
+              "value": "ACC",
+              "location": {
+                "line": 2,
+                "charPositionInLine": 7
+              },
+              "argumentType": "REGISTER"
+            }
+          ]
+        },
+        {
+          "opcode": "MOV",
+          "location": {
+            "line": 3,
+            "charPositionInLine": 0
+          },
+          "argumentElements": [
+            {
+              "value": "10",
+              "location": {
+                "line": 3,
+                "charPositionInLine": 4
+              },
+              "argumentType": "NUMBER"
+            },
+            {
+              "value": "LEFT",
+              "location": {
+                "line": 3,
+                "charPositionInLine": 7
+              },
+              "argumentType": "PORT"
+            }
+          ]
+        }
+      ],
+      "exceptions": []
+    }
+  },
+
+  {
+    "description": "One instruction input with one LABEL argument without registers or ports.",
+    "code": [
+      "start:",
+      "JMP start"
+    ],
+    "registers": [],
+    "ports": [],
+    "expected": {
+      "labels": {
+        "start": 0
+      },
+      "rules": {},
+      "instructions": [
+        {
+          "opcode": "JMP",
+          "location": {
+            "line": 2,
+            "charPositionInLine": 0
+          },
+          "argumentElements": [
+            {
+              "value": "start",
+              "location": {
+                "line": 1,
+                "charPositionInLine": 4
+              },
+              "argumentType": "LABEL"
+            }
+          ]
+        }
+      ],
+      "exceptions": []
+    }
+  },
+
+  {
+    "description": "Multi instruction input with labels, registers, ports, a rule and a comment.",
+    "code": [
+      "!clampat 9999",
+      "",
+      "start:",
+      " MOV 1000 ACC",
+      "",
+      "# loop starts here",
+      "loop:",
+      " ADD -1",
+      " JNZ loop",
+      " JEZ start"
+    ],
+    "registers": [
+      "ACC"
+    ],
+    "ports": [
+      "UP", "RIGHT", "DOWN", "LEFT"
+    ],
+    "expected": {
+      "labels": {
+        "start": 0,
+        "loop": 1
+      },
+      "rules": {
+        "clampat": "9999"
+      },
+      "instructions": [
+        {
+          "opcode": "MOV",
+          "location": {
+            "line": 4,
+            "charPositionInLine": 1
+          },
+          "argumentElements": [
+            {
+              "value": "1000",
+              "location": {
+                "line": 4,
+                "charPositionInLine": 5
+              },
+              "argumentType": "NUMBER"
+            },
+            {
+              "value": "ACC",
+              "location": {
+                "line": 4,
+                "charPositionInLine": 10
+              },
+              "argumentType": "REGISTER"
+            }
+          ]
+        },
+        {
+          "opcode": "ADD",
+          "location": {
+            "line": 8,
+            "charPositionInLine": 1
+          },
+          "argumentElements": [
+            {
+              "value": "-1",
+              "location": {
+                "line": 8,
+                "charPositionInLine": 5
+              },
+              "argumentType": "NUMBER"
+            }
+          ]
+        },
+        {
+          "opcode": "JNZ",
+          "location": {
+            "line": 9,
+            "charPositionInLine": 1
+          },
+          "argumentElements": [
+            {
+              "value": "loop",
+              "location": {
+                "line": 9,
+                "charPositionInLine": 5
+              },
+              "argumentType": "LABEL"
+            }
+          ]
+        },
+        {
+          "opcode": "JEZ",
+          "location": {
+            "line": 10,
+            "charPositionInLine": 1
+          },
+          "argumentElements": [
+            {
+              "value": "start",
+              "location": {
+                "line": 10,
+                "charPositionInLine": 5
+              },
+              "argumentType": "LABEL"
+            }
+          ]
+        }
+      ],
+      "exceptions": []
+    }
+  },
+
+  {
+    "description": "Duplicated label input.",
+    "code": [
+      "start:",
+      "start:"
+    ],
+    "registers": [],
+    "ports": [],
+    "expected": {
+      "labels": {
+        "start": 0
+      },
+      "rules": {},
+      "instructions": [],
+      "exceptions": [
+        {
+          "name": "DuplicateLabelNameException",
+          "location": {
+            "line": 2,
+            "charPositionInLine": 0
+          }
+        }
+      ]
+    }
+  },
+
+  {
+    "description": "Colliding label name input - with register.",
+    "code": [
+      "ACC:"
+    ],
+    "registers": [
+      "ACC"
+    ],
+    "ports": [],
+    "expected": {
+      "labels": {},
+      "rules": {},
+      "instructions": [],
+      "exceptions": [
+        {
+          "name": "LabelNameCollisionException",
+          "location": {
+            "line": 1,
+            "charPositionInLine": 0
+          }
+        }
+      ]
+    }
+  },
+
+  {
+    "description": "Colliding label name input - with port.",
+    "code": [
+      "UP:"
+    ],
+    "registers": [],
+    "ports": [
+      "UP"
+    ],
+    "expected": {
+      "labels": {},
+      "rules": {},
+      "instructions": [],
+      "exceptions": [
+        {
+          "name": "LabelNameCollisionException",
+          "location": {
+            "line": 1,
+            "charPositionInLine": 0
+          }
+        }
+      ]
+    }
+  },
+
+  {
+    "description": "Unknown argument type input.",
+    "code": [
+      "MOV 10 ACC",
+      "JMP label",
+      "NEG"
+    ],
+    "registers": [
+      "ACC"
+    ],
+    "ports": [
+      "UP", "RIGHT", "DOWN", "LEFT"
+    ],
+    "expected": {
+      "labels": {},
+      "rules": {},
+      "instructions": [
+        {
+          "opcode": "MOV",
+          "location": {
+            "line": 1,
+            "charPositionInLine": 0
+          },
+          "argumentElements": [
+            {
+              "value": "10",
+              "location": {
+                "line": 1,
+                "charPositionInLine": 4
+              },
+              "argumentType": "NUMBER"
+            },
+            {
+              "value": "ACC",
+              "location": {
+                "line": 1,
+                "charPositionInLine": 7
+              },
+              "argumentType": "REGISTER"
+            }
+          ]
+        },
+        {
+          "opcode": "JMP",
+          "location": {
+            "line": 2,
+            "charPositionInLine": 0
+          },
+          "argumentElements": [
+            {
+              "value": "label",
+              "location": {
+                "line": 2,
+                "charPositionInLine": 4
+              },
+              "argumentType": "NOT_EVALUATED"
+            },
+            {
+              "value": "ACC",
+              "location": {
+                "line": 4,
+                "charPositionInLine": 10
+              },
+              "argumentType": "REGISTER"
+            }
+          ]
+        },
+        {
+          "opcode": "NEG",
+          "location": {
+            "line": 3,
+            "charPositionInLine": 0
+          },
+          "argumentElements": []
+        }
+      ],
+      "exceptions": [
+        {
+          "name": "UnknownArgumentTypeException",
+          "location": {
+            "line": 2,
+            "charPositionInLine": 4
+          }
+        }
+      ]
+    }
+  },
+
+  {
+    "description": "Recognition exception input - inline label.",
+    "code": [
+      "MOV 10: ACC"
+    ],
+    "registers": [
+      "ACC"
+    ],
+    "ports": [],
+    "expected": {
+      "labels": {},
+      "rules": {},
+      "instructions": [],
+      "exceptions": [
+        {
+          "name": "RecognitionWrapperException",
+          "location": {
+            "line": 1,
+            "charPositionInLine": 4
+          }
+        }
+      ]
+    }
+  },
+
+  {
+    "description": "Recognition exception input - empty label.",
+    "code": [
+      ":"
+    ],
+    "registers": [],
+    "ports": [],
+    "expected": {
+      "labels": {},
+      "rules": {},
+      "instructions": [],
+      "exceptions": [
+        {
+          "name": "RecognitionWrapperException",
+          "location": {
+            "line": 1,
+            "charPositionInLine": 0
+          }
+        }
+      ]
+    }
+  },
+
+  {
+    "description": "Recognition exception input - whitespace-only label.",
+    "code": [
+      "  :"
+    ],
+    "registers": [],
+    "ports": [],
+    "expected": {
+      "labels": {},
+      "rules": {},
+      "instructions": [],
+      "exceptions": [
+        {
+          "name": "RecognitionWrapperException",
+          "location": {
+            "line": 1,
+            "charPositionInLine": 2
+          }
+        }
+      ]
+    }
+  },
+
+  {
+    "description": "Syntax error input - empty rule.",
+    "code": [
+      "!"
+    ],
+    "registers": [],
+    "ports": [],
+    "expected": {
+      "labels": {},
+      "rules": {},
+      "instructions": [],
+      "exceptions": [
+        {
+          "name": "SyntaxErrorException",
+          "location": {
+            "line": 1,
+            "charPositionInLine": 1
+          }
+        }
+      ]
     }
   }
 ]

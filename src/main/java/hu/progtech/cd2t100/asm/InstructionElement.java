@@ -74,7 +74,7 @@ public class InstructionElement extends CodeElement {
     return new EqualsBuilder()
             .appendSuper(super.equals(o))
             .append(inst.opcode, opcode)
-            .append(inst.argumentElements, argumentElements)
+            //.append(inst.argumentElements, argumentElements)
             .isEquals();
   }
 

@@ -66,7 +66,6 @@ public final class ArgumentElement extends CodeElement {
     return argumentType.toString() + " - " + value;
   }
 
-
   public boolean equals(Object o) {
     if (o == this) {
       return true;

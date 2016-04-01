@@ -77,6 +77,8 @@ public class CodeFactoryTest {
     return new GsonBuilder()
       .registerTypeAdapter(ExpectedElementSet.class,
                            new ExpectedElementSetDeserializer())
+      .registerTypeAdapter(Location.class,
+                           new LocationInstanceCreator())
       .registerTypeAdapter(ArgumentElement.class,
                            new ArgumentElementInstanceCreator())
       .registerTypeAdapter(InstructionElement.class,
