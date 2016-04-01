@@ -45,7 +45,7 @@ public class InstructionElement extends CodeElement {
   public String toString() {
     String result = opcode;
 
-    result += " l:" + location.getLine() + ", ";
+    result += " @ " + location.toString() + " ";
 
     int argsNum = argumentElements.length;
 

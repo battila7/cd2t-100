@@ -350,6 +350,41 @@
   },
 
   {
+    "description": "One instruction input with a label in the same line.",
+    "code": [
+      "start: JMP start",
+    ],
+    "registers": [],
+    "ports": [],
+    "expected": {
+      "labels": {
+        "start": 0
+      },
+      "rules": {},
+      "instructions": [
+        {
+          "opcode": "JMP",
+          "location": {
+            "line": 1,
+            "charPositionInLine": 7
+          },
+          "argumentElements": [
+            {
+              "value": "start",
+              "location": {
+                "line": 1,
+                "charPositionInLine": 11
+              },
+              "argumentType": "LABEL"
+            }
+          ]
+        }
+      ],
+      "exceptions": []
+    }
+  },
+
+  {
     "description": "Multi instruction input with labels, registers, ports, a rule and a comment.",
     "code": [
       "!clampat 9999",
@@ -711,6 +746,32 @@
           "location": {
             "line": 1,
             "charPositionInLine": 1
+          }
+        }
+      ]
+    }
+  },
+
+  {
+    "description": "Syntax error input - rule after instructions.",
+    "code": [
+      "MOV 10 ACC",
+      "!WRONG"
+    ],
+    "registers": [
+      "ACC"
+    ],
+    "ports": [],
+    "expected": {
+      "labels": {},
+      "rules": {},
+      "instructions": [],
+      "exceptions": [
+        {
+          "name": "SyntaxErrorException",
+          "location": {
+            "line": 2,
+            "charPositionInLine": 0
           }
         }
       ]

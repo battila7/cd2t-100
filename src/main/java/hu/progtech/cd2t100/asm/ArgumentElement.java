@@ -63,7 +63,8 @@ public final class ArgumentElement extends CodeElement {
    */
   @Override
   public String toString() {
-    return argumentType.toString() + " - " + value;
+    return argumentType.toString() + " - " + value
+           + " @ " + location.toString();
   }
 
   public boolean equals(Object o) {

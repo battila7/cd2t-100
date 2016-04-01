@@ -1,6 +1,9 @@
 package hu.progtech.cd2t100.asm;
 
 import java.util.Optional;
+
+import org.antlr.v4.runtime.Token;
+
 /**
  * This exception type represents a general syntactical error in the
  * input.
@@ -23,11 +26,15 @@ public final class SyntaxErrorException extends LineNumberedException {
     String msg = super.getMessage() + "Syntax error ";
 
     if (offendingSymbol.isPresent()) {
-      return msg + "near \""
-             + offendingSymbol.toString()
-             + "\".";
-    } else {
-      return msg + ".";
+      Object o = offendingSymbol.get();
+
+      if (o instanceof Token) {
+        return msg + "near \""
+               + ((Token)o).getText()
+               + "\".";
+      }
     }
+
+    return msg + ".";
   }
 }

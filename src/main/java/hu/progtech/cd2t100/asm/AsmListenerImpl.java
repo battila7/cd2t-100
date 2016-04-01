@@ -188,7 +188,7 @@ class AsmListenerImpl extends AsmBaseListener {
           .toArray(ArgumentElement[]::new);
 
     instructionList.add(new InstructionElement(
-                          Location.fromParserRuleContext(ctx),
+                          Location.fromParserRuleContext(ctx.opcode()),
                           opcode, args));
   }
 

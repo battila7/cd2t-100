@@ -47,6 +47,12 @@ public final class Location {
   }
 
   @Override
+  public String toString() {
+    return "l: " + line
+           + " c: " + charPositionInLine;
+  }
+
+  @Override
   public boolean equals(Object o) {
     if (o == this) {
       return true;
