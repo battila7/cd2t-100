@@ -18,7 +18,13 @@ If you don't know TIS-100 yet, check it out at here:
 
 ### What's planned
 * Preprocessor rules
-* Custom instructions can be developed in Java
+* Custom instructions can be developed in ~~Java~~ **Groovy**
 * Registers over `ACC` and `BAK`
 
 For more information, please check the Wiki and the Javadoc.
+
+## Current state
+The project has just reached the first milestone! Now it's able to analyze the source code and create elements for further processing. Also, CD2T-100 is capable of perceiving syntactical and some semantical errors. I say "some", because detecting all error without knowing the instruction set is impossible.
+
+## What's next then?
+Integrating Groovy into the project and implementing processor nodes. Surely, these tasks sound pretty hard but arguably these are the most exciting challenges!
