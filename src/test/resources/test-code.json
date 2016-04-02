@@ -385,6 +385,50 @@
   },
 
   {
+    "description": "Multi instruction input with a label in the same line.",
+    "code": [
+      "NEG",
+      "start: JMP start"
+    ],
+    "registers": [],
+    "ports": [],
+    "expected": {
+      "labels": {
+        "start": 1
+      },
+      "rules": {},
+      "instructions": [
+        {
+          "opcode": "NEG",
+          "location": {
+            "line": 1,
+            "charPositionInLine": 0
+          },
+          "argumentElements": []
+        },
+        {
+          "opcode": "JMP",
+          "location": {
+            "line": 2,
+            "charPositionInLine": 7
+          },
+          "argumentElements": [
+            {
+              "value": "start",
+              "location": {
+                "line": 2,
+                "charPositionInLine": 11
+              },
+              "argumentType": "LABEL"
+            }
+          ]
+        }
+      ],
+      "exceptions": []
+    }
+  },
+
+  {
     "description": "Multi instruction input with labels, registers, ports, a rule and a comment.",
     "code": [
       "!clampat 9999",
@@ -558,6 +602,40 @@
       "labels": {},
       "rules": {},
       "instructions": [],
+      "exceptions": [
+        {
+          "name": "LabelNameCollisionException",
+          "location": {
+            "line": 1,
+            "charPositionInLine": 0
+          }
+        }
+      ]
+    }
+  },
+
+  {
+    "description": "Colliding label name input - with register, with instruction in the same line.",
+    "code": [
+      "ACC: NEG"
+    ],
+    "registers": [
+      "ACC"
+    ],
+    "ports": [],
+    "expected": {
+      "labels": {},
+      "rules": {},
+      "instructions": [
+        {
+          "opcode": "NEG",
+          "location": {
+            "line": 1,
+            "charPositionInLine": 5
+          },
+          "argumentElements": []
+        }
+      ],
       "exceptions": [
         {
           "name": "LabelNameCollisionException",

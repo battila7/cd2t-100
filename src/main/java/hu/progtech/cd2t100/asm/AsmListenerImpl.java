@@ -77,15 +77,15 @@ class AsmListenerImpl extends AsmBaseListener {
 
   @Override
   public void exitInstruction(AsmParser.InstructionContext ctx) {
+    addInstruction(ctx);
+
     if (ctx.label() != null) {
       try {
-        addLabel(ctx.label(), false);
+        addLabel(ctx.label(), true);
       } catch (LineNumberedException e) {
         exceptionList.add(e);
       }
     }
-
-    addInstruction(ctx);
 
     updateUnsetLabels(instructionList.size() - 1);
   }

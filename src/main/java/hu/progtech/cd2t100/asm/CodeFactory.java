@@ -16,6 +16,15 @@ import org.apache.commons.lang3.StringUtils;
  */
 public final class CodeFactory {
   /**
+   * Only implemented in order to hide the constructor,
+   * so the class cannot be instantiated.
+   */
+  private CodeFactory() {
+    /*
+     *  Hidden empty constructor.
+     */
+  }
+  /**
    * Removes trailing whitespaces from the specified text and
    * appends a newline to the end of the this trimmed text. This method is
    * used to ensure that each line of the text ends with a newline character.
