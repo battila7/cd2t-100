@@ -16,8 +16,6 @@ public class InstructionInfo {
     this.instructionClass = instructionClass;
 
     this.callSyntaxes = new ArrayList<>();
-
-    extractAnnotationInfo();
   }
 
   public Class<Instruction> getInstructionClass() {
@@ -26,21 +24,5 @@ public class InstructionInfo {
 
   public List<ArgumentType[]> getCallSyntaxes() {
     return callSyntaxes;
-  }
-
-  /**
-   *  Finally some reflection magic!
-   */
-  private void extractAnnotationInfo() {
-    extractCallSyntaxes();
-  }
-
-  private void extractCallSyntaxes() {
-    CallSyntax[] annotations =
-      instructionClass.getAnnotationsByType(CallSyntax.class);
-
-    for (CallSyntax cs : annotations) {
-      this.callSyntaxes.add(cs.value());
-    }
   }
 }
