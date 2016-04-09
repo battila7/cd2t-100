@@ -1,4 +1,4 @@
-package hu.progtech.cd2t100.computation;
+package hu.progtech.cd2t100.formal;
 
 public class InvalidInstructionClassException extends Exception {
   private static final String DEFAULT_MESSAGE =

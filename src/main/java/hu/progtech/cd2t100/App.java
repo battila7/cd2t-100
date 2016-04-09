@@ -6,8 +6,8 @@ import java.util.HashSet;
 import hu.progtech.cd2t100.asm.CodeFactory;
 import hu.progtech.cd2t100.asm.CodeElementSet;
 
-import hu.progtech.cd2t100.computation.InstructionLoader;
-import hu.progtech.cd2t100.computation.InstructionInfo;
+import hu.progtech.cd2t100.formal.InstructionLoader;
+import hu.progtech.cd2t100.formal.InstructionInfo;
 
 public class App {
 

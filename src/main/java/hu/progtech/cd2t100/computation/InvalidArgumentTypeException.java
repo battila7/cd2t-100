@@ -6,7 +6,7 @@ public final class InvalidArgumentTypeException extends Exception {
   private final int index;
 
   private final ArgumentType receivedArgumentType;
-  
+
   private final ArgumentType expectedArgumentType;
 
   public InvalidArgumentTypeException(

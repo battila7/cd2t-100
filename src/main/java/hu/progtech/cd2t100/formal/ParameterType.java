@@ -1,4 +1,4 @@
-package hu.progtech.cd2t100.computation;
+package hu.progtech.cd2t100.formal;
 
 import org.apache.commons.lang3.mutable.MutableInt;
 

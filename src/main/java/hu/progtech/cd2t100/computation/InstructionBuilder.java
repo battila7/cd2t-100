@@ -2,6 +2,8 @@ package hu.progtech.cd2t100.computation;
 
 import java.util.Optional;
 
+import hu.progtech.cd2t100.formal.InstructionInfo;
+
 public final class InstructionBuilder {
 	private InstructionInfo instructionInfo;
 

@@ -4,6 +4,8 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Optional;
 
+import hu.progtech.cd2t100.formal.InstructionInfo;
+
 public final class InstructionRegistry {
   private final Map<String, InstructionInfo> instructionMap;
 

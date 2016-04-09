@@ -1,4 +1,4 @@
-package hu.progtech.cd2t100.computation;
+package hu.progtech.cd2t100.formal;
 
 import java.lang.annotation.Annotation;
 
@@ -23,7 +23,8 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.mutable.MutableInt;
 
-import hu.progtech.cd2t100.computation.annotations.*;
+import hu.progtech.cd2t100.formal.annotations.*;
+import hu.progtech.cd2t100.computation.ExecutionEnvironment;
 
 public class InstructionLoader {
   /*

@@ -1,6 +1,6 @@
-package hu.progtech.cd2t100.computation;
+package hu.progtech.cd2t100.formal;
 
-import hu.progtech.cd2t100.computation.annotations.Parameter;
+import hu.progtech.cd2t100.formal.annotations.Parameter;
 
 public class FormalParameter {
   private final ParameterType parameterType;

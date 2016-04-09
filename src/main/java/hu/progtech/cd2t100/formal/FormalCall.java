@@ -1,4 +1,4 @@
-package hu.progtech.cd2t100.computation;
+package hu.progtech.cd2t100.formal;
 
 import java.lang.reflect.Method;
 

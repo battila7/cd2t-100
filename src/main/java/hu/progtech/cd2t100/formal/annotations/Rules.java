@@ -1,4 +1,4 @@
-package hu.progtech.cd2t100.computation.annotations;
+package hu.progtech.cd2t100.formal.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
