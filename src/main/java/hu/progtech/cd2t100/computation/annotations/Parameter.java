@@ -15,5 +15,5 @@ public @interface Parameter {
 
   PortAccess portAccess() default PortAccess.READ;
 
-  String explicitValue();
+  String implicitValue();
 }

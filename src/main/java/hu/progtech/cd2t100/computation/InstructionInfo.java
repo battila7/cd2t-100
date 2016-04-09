@@ -10,13 +10,19 @@ public class InstructionInfo {
 
   private final List<String> usedPreprocessorRules;
 
-  public InstructionInfo(String opcode, List<String> usedRules,
-                         Class<?> instructionClass) {
+  private final List<FormalCall> possibleCalls;
+
+  public InstructionInfo(String opcode,
+                         List<String> usedRules,
+                         Class<?> instructionClass,
+                         List<FormalCall> possibleCalls) {
     this.opcode = opcode;
 
     this.usedPreprocessorRules = usedRules;
 
     this.instructionClass = instructionClass;
+
+    this.possibleCalls = possibleCalls;
   }
 
   public String getOpcode() {
@@ -29,5 +35,9 @@ public class InstructionInfo {
 
   public Class<?> getInstructionClass() {
     return instructionClass;
+  }
+
+  public List<FormalCall> getPossibleCalls() {
+    return possibleCalls;
   }
 }
