@@ -7,8 +7,8 @@ public class FormalParameter {
 
   private final String implicitValue;
 
-  private FormalParameter(ParameterType parameterType,
-                          String implicitValue) {
+  FormalParameter(ParameterType parameterType,
+                  String implicitValue) {
     this.parameterType = parameterType;
 
     this.implicitValue = implicitValue;

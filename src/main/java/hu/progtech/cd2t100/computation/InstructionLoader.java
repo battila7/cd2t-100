@@ -33,6 +33,12 @@ class InstructionLoader {
     Pattern.compile("[^\\s\\!\\:\\@\\.\\#\\,]+",
                     Pattern.CASE_INSENSITIVE);
 
+  private InstructionLoader() {
+    /*
+     *  The class must not be instantiated.
+     */
+  }
+
   public static InstructionInfo loadInstruction(InputStream codeStream)
     throws IOException,
            CompilationFailedException,
@@ -96,6 +102,8 @@ class InstructionLoader {
       if (!(wordPattern.matcher(rule).matches())) {
         throw new InvalidInstructionClassException(
           "Invalid rule name: " + rule);
+      } else {
+        rules.add(rule);
       }
     }
 
