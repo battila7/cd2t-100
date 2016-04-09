@@ -21,17 +21,32 @@ import org.codehaus.groovy.control.CompilationFailedException;
 import org.apache.commons.io.IOUtils;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.mutable.MutableInt;
 
 import hu.progtech.cd2t100.computation.annotations.*;
 
-class InstructionLoader {
+public class InstructionLoader {
   /*
    * There's no need for ^ and $ because we're going to
    * use Matcher.matches() which matches against the entire string.
    */
-  private static Pattern wordPattern =
+  private static final Pattern wordPattern =
     Pattern.compile("[^\\s\\!\\:\\@\\.\\#\\,]+",
                     Pattern.CASE_INSENSITIVE);
+
+  private static final List<Class<?>> autoImportClasses =
+    Arrays.asList(Opcode.class, Rules.class, Parameter.class,
+                  ExecutionEnvironment.class, ParameterType.class,
+                  MutableInt.class);
+
+  private static final String automaticImportStatement;
+
+  static {
+    automaticImportStatement =
+      autoImportClasses.stream()
+                       .map(x -> "import " + x.getName())
+                       .collect(Collectors.joining(";\n", "", ";\n\n"));
+  }
 
   private InstructionLoader() {
     /*
@@ -55,6 +70,8 @@ class InstructionLoader {
            InvalidInstructionClassException,
            InvalidFormalParameterListException
   {
+    classCode = automaticImportStatement + classCode;
+
     GroovyClassLoader groovyClassLoader
       = new GroovyClassLoader(InstructionLoader.class.getClassLoader());
 

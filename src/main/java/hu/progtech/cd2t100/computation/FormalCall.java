@@ -23,4 +23,19 @@ public class FormalCall {
   public Method getBackingMethod() {
     return backingMethod;
   }
+
+  @Override
+  public String toString() {
+    String str = "M: " + backingMethod.toString();
+
+    str += " Params: (";
+
+    for (FormalParameter f : formalParameterList) {
+      str += "[ " +f.toString() + " ]";
+    }
+
+    str += ")";
+
+    return str;
+  }
 }

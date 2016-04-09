@@ -30,4 +30,15 @@ public class FormalParameter {
   public boolean hasImplicitValue() {
     return !((implicitValue == null) || (implicitValue.equals("")));
   }
+
+  @Override
+  public String toString() {
+    String str = parameterType.toString();
+
+    if (hasImplicitValue()) {
+      str += " I: " + implicitValue;
+    }
+
+    return str;
+  }
 }

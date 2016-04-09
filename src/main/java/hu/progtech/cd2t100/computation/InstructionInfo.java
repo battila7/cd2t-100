@@ -39,4 +39,19 @@ public class InstructionInfo {
   public List<FormalCall> getPossibleCalls() {
     return possibleCalls;
   }
+
+  @Override
+  public String toString() {
+    String str = opcode + "\n\t";
+
+    str += usedPreprocessorRules.toString() + "\n\t";
+
+    str += instructionClass.getName();
+
+    for (FormalCall f : possibleCalls) {
+      str += "\n\t\t" + f.toString();
+    }
+
+    return str;
+  }
 }

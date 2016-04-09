@@ -6,9 +6,26 @@ import java.util.HashSet;
 import hu.progtech.cd2t100.asm.CodeFactory;
 import hu.progtech.cd2t100.asm.CodeElementSet;
 
+import hu.progtech.cd2t100.computation.InstructionLoader;
+import hu.progtech.cd2t100.computation.InstructionInfo;
+
 public class App {
 
 	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+
+		System.out.println("Asm code (A) / Groovy instruction (G):");
+
+		String choice = sc.nextLine();
+
+		if (choice.toUpperCase().charAt(0) == 'A') {
+			elementSetAnalysis(sc);
+		} else {
+			buildInstructionInfo(sc);
+		}
+	}
+
+	private static void elementSetAnalysis(Scanner sc) {
 		CodeElementSet elementSet;
 
 		HashSet<String> registerNameSet = new HashSet<>();
@@ -23,7 +40,6 @@ public class App {
 		portNameSet.add("DOWN");
 		portNameSet.add("LEFT");
 
-		Scanner sc = new Scanner(System.in);
 		String code = "";
 
 		while (sc.hasNextLine()) {
@@ -38,4 +54,20 @@ public class App {
 		System.out.println(elementSet);
 	}
 
+	private static void buildInstructionInfo(Scanner sc) {
+		String code = "";
+
+		while (sc.hasNextLine()) {
+			code += sc.nextLine();
+		}
+
+		try {
+			InstructionInfo instructionInfo
+				= InstructionLoader.loadInstruction(code);
+
+			System.out.println(instructionInfo);
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+	}
 }

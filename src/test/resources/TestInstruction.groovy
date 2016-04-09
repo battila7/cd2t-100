@@ -1,15 +1,9 @@
-import hu.progtech.cd2t100.computation.annotations.*;
-
-import hu.progtech.cd2t100.computation.ParameterType;
-import hu.progtech.cd2t100.computation.ExecutionEnvironment;
-
-import org.apache.commons.lang3.mutable.MutableInt;
-
 @Opcode("TEST")
 @Rules([ "clampat" ])
 public class TestInstruction {
-  static void apply(ExecutionEnvironment execEnv) {
-
+  static void apply(ExecutionEnvironment execEnv)
+  {
+    return;
   }
 
   static void apply(ExecutionEnvironment execEnv,
@@ -17,7 +11,7 @@ public class TestInstruction {
                                implicitValue = "ACC")
                     int[] acc)
   {
-
+    return;
   }
 
   static void apply(ExecutionEnvironment execEnv,
@@ -26,6 +20,6 @@ public class TestInstruction {
                     @Parameter(parameterType = ParameterType.WRITE_PORT)
                     MutableInt mint)
   {
-
+    return;
   }
 }
