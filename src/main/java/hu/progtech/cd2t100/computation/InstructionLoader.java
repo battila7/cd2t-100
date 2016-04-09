@@ -3,7 +3,6 @@ package hu.progtech.cd2t100.computation;
 import java.lang.annotation.Annotation;
 
 import java.lang.reflect.Method;
-import java.lang.reflect.Type;
 
 import java.io.InputStream;
 import java.io.IOException;
@@ -13,7 +12,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 import java.util.stream.Collectors;
 
 import groovy.lang.GroovyClassLoader;

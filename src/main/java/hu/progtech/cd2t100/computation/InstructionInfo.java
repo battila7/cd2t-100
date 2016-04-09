@@ -1,7 +1,6 @@
 package hu.progtech.cd2t100.computation;
 
 import java.util.List;
-import java.util.ArrayList;
 
 public class InstructionInfo {
   private final Class<?> instructionClass;
