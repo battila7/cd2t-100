@@ -3,6 +3,7 @@ package hu.progtech.cd2t100.computation;
 import java.lang.annotation.Annotation;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 
 import java.io.InputStream;
 import java.io.IOException;
@@ -28,15 +29,14 @@ class InstructionLoader {
    * There's no need for ^ and $ because we're going to
    * use Matcher.matches() which matches against the entire string.
    */
-  private static Pattern opcodePattern =
+  private static Pattern wordPattern =
     Pattern.compile("[^\\s\\!\\:\\@\\.\\#\\,]+",
                     Pattern.CASE_INSENSITIVE);
 
   public static InstructionInfo loadInstruction(InputStream codeStream)
     throws IOException,
            CompilationFailedException,
-           InvalidOrMissingOpcodeException,
-           MissingApplyMethodException,
+           InvalidInstructionClassException,
            InvalidFormalParameterListException
   {
     String code = IOUtils.toString(codeStream, "UTF-8");
@@ -46,8 +46,7 @@ class InstructionLoader {
 
   public static InstructionInfo loadInstruction(String classCode)
     throws CompilationFailedException,
-           InvalidOrMissingOpcodeException,
-           MissingApplyMethodException,
+           InvalidInstructionClassException,
            InvalidFormalParameterListException
   {
     GroovyClassLoader groovyClassLoader
@@ -56,14 +55,15 @@ class InstructionLoader {
     Class<?> instructionClass = groovyClassLoader.parseClass(classCode);
 
     String opcode = checkOpcode(instructionClass)
-                    .orElseThrow(InvalidOrMissingOpcodeException::new);
+                    .orElseThrow(InvalidInstructionClassException::new);
 
     List<String> rules = getUsedPreprocessorRules(instructionClass);
 
     List<FormalCall> calls = getFormalCalls(instructionClass);
 
     if (calls.isEmpty()) {
-      throw new MissingApplyMethodException();
+      throw new InvalidInstructionClassException(
+        "Method(s) with name \"apply\" not found.");
     }
 
     return new InstructionInfo(opcode, rules, instructionClass, calls);
@@ -78,19 +78,33 @@ class InstructionLoader {
                                     .value();
 
     return Optional.ofNullable(opcode)
-                   .filter(x -> opcodePattern.matcher(x).matches());
+                   .filter(x -> wordPattern.matcher(x).matches());
   }
 
-  private static List<String> getUsedPreprocessorRules(Class<?> instructionClass) {
-    return
-      Arrays.stream(instructionClass
-                   .getDeclaredAnnotationsByType(Rule.class))
-            .map(Rule::value)
-            .collect(Collectors.toList());
+  private static List<String> getUsedPreprocessorRules(Class<?> instructionClass)
+    throws InvalidInstructionClassException
+  {
+    ArrayList<String> rules = new ArrayList<>();
+
+    Rules r = instructionClass.getDeclaredAnnotation(Rules.class);
+
+    if (r == null) {
+      return rules;
+    }
+
+    for (String rule : r.value()) {
+      if (!(wordPattern.matcher(rule).matches())) {
+        throw new InvalidInstructionClassException(
+          "Invalid rule name: " + rule);
+      }
+    }
+
+    return rules;
   }
 
   private static List<FormalCall> getFormalCalls(Class<?> instructionClass)
-    throws InvalidFormalParameterListException
+    throws InvalidFormalParameterListException,
+           InvalidInstructionClassException
   {
     /*
      *  map() cannot be used since it is not possible to throw checked
@@ -104,6 +118,11 @@ class InstructionLoader {
     ArrayList<FormalCall> calls = new ArrayList<>();
 
     for (Method m : applyMethods) {
+      if (!(Modifier.isStatic(m.getModifiers()))) {
+        throw new InvalidInstructionClassException(
+          "\"apply\" methods must be static.");
+      }
+
       calls.add(formalCallFromMethod(m));
     }
 
@@ -118,7 +137,8 @@ class InstructionLoader {
 
     if ((paramTypes.length == 0) ||
         (paramTypes[0] != ExecutionEnvironment.class)) {
-      throw new InvalidFormalParameterListException();
+      throw new InvalidFormalParameterListException(
+        "The method must accept at least one parameter with type ExecutionEnvironment.");
     }
 
     Annotation[][] paramAnnotations =
@@ -129,7 +149,8 @@ class InstructionLoader {
 
       if ((a.length != 1) ||
           (a[0].getClass() != Parameter.class)) {
-        throw new InvalidFormalParameterListException();
+        throw new InvalidFormalParameterListException(
+          "All parameters must be annotated with the Parameter annotation (except the ExecutionEnvironment).");
       }
     }
 
@@ -152,12 +173,14 @@ class InstructionLoader {
       Parameter param = (Parameter)paramAnnotations[i][0];
 
       if (param.parameterType().getRequiredClass() != paramTypes[i]) {
-        throw new InvalidFormalParameterListException();
+        throw new InvalidFormalParameterListException(
+          "Method parameter type did not match the required parameter type.");
       }
 
       if ((StringUtils.isEmpty(param.implicitValue())) &&
           (implicitValueSet)) {
-        throw new InvalidFormalParameterListException();
+        throw new InvalidFormalParameterListException(
+          "Parameter without an implicit value must not occur after a parameter with an implicit value");
       }
 
       implicitValueSet = !StringUtils.isEmpty(param.implicitValue());
