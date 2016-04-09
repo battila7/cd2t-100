@@ -12,5 +12,5 @@ import hu.progtech.cd2t100.computation.ParameterType;
 public @interface Parameter {
   ParameterType parameterType();
 
-  String implicitValue();
+  String implicitValue() default "";
 }

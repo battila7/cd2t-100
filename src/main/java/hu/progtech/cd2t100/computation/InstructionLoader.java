@@ -147,8 +147,7 @@ class InstructionLoader {
     for (int i = 1; i < paramAnnotations.length; ++i) {
       Annotation[] a = paramAnnotations[i];
 
-      if ((a.length != 1) ||
-          (a[0].getClass() != Parameter.class)) {
+      if ((a.length != 1) || (!(a[0] instanceof Parameter))) {
         throw new InvalidFormalParameterListException(
           "All parameters must be annotated with the Parameter annotation (except the ExecutionEnvironment).");
       }

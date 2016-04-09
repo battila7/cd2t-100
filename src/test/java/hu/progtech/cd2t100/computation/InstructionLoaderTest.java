@@ -67,7 +67,7 @@ public class InstructionLoaderTest {
   }
 
   @Test
-  public void InvalidFirstArgument() throws Exception {
+  public void invalidFirstArgument() throws Exception {
     thrown.expect(InvalidFormalParameterListException.class);
     thrown.expectMessage(startsWith("The method must accept"));
 
@@ -77,5 +77,29 @@ public class InstructionLoaderTest {
   @Test
   public void nop() throws Exception {
     InstructionLoader.loadInstruction(getCodeStream("Nop.groovy"));
+  }
+
+  @Test
+  public void missingParameterAnnotation() throws Exception {
+    thrown.expect(InvalidFormalParameterListException.class);
+    thrown.expectMessage(startsWith("All parameters must be annotated"));
+
+    InstructionLoader.loadInstruction(getCodeStream("MissingParameterAnnotation.groovy"));
+  }
+
+  @Test
+  public void invalidParameterAnnotation() throws Exception {
+    thrown.expect(InvalidFormalParameterListException.class);
+    thrown.expectMessage(startsWith("Method parameter type"));
+
+    InstructionLoader.loadInstruction(getCodeStream("InvalidParameterAnnotation.groovy"));
+  }
+
+  @Test
+  public void invalidImplicitLocation() throws Exception {
+    thrown.expect(InvalidFormalParameterListException.class);
+    thrown.expectMessage(startsWith("Parameter without an implicit"));
+
+    InstructionLoader.loadInstruction(getCodeStream("InvalidImplicitLocation.groovy"));
   }
 }
