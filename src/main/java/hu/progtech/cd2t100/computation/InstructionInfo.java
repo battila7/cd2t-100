@@ -4,25 +4,30 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class InstructionInfo {
-  private Class<Instruction> instructionClass;
+  private final Class<?> instructionClass;
 
-  private List<ArgumentType[]> callSyntaxes;
+  private final String opcode;
 
-  private boolean canUseBackupRegister;
+  private final List<String> usedPreprocessorRules;
 
-  private List<String> preprocessorRules;
+  public InstructionInfo(String opcode, List<String> usedRules,
+                         Class<?> instructionClass) {
+    this.opcode = opcode;
 
-  public InstructionInfo(Class<Instruction> instructionClass) {
+    this.usedPreprocessorRules = usedRules;
+
     this.instructionClass = instructionClass;
-
-    this.callSyntaxes = new ArrayList<>();
   }
 
-  public Class<Instruction> getInstructionClass() {
+  public String getOpcode() {
+    return opcode;
+  }
+
+  public List<String> getUsedPreprocessorRules() {
+    return usedPreprocessorRules;
+  }
+
+  public Class<?> getInstructionClass() {
     return instructionClass;
-  }
-
-  public List<ArgumentType[]> getCallSyntaxes() {
-    return callSyntaxes;
   }
 }

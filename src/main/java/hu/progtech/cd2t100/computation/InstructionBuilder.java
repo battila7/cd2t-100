@@ -43,7 +43,7 @@ public final class InstructionBuilder {
 		return this;
 	}
 
-	public Instruction build() {
+	/*public Instruction build() {
 		return null;
-	}
+	}*/
 }

@@ -13,11 +13,11 @@ public final class InstructionRegistry {
 
   public void registerInstruction(String opcode, InstructionInfo instructionInfo)
     throws Exception {
-    if (instructionMap.putIfAbsent(opcode, instructionInfo) != null) {
+    /*if (instructionMap.putIfAbsent(opcode, instructionInfo) != null) {
       throw new Exception("Opcode is already registered by " +
                            instructionMap.get(opcode)
                                          .getInstructionClass().getName());
-    }
+    }*/
   }
 
   public Optional<InstructionInfo> getInstructionInfoFor(String opcode) {
