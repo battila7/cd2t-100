@@ -3,37 +3,31 @@ package hu.progtech.cd2t100.computation;
 import hu.progtech.cd2t100.computation.annotations.Parameter;
 
 public class FormalParameter {
-  private final ArgumentType argumentType;
-
-  private final PortAccess portAccess;
+  private final ParameterType parameterType;
 
   private final String implicitValue;
 
-  private FormalParameter(ArgumentType argumentType,
-                         PortAccess portAccess,
-                         String implicitValue) {
-    this.argumentType = argumentType;
-
-    this.portAccess = portAccess;
+  private FormalParameter(ParameterType parameterType,
+                          String implicitValue) {
+    this.parameterType = parameterType;
 
     this.implicitValue = implicitValue;
   }
 
   public static FormalParameter fromParameterAnnotation(Parameter parameter) {
-    return new FormalParameter(parameter.argumentType(),
-                               parameter.portAccess(),
+    return new FormalParameter(parameter.parameterType(),
                                parameter.implicitValue());
   }
 
-  public ArgumentType getArgumentType() {
-    return argumentType;
-  }
-
-  public PortAccess getPortAccess() {
-    return portAccess;
+  public ParameterType getParameterType() {
+    return parameterType;
   }
 
   public String getImplicitValue() {
     return implicitValue;
+  }
+
+  public boolean hasImplicitValue() {
+    return !((implicitValue == null) || (implicitValue.equals("")));
   }
 }
