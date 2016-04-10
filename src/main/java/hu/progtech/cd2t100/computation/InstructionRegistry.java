@@ -16,13 +16,13 @@ public final class InstructionRegistry {
     ruleMap = new HashMap<>();
   }
 
-  public void registerInstruction(String opcode, InstructionInfo instructionInfo)
-    throws Exception {
-    /*if (instructionMap.putIfAbsent(opcode, instructionInfo) != null) {
-      throw new Exception("Opcode is already registered by " +
-                           instructionMap.get(opcode)
-                                         .getInstructionClass().getName());
-    }*/
+  public void registerInstruction(InstructionInfo info)
+    throws OpcodeAlreadyRegisteredException {
+    if (instructionMap.putIfAbsent(info.getOpcode(), info) != null) {
+      throw new OpcodeAlreadyRegisteredException(
+        "Opcode is already registered by " +
+        instructionMap.get(info.getOpcode()).getInstructionClass().getName());
+    }
   }
 
   public void putRules(Map<String, String> rules) {
@@ -31,5 +31,9 @@ public final class InstructionRegistry {
 
   public InstructionInfo getInstructionInfoFor(String opcode) {
     return instructionMap.get(opcode);
+  }
+
+  public Map<String, String> getRules() {
+    return ruleMap;
   }
 }
