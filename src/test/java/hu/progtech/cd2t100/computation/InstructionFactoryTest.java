@@ -114,4 +114,52 @@ public class InstructionFactoryTest {
                        i.getMethod(),
                        info.getPossibleCalls().get(0).getBackingMethod());
   }
+
+  @Test
+  public void unsetRuleTest() throws Exception {
+    InstructionInfo info =
+      InstructionLoader.loadInstruction(getCodeStream("TestInstruction.groovy"));
+
+    instructionRegistry.registerInstruction(info);
+
+    CodeElementSet elementSet =
+      CodeFactory.createCodeElementSet(registerMap.keySet(), allPortNames,
+                                       "TEST");
+
+    List<LineNumberedException> exceptionList =
+      instructionFactory.makeInstructions(elementSet);
+
+    Assert.assertEquals("One exception must have been thrown.",
+                        1, exceptionList.size());
+
+    Assert.assertTrue("Exception must be instance of PreprocessorRuleUnsetException.",
+                      exceptionList.get(0) instanceof PreprocessorRuleUnsetException);
+  }
+
+  @Test
+  public void ambiguousTest() throws Exception {
+    HashMap<String, String> rules = new HashMap<>();
+
+    rules.put("clampat", "999");
+
+    instructionRegistry.putRules(rules);
+
+    InstructionInfo info =
+      InstructionLoader.loadInstruction(getCodeStream("TestInstruction.groovy"));
+
+    instructionRegistry.registerInstruction(info);
+
+    CodeElementSet elementSet =
+      CodeFactory.createCodeElementSet(registerMap.keySet(), allPortNames,
+                                       "TEST");
+
+    List<LineNumberedException> exceptionList =
+      instructionFactory.makeInstructions(elementSet);
+
+    Assert.assertEquals("One exception must have been thrown.",
+                        1, exceptionList.size());
+
+    Assert.assertTrue("Exception must be instance of ArgumentMatchingException.",
+                      exceptionList.get(0) instanceof ArgumentMatchingException);
+  }
 }

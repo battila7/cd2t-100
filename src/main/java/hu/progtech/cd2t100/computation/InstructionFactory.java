@@ -69,6 +69,19 @@ public final class InstructionFactory {
 			return;
 		}
 
+		for (String ruleName : info.getUsedPreprocessorRules()) {
+			if (instructionRegistry.getRuleValue(ruleName) == null) {
+				exceptionList.add(new PreprocessorRuleUnsetException(
+														element.getLocation(),
+														element.getOpcode(),
+														ruleName));
+			}
+		}
+
+		if (!exceptionList.isEmpty()) {
+			return;
+		}
+
 		argumentMatcher.setInstructionElement(element);
 
 		argumentMatcher.setInstructionInfo(info);

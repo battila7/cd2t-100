@@ -81,9 +81,7 @@ public class InstructionRegistryTest {
 
     instructionRegistry.putRules(overrideRules);
 
-    rules.putAll(overrideRules);
-
     Assert.assertEquals("Rule map must be updated.",
-                        rules, instructionRegistry.getRules());
+                        "1000", instructionRegistry.getRuleValue("clampat"));
   }
 }

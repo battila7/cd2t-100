@@ -36,4 +36,8 @@ public final class InstructionRegistry {
   public Map<String, String> getRules() {
     return ruleMap;
   }
+
+  public String getRuleValue(String ruleName) {
+    return ruleMap.get(ruleName);
+  }
 }
