@@ -91,7 +91,8 @@ public final class InstructionFactory {
 							.collect(Collectors.toCollection(HashSet::new));
 
 			instructions.add(new Instruction(matchedCall.getBackingMethod(),
-																			 args, readDependencies));
+																			 args, readDependencies,
+																			 element.getLocation()));
 
 		} catch (ArgumentMatchingException ame) {
 			exceptionList.add(ame);
