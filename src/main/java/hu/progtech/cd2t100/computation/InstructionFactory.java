@@ -23,9 +23,7 @@ public final class InstructionFactory {
 
 	private final ArgumentMatcher argumentMatcher;
 
-	private final Map<String, Register> registerMap;
 	private final Map<String, CommunicationPort> readablePortMap;
-	private final Map<String, CommunicationPort> writeablePortMap;
 
 	private final ArrayList<LineNumberedException> exceptionList;
 	private final ArrayList<Instruction> instructions;
@@ -36,9 +34,7 @@ public final class InstructionFactory {
 														Map<String, CommunicationPort> writeablePortMap)
 	{
 		this.instructionRegistry = instructionRegistry;
-		this.registerMap = registerMap;
 		this.readablePortMap = readablePortMap;
-		this.writeablePortMap = writeablePortMap;
 
 		exceptionList = new ArrayList<>();
 		instructions = new ArrayList<>();
