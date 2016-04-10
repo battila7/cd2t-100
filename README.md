@@ -11,6 +11,8 @@ CD2T-100 is a Java implementation of a TIS-100-like CPU released under the MIT l
 If you don't know TIS-100 yet, check it out at here:
 [TIS-100 by Zachtronics](http://www.zachtronics.com/tis-100/)
 
+Don't forget to take a look at the <a href="https://github.com/battila7/cd2t-100/wiki">Wiki</a>.
+
 ## Functionality
 ### What'll be left out
 * Stack memory nodes
