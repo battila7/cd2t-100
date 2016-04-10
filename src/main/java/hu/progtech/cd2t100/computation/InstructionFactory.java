@@ -3,12 +3,17 @@ package hu.progtech.cd2t100.computation;
 import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.stream.Collectors;
 
 import hu.progtech.cd2t100.asm.InstructionElement;
 import hu.progtech.cd2t100.asm.CodeElementSet;
 import hu.progtech.cd2t100.asm.LineNumberedException;
 
 import hu.progtech.cd2t100.formal.InstructionInfo;
+import hu.progtech.cd2t100.formal.FormalCall;
+import hu.progtech.cd2t100.formal.ParameterType;
 
 import hu.progtech.cd2t100.computation.io.Register;
 import hu.progtech.cd2t100.computation.io.CommunicationPort;
@@ -53,10 +58,6 @@ public final class InstructionFactory {
 		return exceptionList;
 	}
 
-	public List<LineNumberedException> getExceptionList() {
-		return exceptionList;
-	}
-
 	public List<Instruction> getInstructions() {
 		return instructions;
 	}
@@ -78,6 +79,20 @@ public final class InstructionFactory {
 
 		try {
 			argumentMatcher.match();
+
+			List<Argument> args = argumentMatcher.getActualArguments();
+
+			FormalCall matchedCall = argumentMatcher.getMatchedCall();
+
+			Set<CommunicationPort> readDependencies =
+					args.stream()
+							.filter(x -> x.getParameterType() == ParameterType.READ_PORT)
+							.map(x -> readablePortMap.get(x.getValue()))
+							.collect(Collectors.toCollection(HashSet::new));
+
+			instructions.add(new Instruction(matchedCall.getBackingMethod(),
+																			 args, readDependencies));
+
 		} catch (ArgumentMatchingException ame) {
 			exceptionList.add(ame);
 		}

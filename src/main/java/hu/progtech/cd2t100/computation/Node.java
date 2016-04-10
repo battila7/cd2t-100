@@ -3,7 +3,6 @@ package hu.progtech.cd2t100.computation;
 import java.util.Map;
 import java.util.List;
 import java.util.HashSet;
-import java.util.ArrayList;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
@@ -32,7 +31,7 @@ public class Node {
 
   private boolean readyToRun;
 
-  private ArrayList<Instruction> instructions;
+  private List<Instruction> instructions;
 
   private CodeElementSet codeElementSet;
 
@@ -110,7 +109,11 @@ public class Node {
     List<LineNumberedException> exceptionList =
       instructionFactory.makeInstructions(codeElementSet);
 
-    readyToRun = exceptionList.isEmpty();
+    if (exceptionList.isEmpty()) {
+        readyToRun = true;
+
+        instructions = instructionFactory.getInstructions();
+    }
 
     return exceptionList;
   }
