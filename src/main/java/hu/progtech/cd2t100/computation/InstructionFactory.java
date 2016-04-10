@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import hu.progtech.cd2t100.formal.InstructionInfo;
 
-public final class InstructionBuilder {
+public final class InstructionFactory {
 	private InstructionInfo instructionInfo;
 
 	private String opcode;
@@ -13,16 +13,13 @@ public final class InstructionBuilder {
 
 	private InstructionRegistry instructionRegistry;
 
-	public InstructionBuilder(InstructionRegistry instructionRegistry,
-	                          ArgumentChecker argumentChecker) {
+	public InstructionFactory(InstructionRegistry instructionRegistry) {
 		instructionInfo = null;
 
 		this.instructionRegistry = instructionRegistry;
-
-		this.argumentChecker = argumentChecker;
 	}
 
-	public InstructionBuilder addArg(Argument argument)
+	/*public InstructionBuilder addArg(Argument argument)
 		throws Exception, InvalidArgumentTypeException {
 		if (instructionInfo == null) {
 			throw new Exception("Instruction is unset, cannot determine aguments!");
@@ -43,9 +40,5 @@ public final class InstructionBuilder {
 		instructionInfo = instructionInfoOpt.get();
 
 		return this;
-	}
-
-	/*public Instruction build() {
-		return null;
 	}*/
 }
