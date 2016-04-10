@@ -2,9 +2,11 @@ package hu.progtech.cd2t100.computation;
 
 import java.util.Map;
 import java.util.List;
+import java.util.HashSet;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+import java.util.stream.Collectors;
 
 import hu.progtech.cd2t100.asm.CodeFactory;
 import hu.progtech.cd2t100.asm.CodeElementSet;
@@ -18,7 +20,10 @@ public class Node {
     Pattern.compile("\r\n|\r|\n");
 
   private final Map<String, Register> registerMap;
-  private final Map<String, CommunicationPort> portMap;
+  private final Map<String, CommunicationPort> readablePortMap;
+  private final Map<String, CommunicationPort> writeablePortMap;
+
+  private final HashSet<String> portNameSet;
 
   private final int maximumSourceCodeLines;
 
@@ -28,14 +33,16 @@ public class Node {
 
   private boolean readyToRun;
 
-  //private ArrayList<Instruction> instructions;
+  private ArrayList<Instruction> instructions;
 
   private CodeElementSet codeElementSet;
 
   public Node(InstructionRegistry instructionRegistry,
               int maximumSourceCodeLines,
               Map<String, Register> registerMap,
-              Map<String, CommunicationPort> portMap)
+              Map<String, CommunicationPort> readablePortMap,
+              Map<String, CommunicationPort> writeablePortMap)
+
   {
     this.instructionRegistry = instructionRegistry;
 
@@ -43,7 +50,13 @@ public class Node {
 
     this.registerMap = registerMap;
 
-    this.portMap = portMap;
+    this.readablePortMap = readablePortMap;
+
+    this.writeablePortMap = writeablePortMap;
+
+    this.portNameSet = new HashSet<>(readablePortMap.keySet());
+
+    portNameSet.addAll(writeablePortMap.keySet());
 
     readyToRun = false;
   }
@@ -74,20 +87,33 @@ public class Node {
 
     codeElementSet = CodeFactory.createCodeElementSet(
                                     registerMap.keySet(),
-                                    portMap.keySet(),
+                                    portNameSet,
                                     sourceCode);
+
+    if (!(codeElementSet.isExceptionOccurred())) {
+      instructionRegistry.putRules(codeElementSet.getRuleMap());
+    }
 
     return codeElementSet.getExceptionList();
   }
 
-  public void buildInstructions() {
+  public List<LineNumberedException> buildInstructions() {
     if ((codeElementSet == null) || (codeElementSet.isExceptionOccurred())) {
       // gonna throw some exception
     }
 
+    InstructionFactory instructionFactory =
+      new InstructionFactory(instructionRegistry,
+                             registerMap,
+                             readablePortMap,
+                             writeablePortMap);
 
+    List<LineNumberedException> exceptionList =
+      instructionFactory.makeInstructions(codeElementSet);
 
-    readyToRun = true;
+    readyToRun = exceptionList.isEmpty();
+
+    return exceptionList;
   }
 
   public int getMaximumSourceCodeLines() {

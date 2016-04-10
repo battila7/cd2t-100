@@ -11,11 +11,13 @@ public class NodeBuilder {
   private InstructionRegistry instructionRegistry;
 
   private HashMap<String, Register> registerMap;
-  private HashMap<String, CommunicationPort> portMap;
+  private HashMap<String, CommunicationPort> readablePortMap;
+  private HashMap<String, CommunicationPort> writeablePortMap;
 
   public NodeBuilder() {
-    registerMap = new HashMap();
-    portMap = new HashMap();
+    registerMap = new HashMap<>();
+    readablePortMap = new HashMap<>();
+    writeablePortMap = new HashMap<>();
   }
 
   public NodeBuilder setMaximumSourceCodeLines(int max) {
@@ -30,9 +32,16 @@ public class NodeBuilder {
     return this;
   }
 
-  public NodeBuilder addCommunicationPort(String name,
-                                          CommunicationPort port) {
-    portMap.put(name, port);
+  public NodeBuilder addReadablePort(String name,
+                                     CommunicationPort port) {
+    readablePortMap.put(name, port);
+
+    return this;
+  }
+
+  public NodeBuilder addWriteablePort(String name,
+                                      CommunicationPort port) {
+    writeablePortMap.put(name, port);
 
     return this;
   }
@@ -48,6 +57,7 @@ public class NodeBuilder {
     return new Node(instructionRegistry,
                     maximumSourceCodeLines,
                     registerMap,
-                    portMap);
+                    readablePortMap,
+                    writeablePortMap);
   }
 }

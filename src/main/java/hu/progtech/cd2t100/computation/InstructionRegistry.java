@@ -2,15 +2,18 @@ package hu.progtech.cd2t100.computation;
 
 import java.util.Map;
 import java.util.HashMap;
-import java.util.Optional;
 
 import hu.progtech.cd2t100.formal.InstructionInfo;
 
 public final class InstructionRegistry {
   private final Map<String, InstructionInfo> instructionMap;
 
+  private final Map<String, String> ruleMap;
+
   public InstructionRegistry() {
     instructionMap = new HashMap<>();
+
+    ruleMap = new HashMap<>();
   }
 
   public void registerInstruction(String opcode, InstructionInfo instructionInfo)
@@ -22,7 +25,11 @@ public final class InstructionRegistry {
     }*/
   }
 
-  public Optional<InstructionInfo> getInstructionInfoFor(String opcode) {
-    return Optional.ofNullable(instructionMap.get(opcode));
+  public void putRules(Map<String, String> rules) {
+    ruleMap.putAll(rules);
+  }
+
+  public InstructionInfo getInstructionInfoFor(String opcode) {
+    return instructionMap.get(opcode);
   }
 }
