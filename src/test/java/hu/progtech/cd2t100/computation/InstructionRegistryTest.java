@@ -2,7 +2,6 @@ package hu.progtech.cd2t100.computation;
 
 import java.io.InputStream;
 
-import java.util.Map;
 import java.util.HashMap;
 
 import org.junit.Test;
