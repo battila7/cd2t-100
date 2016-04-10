@@ -14,9 +14,9 @@ import hu.progtech.cd2t100.computation.io.Register;
 import hu.progtech.cd2t100.computation.io.CommunicationPort;
 
 public final class InstructionFactory {
-	private ArgumentChecker argumentChecker;
-
 	private final InstructionRegistry instructionRegistry;
+
+	private final ArgumentMatcher argumentMatcher;
 
 	private final Map<String, Register> registerMap;
 	private final Map<String, CommunicationPort> readablePortMap;
@@ -37,9 +37,15 @@ public final class InstructionFactory {
 
 		exceptionList = new ArrayList<>();
 		instructions = new ArrayList<>();
+
+		argumentMatcher = new ArgumentMatcher(registerMap.keySet(),
+																					readablePortMap.keySet(),
+																					writeablePortMap.keySet());
 	}
 
 	public List<LineNumberedException> makeInstructions(CodeElementSet elementSet) {
+		argumentMatcher.setLabels(elementSet.getLabelMap().keySet());
+
 		elementSet.getInstructionList()
 							.stream()
 							.forEach(x -> constructInstruction(x));
@@ -60,11 +66,20 @@ public final class InstructionFactory {
 			instructionRegistry.getInstructionInfoFor(element.getOpcode());
 
 		if (info == null) {
-			// no opcode, get some exception
+			exceptionList.add(new UnknownOpcodeException(element.getLocation(),
+																									 element.getOpcode()));
 
 			return;
 		}
 
+		argumentMatcher.setInstructionElement(element);
 
+		argumentMatcher.setInstructionInfo(info);
+
+		try {
+			argumentMatcher.match();
+		} catch (ArgumentMatchingException ame) {
+			exceptionList.add(ame);
+		}
 	}
 }
