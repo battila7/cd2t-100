@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
-import java.util.stream.Collectors;
 
 import hu.progtech.cd2t100.asm.CodeFactory;
 import hu.progtech.cd2t100.asm.CodeElementSet;

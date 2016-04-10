@@ -71,12 +71,12 @@ public class InstructionLoader {
            InvalidInstructionClassException,
            InvalidFormalParameterListException
   {
-    classCode = automaticImportStatement + classCode;
+    String actualCode = automaticImportStatement + classCode;
 
     GroovyClassLoader groovyClassLoader
       = new GroovyClassLoader(InstructionLoader.class.getClassLoader());
 
-    Class<?> instructionClass = groovyClassLoader.parseClass(classCode);
+    Class<?> instructionClass = groovyClassLoader.parseClass(actualCode);
 
     String opcode = checkOpcode(instructionClass)
                     .orElseThrow(InvalidInstructionClassException::new);

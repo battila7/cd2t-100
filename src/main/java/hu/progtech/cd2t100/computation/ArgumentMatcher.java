@@ -22,8 +22,6 @@ final class ArgumentMatcher {
 
   private InstructionElement element;
 
-  private InstructionInfo info;
-
   private List<FormalCall> possibleCalls;
 
   private ArgumentElement[] suppliedArguments;
@@ -32,7 +30,7 @@ final class ArgumentMatcher {
 
   private FormalCall matchedCall;
 
-  ArgumentMatcher(Set<String> registerSet,
+  public ArgumentMatcher(Set<String> registerSet,
                   Set<String> readablePortSet,
                   Set<String> writeablePortSet)
   {
@@ -41,21 +39,21 @@ final class ArgumentMatcher {
 		this.writeablePortSet = writeablePortSet;
   }
 
-  void setInstructionElement(InstructionElement element) {
+  public void setInstructionElement(InstructionElement element) {
     this.element = element;
 
     suppliedArguments = element.getArgumentElements();
   }
 
-  void setInstructionInfo(InstructionInfo info) {
+  public void setInstructionInfo(InstructionInfo info) {
     possibleCalls = info.getPossibleCalls();
   }
 
-  void setLabels(Set<String> labelSet) {
+  public void setLabels(Set<String> labelSet) {
     this.labelSet = labelSet;
   }
 
-  void match() throws ArgumentMatchingException {
+  public void match() throws ArgumentMatchingException {
     actualArguments = new ArrayList<>();
 
     for (int i = 0; i < suppliedArguments.length; ++i) {
@@ -87,11 +85,11 @@ final class ArgumentMatcher {
     }
   }
 
-  List<Argument> getActualArguments() {
+  public List<Argument> getActualArguments() {
     return actualArguments;
   }
 
-  FormalCall getMatchedCall() {
+  public FormalCall getMatchedCall() {
     return matchedCall;
   }
 
