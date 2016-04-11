@@ -38,7 +38,7 @@ public class InstructionLoader {
   private static final List<Class<?>> autoImportClasses =
     Arrays.asList(Opcode.class, Rules.class, Parameter.class,
                   ExecutionEnvironment.class, ParameterType.class,
-                  MutableInt.class);
+                  ReadResult.class, MutableInt.class);
 
   private static final String automaticImportStatement;
 

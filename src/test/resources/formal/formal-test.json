@@ -1,0 +1,269 @@
+[
+  {
+    "description": "Missing opcode annotation.",
+    "groovy": "invalidGroovy/NoOpcode.groovy",
+    "expected": {
+      "exception": "hu.progtech.cd2t100.formal.InvalidInstructionClassException",
+      "exceptionMessage": "Opcode"
+    }
+  },
+  {
+    "description": "Invalid opcode annotation value.",
+    "groovy": "invalidGroovy/InvalidOpcode.groovy",
+    "expected": {
+      "exception": "hu.progtech.cd2t100.formal.InvalidInstructionClassException",
+      "exceptionMessage": "Opcode"
+    }
+  },
+  {
+    "description": "Missing apply method.",
+    "groovy": "invalidGroovy/MissingApply.groovy",
+    "expected": {
+      "exception": "hu.progtech.cd2t100.formal.InvalidInstructionClassException",
+      "exceptionMessage": "Method(s)"
+    }
+  },
+  {
+    "description": "Invalid rule demanded.",
+    "groovy": "invalidGroovy/InvalidRule.groovy",
+    "expected": {
+      "exception": "hu.progtech.cd2t100.formal.InvalidInstructionClassException",
+      "exceptionMessage": "Invalid rule"
+    }
+  },
+  {
+    "description": "apply method is not static.",
+    "groovy": "invalidGroovy/NotStatic.groovy",
+    "expected": {
+      "exception": "hu.progtech.cd2t100.formal.InvalidInstructionClassException",
+      "exceptionMessage": "apply"
+    }
+  },
+  {
+    "description": "apply method has no arguments.",
+    "groovy": "invalidGroovy/NoArguments.groovy",
+    "expected": {
+      "exception": "hu.progtech.cd2t100.formal.InvalidFormalParameterListException",
+      "exceptionMessage": "The method must accept"
+    }
+  },
+  {
+    "description": "First formal parameter is not of type ExecutionEnvironment",
+    "groovy": "invalidGroovy/InvalidFirstArgument.groovy",
+    "expected": {
+      "exception": "hu.progtech.cd2t100.formal.InvalidFormalParameterListException",
+      "exceptionMessage": "The method must accept"
+    }
+  },
+  {
+    "description": "Formal parameter is not annotated.",
+    "groovy": "invalidGroovy/MissingParameterAnnotation.groovy",
+    "expected": {
+      "exception": "hu.progtech.cd2t100.formal.InvalidFormalParameterListException",
+      "exceptionMessage": "All parameters must be annotated"
+    }
+  },
+  {
+    "description": "Expected and actual parameter type mismatch.",
+    "groovy": "invalidGroovy/InvalidParameterAnnotation.groovy",
+    "expected": {
+      "exception": "hu.progtech.cd2t100.formal.InvalidFormalParameterListException",
+      "exceptionMessage": "Method parameter type"
+    }
+  },
+  {
+    "description": "Badly placed implicit-valued parameter.",
+    "groovy": "invalidGroovy/InvalidImplicitLocation.groovy",
+    "expected": {
+      "exception": "hu.progtech.cd2t100.formal.InvalidFormalParameterListException",
+      "exceptionMessage": "Parameter without an implicit"
+    }
+  },
+  {
+    "description": "Not valid Groovy code.",
+    "groovy": "invalidGroovy/CompileError.groovy",
+    "expected": {
+      "exception": "org.codehaus.groovy.control.CompilationFailedException"
+    }
+  },
+
+  {
+    "description": "NOP instruction - one apply only with ExecEnv parameter.",
+    "groovy": "validGroovy/Nop.groovy",
+    "expected": {
+      "opcode": "NOP",
+      "rules": [],
+      "calls": [
+        {
+          "params": []
+        }
+      ]
+    }
+  },
+  {
+    "description": "NOP instruction - one apply only with ExecEnv parameter with demanded rules.",
+    "groovy": "validGroovy/NopRules.groovy",
+    "expected": {
+      "opcode": "NOP",
+      "rules": ["clampat", "overflow"],
+      "calls": [
+        {
+          "params": []
+        }
+      ]
+    }
+  },
+  {
+    "description": "ONE instruction - one apply only one NUMBER type parameter, without implicit value.",
+    "groovy": "validGroovy/OneApplyOneParam.groovy",
+    "expected": {
+      "opcode": "ONE",
+      "rules": [],
+      "calls": [
+        {
+          "params": [
+            {
+              "parameterType": "READ_PORT",
+              "implicitValue": ""
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "description": "MUL instruction - multiple apply methods with one parameter (different type per method) without implicit value.",
+    "groovy": "validGroovy/MultipleApplyOneParam.groovy",
+    "expected": {
+      "opcode": "MUL",
+      "rules": [],
+      "calls": [
+        {
+          "params": [
+            {
+              "parameterType": "NUMBER",
+              "implicitValue": ""
+            }
+          ]
+        },
+        {
+          "params": [
+            {
+              "parameterType": "READ_PORT",
+              "implicitValue": ""
+            }
+          ]
+        },
+        {
+          "params": [
+            {
+              "parameterType": "WRITE_PORT",
+              "implicitValue": ""
+            }
+          ]
+        },
+        {
+          "params": [
+            {
+              "parameterType": "REGISTER",
+              "implicitValue": ""
+            }
+          ]
+        },
+        {
+          "params": [
+            {
+              "parameterType": "LABEL",
+              "implicitValue": ""
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "description": "ONEMUL instruction - one apply multiple parameters.",
+    "groovy": "validGroovy/OneApplyMultipleParam.groovy",
+    "expected": {
+      "opcode": "ONEMUL",
+      "rules": [],
+      "calls": [
+        {
+          "params": [
+            {
+              "parameterType": "READ_PORT",
+              "implicitValue": ""
+            },
+            {
+              "parameterType": "READ_PORT",
+              "implicitValue": ""
+            },
+            {
+              "parameterType": "WRITE_PORT",
+              "implicitValue": ""
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "description": "ONEIMPL instruction - one apply multiple parameters, implicit value introduced.",
+    "groovy": "validGroovy/OneApplyImplicit.groovy",
+    "expected": {
+      "opcode": "ONEIMPL",
+      "rules": [],
+      "calls": [
+        {
+          "params": [
+            {
+              "parameterType": "READ_PORT",
+              "implicitValue": ""
+            },
+            {
+              "parameterType": "REGISTER",
+              "implicitValue": "ACC"
+            },
+            {
+              "parameterType": "WRITE_PORT",
+              "implicitValue": "UP"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "description": "MIXED instruction - combinations of the above.",
+    "groovy": "validGroovy/Mixed.groovy",
+    "expected": {
+      "opcode": "MXD",
+      "rules": ["place", "holder", "rule"],
+      "calls": [
+        {
+          "params": []
+        },
+        {
+          "params": [
+            {
+              "parameterType": "LABEL",
+              "implicitValue": ""
+            }
+          ]
+        },
+        {
+          "params": [
+            {
+              "parameterType": "NUMBER",
+              "implicitValue": ""
+            },
+            {
+              "parameterType": "NUMBER",
+              "implicitValue": "100"
+            }
+          ]
+        }
+      ]
+    }
+  }
+]

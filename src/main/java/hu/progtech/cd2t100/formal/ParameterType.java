@@ -4,7 +4,7 @@ import org.apache.commons.lang3.mutable.MutableInt;
 
 public enum ParameterType {
   NUMBER (int.class),
-  READ_PORT (int.class),
+  READ_PORT (ReadResult.class),
   WRITE_PORT (MutableInt.class),
   REGISTER (int[].class),
   LABEL (String.class);

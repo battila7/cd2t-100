@@ -1,22 +1,81 @@
 package hu.progtech.cd2t100.formal;
 
 import java.io.InputStream;
-
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Set;
+import java.util.HashSet;
 
 import org.junit.Test;
-import org.junit.Rule;
-import org.junit.Assert;
-import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameter;
+import org.junit.runners.Parameterized.Parameters;
 
-import static org.hamcrest.core.StringStartsWith.startsWith;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonArray;
+import com.google.gson.reflect.TypeToken;
 
-import org.codehaus.groovy.control.CompilationFailedException;
+import org.apache.commons.lang3.StringUtils;
 
+import static org.assertj.core.api.Assertions.*;
+
+@RunWith(Parameterized.class)
 public class InstructionLoaderTest {
-  @Rule
-  public ExpectedException thrown = ExpectedException.none();
+  private static String CODE_FILE = "formal/formal-test.json";
+
+  private static int PARAMETER_COUNT = 3;
+
+  @Parameter
+  public String description;
+
+  @Parameter(value = 1)
+  public String groovyResource;
+
+  @Parameter(value = 2)
+  public ExpectedInstructionInfo expectedInfo;
+
+  @Parameters
+  public static Collection<Object[]> data() {
+    Gson gson = constructGson();
+
+    InputStream is =
+      InstructionLoaderTest.class
+                           .getClassLoader()
+                           .getResourceAsStream(CODE_FILE);
+
+    JsonArray root =
+      gson.fromJson(new InputStreamReader(is), JsonElement.class)
+          .getAsJsonArray();
+
+    return extractTestData(gson, root);
+  }
+
+  @Test
+  public void test() throws Exception {
+    String exceptionClassName = expectedInfo.getThrownExceptionName();
+
+    if (exceptionClassName != null) {
+      Class<?> exceptionClass = Class.forName(exceptionClassName);
+
+      assertThatThrownBy(() -> InstructionLoader.loadInstruction(getCodeStream(groovyResource)))
+                        .isInstanceOf(exceptionClass)
+                        .hasMessageContaining(expectedInfo.getMessageFragment());
+    } else {
+      InstructionInfo info =
+        InstructionLoader.loadInstruction(getCodeStream(groovyResource));
+
+      assertThat(expectedInfo.compareToInstructionInfo(info))
+                .isTrue();
+    }
+  }
 
   private static InputStream getCodeStream(String resourceName) {
     return InstructionLoaderTest.class
@@ -24,115 +83,36 @@ public class InstructionLoaderTest {
                                 .getResourceAsStream(resourceName);
   }
 
-  @Test
-  public void noOpcode() throws Exception {
-    thrown.expect(InvalidInstructionClassException.class);
-    thrown.expectMessage(startsWith("Opcode"));
-
-    InstructionLoader.loadInstruction(getCodeStream("NoOpcode.groovy"));
+  private static Gson constructGson() {
+    return new GsonBuilder()
+      .registerTypeAdapter(ExpectedInstructionInfo.class,
+                           new ExpectedInstructionInfoDeserializer())
+      .registerTypeAdapter(FormalCall.class,
+                           new FormalCallDeserializer())
+      .registerTypeAdapter(FormalParameter.class,
+                           new FormalParameterInstanceCreator())
+      .create();
   }
 
-  @Test
-  public void invalidOpcode() throws Exception {
-    thrown.expect(InvalidInstructionClassException.class);
-    thrown.expectMessage(startsWith("Opcode"));
+  private static List<Object[]> extractTestData(Gson gson, JsonArray root) {
+    ArrayList<Object[]> testData = new ArrayList<>();
 
-    InstructionLoader.loadInstruction(getCodeStream("InvalidOpcode.groovy"));
-  }
+    Iterator<JsonElement> it = root.iterator();
 
-  @Test
-  public void missingApply() throws Exception {
-    thrown.expect(InvalidInstructionClassException.class);
-    thrown.expectMessage(startsWith("Method(s)"));
+    while (it.hasNext()) {
+      JsonObject testCase = it.next().getAsJsonObject();
 
-    InstructionLoader.loadInstruction(getCodeStream("MissingApply.groovy"));
-  }
+      Object[] params = new Object[PARAMETER_COUNT];
 
-  @Test
-  public void invalidRule() throws Exception {
-    thrown.expect(InvalidInstructionClassException.class);
-    thrown.expectMessage(startsWith("Invalid rule"));
+      params[0] = gson.fromJson(testCase.get("description"), String.class);
 
-    InstructionLoader.loadInstruction(getCodeStream("InvalidRule.groovy"));
-  }
+      params[1] = gson.fromJson(testCase.get("groovy"), String.class);
 
-  @Test
-  public void notStatic() throws Exception {
-    thrown.expect(InvalidInstructionClassException.class);
-    thrown.expectMessage(startsWith("\"apply\""));
+      params[2] = gson.fromJson(testCase.get("expected"), ExpectedInstructionInfo.class);
 
-    InstructionLoader.loadInstruction(getCodeStream("NotStatic.groovy"));
-  }
+      testData.add(params);
+    }
 
-  @Test
-  public void noArguments() throws Exception {
-    thrown.expect(InvalidFormalParameterListException.class);
-    thrown.expectMessage(startsWith("The method must accept"));
-
-    InstructionLoader.loadInstruction(getCodeStream("NoArguments.groovy"));
-  }
-
-  @Test
-  public void invalidFirstArgument() throws Exception {
-    thrown.expect(InvalidFormalParameterListException.class);
-    thrown.expectMessage(startsWith("The method must accept"));
-
-    InstructionLoader.loadInstruction(getCodeStream("InvalidFirstArgument.groovy"));
-  }
-
-  @Test
-  public void nop() throws Exception {
-    InstructionLoader.loadInstruction(getCodeStream("Nop.groovy"));
-  }
-
-  @Test
-  public void missingParameterAnnotation() throws Exception {
-    thrown.expect(InvalidFormalParameterListException.class);
-    thrown.expectMessage(startsWith("All parameters must be annotated"));
-
-    InstructionLoader.loadInstruction(getCodeStream("MissingParameterAnnotation.groovy"));
-  }
-
-  @Test
-  public void invalidParameterAnnotation() throws Exception {
-    thrown.expect(InvalidFormalParameterListException.class);
-    thrown.expectMessage(startsWith("Method parameter type"));
-
-    InstructionLoader.loadInstruction(getCodeStream("InvalidParameterAnnotation.groovy"));
-  }
-
-  @Test
-  public void invalidImplicitLocation() throws Exception {
-    thrown.expect(InvalidFormalParameterListException.class);
-    thrown.expectMessage(startsWith("Parameter without an implicit"));
-
-    InstructionLoader.loadInstruction(getCodeStream("InvalidImplicitLocation.groovy"));
-  }
-
-  @Test
-  public void testInstruction() throws Exception {
-    InstructionInfo test =
-      InstructionLoader.loadInstruction(getCodeStream("TestInstruction.groovy"));
-
-    Assert.assertEquals("Opcode should be TEST", "TEST", test.getOpcode());
-
-    ArrayList<String> rules = new ArrayList<>();
-
-    rules.add("clampat");
-
-    Assert.assertEquals("Only one rule should be used",
-                        rules, test.getUsedPreprocessorRules());
-
-    List<FormalCall> calls = test.getPossibleCalls();
-
-    Assert.assertEquals("There should be 3 possible calls",
-                        3, calls.size());
-  }
-
-  @Test
-  public void compileError() throws Exception {
-    thrown.expect(CompilationFailedException.class);
-
-    InstructionLoader.loadInstruction(getCodeStream("CompileError.groovy"));
+    return testData;
   }
 }

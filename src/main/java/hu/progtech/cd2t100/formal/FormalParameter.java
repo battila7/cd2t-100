@@ -2,6 +2,9 @@ package hu.progtech.cd2t100.formal;
 
 import hu.progtech.cd2t100.formal.annotations.Parameter;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 public class FormalParameter {
   private final ParameterType parameterType;
 
@@ -40,5 +43,31 @@ public class FormalParameter {
     }
 
     return str;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (o == this) {
+      return true;
+    }
+
+    if (!(o instanceof FormalParameter)) {
+      return false;
+    }
+
+    FormalParameter fp = (FormalParameter)o;
+
+    return new EqualsBuilder()
+            .append(fp.parameterType, parameterType)
+            .append(fp.implicitValue, implicitValue)
+            .isEquals();
+  }
+
+  @Override
+  public int hashCode() {
+    return new HashCodeBuilder(11, 47)
+            .append(implicitValue)
+            .append(parameterType)
+            .toHashCode();
   }
 }
