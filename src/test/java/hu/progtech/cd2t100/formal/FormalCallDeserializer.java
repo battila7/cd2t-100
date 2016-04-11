@@ -1,7 +1,6 @@
 package hu.progtech.cd2t100.formal;
 
 import java.lang.reflect.Type;
-import java.util.HashMap;
 import java.util.ArrayList;
 
 import com.google.gson.JsonDeserializer;
