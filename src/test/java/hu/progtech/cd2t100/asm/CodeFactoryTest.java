@@ -2,6 +2,10 @@ package hu.progtech.cd2t100.asm;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.File;
+
+import java.nio.file.Paths;
+
 import java.lang.reflect.Type;
 import java.util.Iterator;
 import java.util.List;
@@ -28,7 +32,8 @@ import org.apache.commons.lang3.StringUtils;
 
 @RunWith(Parameterized.class)
 public class CodeFactoryTest {
-  private static String CODE_FILE = "asm/test-code.json";
+  private static String CODE_FILE = Paths.get("asm", "test-code.json")
+                                         .toString();
 
   private static int PARAMETER_COUNT = 5;
 

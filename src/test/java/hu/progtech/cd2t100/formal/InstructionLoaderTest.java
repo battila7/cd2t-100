@@ -2,6 +2,9 @@ package hu.progtech.cd2t100.formal;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.File;
+
+import java.nio.file.Paths;
 
 import java.util.Iterator;
 import java.util.List;
@@ -24,7 +27,8 @@ import static org.assertj.core.api.Assertions.*;
 
 @RunWith(Parameterized.class)
 public class InstructionLoaderTest {
-  private static String CODE_FILE = "formal/formal-test.json";
+  private static String CODE_FILE = Paths.get("formal", "formal-test.json")
+                                         .toString();
 
   private static int PARAMETER_COUNT = 3;
 
@@ -73,9 +77,11 @@ public class InstructionLoaderTest {
   }
 
   private static InputStream getCodeStream(String resourceName) {
+    File f = new File(resourceName);
+
     return InstructionLoaderTest.class
                                 .getClassLoader()
-                                .getResourceAsStream(resourceName);
+                                .getResourceAsStream(f.getPath());
   }
 
   private static Gson constructGson() {
