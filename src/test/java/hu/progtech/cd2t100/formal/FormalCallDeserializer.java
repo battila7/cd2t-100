@@ -25,7 +25,12 @@ class FormalCallDeserializer implements
     ArrayList<FormalParameter> paramList =
       context.deserialize(jObject.get("params"), paramListType);
 
-    return new FormalCall(paramList, null);
+    int demandedParams = (int)paramList
+                                .stream()
+                                .filter(x -> !x.hasImplicitValue())
+                                .count();
+
+    return new FormalCall(paramList, null, demandedParams);
   }
 
 }

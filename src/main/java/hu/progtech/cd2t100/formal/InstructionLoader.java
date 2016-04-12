@@ -182,7 +182,12 @@ public class InstructionLoader {
     List<FormalParameter> formalParameters
       = getFormalParameters(paramTypes, paramAnnotations);
 
-    return new FormalCall(formalParameters, method);
+    int demandedParams = (int)formalParameters
+                                .stream()
+                                .filter(x -> !x.hasImplicitValue())
+                                .count();
+
+    return new FormalCall(formalParameters, method, demandedParams);
   }
 
   private static List<FormalParameter> getFormalParameters(

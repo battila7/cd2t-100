@@ -9,11 +9,16 @@ public class FormalCall {
 
   private final Method backingMethod;
 
+  private final int demandedParams;
+
   public FormalCall (List<FormalParameter> formalParameterList,
-                     Method backingMethod) {
+                     Method backingMethod,
+                     int demandedParams) {
     this.formalParameterList = formalParameterList;
 
     this.backingMethod = backingMethod;
+
+    this.demandedParams = demandedParams;
   }
 
   public List<FormalParameter> getFormalParameterList() {
@@ -22,6 +27,10 @@ public class FormalCall {
 
   public Method getBackingMethod() {
     return backingMethod;
+  }
+
+  public int getDemandedParams() {
+    return demandedParams;
   }
 
   @Override

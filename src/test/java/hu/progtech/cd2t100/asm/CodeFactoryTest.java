@@ -2,7 +2,6 @@ package hu.progtech.cd2t100.asm;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.File;
 
 import java.nio.file.Paths;
 

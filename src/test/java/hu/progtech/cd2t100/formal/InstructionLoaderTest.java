@@ -65,6 +65,7 @@ public class InstructionLoaderTest {
       Class<?> exceptionClass = Class.forName(exceptionClassName);
 
       assertThatThrownBy(() -> InstructionLoader.loadInstruction(getCodeStream(groovyResource)))
+                        .as(description)
                         .isInstanceOf(exceptionClass)
                         .hasMessageContaining(expectedInfo.getMessageFragment());
     } else {
@@ -72,6 +73,7 @@ public class InstructionLoaderTest {
         InstructionLoader.loadInstruction(getCodeStream(groovyResource));
 
       assertThat(expectedInfo.compareToInstructionInfo(info))
+                .as(description)
                 .isTrue();
     }
   }

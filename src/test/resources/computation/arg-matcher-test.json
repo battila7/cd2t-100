@@ -1,0 +1,145 @@
+[
+  {
+    "description": "NOP instruction, no arguments/exception expected",
+    "node": {
+      "registers": [],
+      "readablePorts": [],
+      "writeablePorts": [],
+      "labels": []
+    },
+    "instruction": "NOP",
+    "groovy": "validGroovy/Nop.groovy",
+    "arguments": []
+  },
+
+  {
+    "description": "ONE instruction, one READ_PORT argument with same value expected",
+    "node": {
+      "registers": [],
+      "readablePorts": ["UP"],
+      "writeablePorts": [],
+      "labels": []
+    },
+    "instruction": "ONE UP",
+    "groovy": "validGroovy/OneApplyOneParam.groovy",
+    "arguments": [
+      {
+        "parameterType": "READ_PORT",
+        "value": "UP"
+      }
+    ]
+  },
+  {
+    "description": "ONE instruction, no arguments provided, exception expected",
+    "node": {
+      "registers": [],
+      "readablePorts": ["UP"],
+      "writeablePorts": [],
+      "labels": []
+    },
+    "instruction": "ONE",
+    "groovy": "validGroovy/OneApplyOneParam.groovy",
+    "arguments": [],
+    "exceptionMessage": "No suitable instruction overload"
+  },
+  {
+    "description": "ONE instruction, too many arguments provided, exception expected",
+    "node": {
+      "registers": [],
+      "readablePorts": ["UP"],
+      "writeablePorts": [],
+      "labels": []
+    },
+    "instruction": "ONE UP UP",
+    "groovy": "validGroovy/OneApplyOneParam.groovy",
+    "arguments": [],
+    "exceptionMessage": "No suitable instruction overload"
+  },
+  {
+    "description": "ONE instruction, writeable port provided instead of readable, exception expected",
+    "node": {
+      "registers": [],
+      "readablePorts": [],
+      "writeablePorts": ["DOWN"],
+      "labels": []
+    },
+    "instruction": "ONE DOWN",
+    "groovy": "validGroovy/OneApplyOneParam.groovy",
+    "arguments": [],
+    "exceptionMessage": "No suitable instruction overload"
+  },
+  {
+    "description": "ONE instruction, unexpected argument type, exception expected",
+    "node": {
+      "registers": [],
+      "readablePorts": [],
+      "writeablePorts": [],
+      "labels": []
+    },
+    "instruction": "ONE 100",
+    "groovy": "validGroovy/OneApplyOneParam.groovy",
+    "arguments": [],
+    "exceptionMessage": "No suitable instruction overload"
+  },
+
+  {
+    "description": "ONEIMPL instruction, one argument provided, two implicit arguments",
+    "node": {
+      "registers": ["ACC"],
+      "readablePorts": ["DOWN"],
+      "writeablePorts": ["UP"],
+      "labels": []
+    },
+    "instruction": "ONEIMPL DOWN",
+    "groovy": "validGroovy/OneApplyImplicit.groovy",
+    "arguments": [
+      {
+        "parameterType": "READ_PORT",
+        "value": "DOWN"
+      },
+      {
+        "parameterType": "REGISTER",
+        "value": "ACC"
+      },
+      {
+        "parameterType": "WRITE_PORT",
+        "value": "UP"
+      }
+    ]
+  },
+  {
+    "description": "ONEIMPL instruction, called on incompatible node, exception expected",
+    "node": {
+      "registers": ["ACC"],
+      "readablePorts": ["DOWN"],
+      "writeablePorts": [],
+      "labels": []
+    },
+    "instruction": "ONEIMPL DOWN",
+    "groovy": "validGroovy/OneApplyImplicit.groovy",
+    "arguments": [],
+    "exceptionMessage": "Implicit parameter error"
+  },
+
+  {
+    "description": "AMB instruction, right args provided",
+    "node": {
+      "registers": [],
+      "readablePorts": [],
+      "writeablePorts": [],
+      "labels": []
+    },
+    "instruction": "ZERO: AMB 10 ZERO",
+    "groovy": "validGroovy/PossiblyAmbiguous.groovy",
+    "arguments": [
+      {
+        "parameterType": "NUMBER",
+        "value": "10"
+      },
+      {
+        "parameterType": "LABEL",
+        "value": "ZERO"
+      }
+    ]
+  }
+]

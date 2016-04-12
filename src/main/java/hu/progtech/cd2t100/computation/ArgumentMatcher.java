@@ -4,6 +4,7 @@ import java.util.Set;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.stream.Collectors;
 
 import hu.progtech.cd2t100.asm.ArgumentElement;
 import hu.progtech.cd2t100.asm.InstructionElement;
@@ -56,14 +57,29 @@ final class ArgumentMatcher {
   public void match() throws ArgumentMatchingException {
     actualArguments = new ArrayList<>();
 
-    for (int i = 0; i < suppliedArguments.length; ++i) {
-      matchOne(i);
+    possibleCalls = possibleCalls
+                      .stream()
+                      .filter(x -> x.getDemandedParams() == suppliedArguments.length)
+                      .collect(Collectors.toList());
 
-      if (possibleCalls.isEmpty()) {
+    if (possibleCalls.isEmpty()) {
+
+      throw new ArgumentMatchingException(
+        element.getLocation(),
+        "No suitable instruction overload found.");
+    }
+
+    for (int i = 0; i < suppliedArguments.length; ++i) {
+      ParameterType matchedType = matchOne(i);
+
+      if (matchedType == null) {
         throw new ArgumentMatchingException(
           suppliedArguments[i].getLocation(),
-          "No suitable instruction overload found");
+          "No suitable instruction overload found.");
       }
+
+      actualArguments.add(new Argument(suppliedArguments[i].getValue(),
+                                       matchedType));
     }
 
     if (possibleCalls.size() > 1) {
@@ -75,12 +91,15 @@ final class ArgumentMatcher {
     matchedCall = possibleCalls.get(0);
 
     for (FormalParameter formalParam : matchedCall.getFormalParameterList()) {
-      if (formalParam.hasImplicitValue() &&
-          (!checkImplicitParameter(formalParam)))
-      {
-        throw new ArgumentMatchingException(
-          element.getLocation(),
-          "Implicit parameter error. Is this instruction compatible with the node?");
+      if (formalParam.hasImplicitValue()) {
+        if (!checkImplicitParameter(formalParam)) {
+          throw new ArgumentMatchingException(
+            element.getLocation(),
+            "Implicit parameter error. Is this instruction compatible with the node?");
+        }
+
+        actualArguments.add(new Argument(formalParam.getImplicitValue(),
+                                         formalParam.getParameterType()));
       }
     }
   }
@@ -93,8 +112,10 @@ final class ArgumentMatcher {
     return matchedCall;
   }
 
-  private void matchOne(int argIndex) {
+  private ParameterType matchOne(int argIndex) {
     ArgumentElement argElement = suppliedArguments[argIndex];
+
+    ParameterType matchedType = null;
 
     for (Iterator<FormalCall> iterator = possibleCalls.iterator();
          iterator.hasNext(); )
@@ -106,11 +127,12 @@ final class ArgumentMatcher {
 
       if (!suppliedAndFormalMatches(argElement, formalParam)) {
         iterator.remove();
+      } else {
+        matchedType = formalParam.getParameterType();
       }
-
-      actualArguments.add(new Argument(argElement.getValue(),
-                                       formalParam.getParameterType()));
     }
+
+    return matchedType;
   }
 
   private boolean suppliedAndFormalMatches(ArgumentElement argElement,
