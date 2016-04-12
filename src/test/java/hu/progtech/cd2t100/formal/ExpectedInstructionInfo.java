@@ -2,7 +2,7 @@ package hu.progtech.cd2t100.formal;
 
 import java.util.List;
 
-public class ExpectedInstructionInfo {
+class ExpectedInstructionInfo {
   private final String opcode;
 
   private final List<String> usedPreprocessorRules;

@@ -143,6 +143,13 @@ public class InstructionLoader {
 
     ArrayList<FormalCall> calls = new ArrayList<>();
 
+    /**
+     * TODO: Prevent ambiguous methods
+     *       (demanded argument list type and length is the same).
+     *       And only methods with
+     *         static x apply(ExecutionEnvironment, Object...)
+     *       should pass.
+     */
     for (Method m : applyMethods) {
       if (!(Modifier.isStatic(m.getModifiers()))) {
         throw new InvalidInstructionClassException(

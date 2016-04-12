@@ -2,7 +2,7 @@ package hu.progtech.cd2t100.computation;
 
 import java.util.Set;
 
-public class DummyNodeConfig {
+class DummyNodeConfig {
   private final Set<String> registerSet;
 
   private final Set<String> readablePortSet;
