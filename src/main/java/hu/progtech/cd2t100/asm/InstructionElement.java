@@ -43,7 +43,7 @@ public class InstructionElement extends CodeElement {
   }
 
   /**
-   *  Returns the array of {@code ArgumentElement}s contained in the {@InstructionElement}.
+   *  Returns the array of {@code ArgumentElement}s contained in the {@code InstructionElement}.
    *
    *  @return the array of arguments
    */
