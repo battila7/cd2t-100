@@ -17,12 +17,24 @@ package hu.progtech.cd2t100.asm;
 public final class LabelNameCollisionException extends LineNumberedException {
   private String labelName;
 
+  /**
+   *  Constructs a new {@code LabelNameCollisionException} with the specified
+   *  location and colliding label name.
+   *
+   *  @param location the location of the label
+   *  @param labelName the colliding label's name
+   */
   public LabelNameCollisionException(Location location, String labelName) {
     super(location);
 
     this.labelName = labelName;
   }
-
+  
+  /**
+   *  Returns the name of the label causing the exception.
+   *
+   *  @return the name of the label
+   */
   public String getLabelName() {
     return labelName;
   }

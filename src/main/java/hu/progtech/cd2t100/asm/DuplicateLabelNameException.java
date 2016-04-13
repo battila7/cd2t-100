@@ -19,11 +19,11 @@ public final class DuplicateLabelNameException extends LineNumberedException {
   private String labelName;
 
   /**
-   * Constructs a new instance with the specified location and from
-   * the duplicated label name.
+   * Constructs a new {@code DuplicateLabelNameException}
+   * with the specified location and the duplicated label name.
    *
-   * @param location The location of duplication's occurence.
-   * @param labelName The name of the duplicated label.
+   * @param location the location of duplication's occurence
+   * @param labelName the name of the duplicated label
    */
   public DuplicateLabelNameException(Location location, String labelName) {
     super(location);
@@ -31,6 +31,11 @@ public final class DuplicateLabelNameException extends LineNumberedException {
     this.labelName = labelName;
   }
 
+  /**
+   *  Returns the name of the label causing the exception.
+   *
+   *  @return the name of the label
+   */
   public String getLabelName() {
     return labelName;
   }

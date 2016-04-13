@@ -6,10 +6,20 @@ package hu.progtech.cd2t100.asm;
 public abstract class LineNumberedException extends Exception {
   protected final Location location;
 
+  /**
+   *  Constructs a new {@code LineNumberedException} with the given location.
+   *
+   *  @param location the location of the erroneus code fragment
+   */
   public LineNumberedException(Location location) {
     this.location = location;
   }
 
+  /**
+   *  Returns the location of the code causing this exception.
+   *
+   *  @return the location
+   */
   public Location getLocation() {
     return location;
   }

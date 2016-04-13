@@ -19,10 +19,10 @@ public class InstructionElement extends CodeElement {
    * Constructs an {@code InstructionElement} with the specified location, opcode
    * and {@code argumentElement}s.
    *
-   * @param location The location of the instruction in the source code.
-   * @param opcode The opcode of the instruction ({@code MOV}, {@code NEG}, etc.).
-   * @param argumentElements The {@code ArgumentElement} instances representing
-   *                         the arguments of the instruction.
+   * @param location the location of the instruction in the source code
+   * @param opcode the opcode of the instruction ({@code MOV}, {@code NEG}, etc.)
+   * @param argumentElements the {@code ArgumentElement} instances representing
+   *                         the arguments of the instruction
    */
   public InstructionElement(Location location, String opcode,
                             ArgumentElement[] argumentElements)
@@ -33,10 +33,20 @@ public class InstructionElement extends CodeElement {
     this.argumentElements = argumentElements;
   }
 
+  /**
+   *  Returns the opcode of this {@code InstructionElement}.
+   *
+   *  @return the opcode
+   */
   public String getOpcode() {
     return opcode;
   }
 
+  /**
+   *  Returns the array of {@code ArgumentElement}s contained in the {@InstructionElement}.
+   *
+   *  @return the array of arguments
+   */
   public ArgumentElement[] getArgumentElements() {
     return argumentElements;
   }

@@ -42,8 +42,8 @@ class AsmListenerImpl extends AsmBaseListener {
    * Constructs a new listener with the given register and port set. Referencing
    * other registers and/or ports than these ones results an appropiate exception.
    *
-   * @param registerNameSet A set containing the usable register names.
-   * @param portNameSet A set containing the usable existing port names.
+   * @param registerNameSet a set containing the usable register names
+   * @param portNameSet a set containing the usable existing port names
    */
   public AsmListenerImpl(Set<String> registerNameSet,
                          Set<String> portNameSet) {
@@ -107,18 +107,38 @@ class AsmListenerImpl extends AsmBaseListener {
     updateUnsetLabels(0);
   }
 
+  /**
+   *  Returns the list of exceptions.
+   *
+   *  @return the exception list
+   */
   public List<LineNumberedException> getExceptionList() {
     return exceptionList;
   }
 
+  /**
+   *  Returns the list of instructions.
+   *
+   *  @return the instruction list
+   */
   public List<InstructionElement> getInstructionList() {
     return instructionList;
   }
 
+  /**
+   * Returns the map of labels.
+   *
+   * @return the map of labels
+   */
   public Map<String, Integer> getLabelMap() {
     return labelMap;
   }
 
+  /**
+   *  Returns the map of preprocessor rules.
+   *
+   *  @return the map of preprocessor rules
+   */
   public Map<String, String> getRuleMap() {
     return ruleMap;
   }
@@ -138,15 +158,15 @@ class AsmListenerImpl extends AsmBaseListener {
    * }
    *  </pre>
    *
-   * @param ctx The context that contains the label to be extracted.
-   * @param isPositionKnown Whether the position of the instruction that follows
-   *                        label is known.
+   * @param ctx the context that contains the label to be extracted
+   * @param isPositionKnown whether the position of the instruction that follows
+   *                        label is known
    *
-   * @throws DuplicateLabelNameException If the underlying label of {@code ctx}
-   *                                     already exists.
-   * @throws LabelNameCollisionException If the underlying label of {@code ctx}
+   * @throws DuplicateLabelNameException if the underlying label of {@code ctx}
+   *                                     already exists
+   * @throws LabelNameCollisionException if the underlying label of {@code ctx}
    *                                     collides with either a register or a
-   *                                     port name.
+   *                                     port name
    */
   private void addLabel(AsmParser.LabelContext ctx, boolean isPositionKnown)
     throws DuplicateLabelNameException, LabelNameCollisionException {
@@ -171,7 +191,7 @@ class AsmListenerImpl extends AsmBaseListener {
    * corresponding to its arguments, the method also inspects the
    * {@code ArgumentContext}s of {@code ctx}.
    *
-   * @param ctx The context that contains the instruction to be extracted.
+   * @param ctx the context that contains the instruction to be extracted
    *
    * @see ArgumentElement
    * @see InstructionElement
@@ -204,10 +224,10 @@ class AsmListenerImpl extends AsmBaseListener {
    * }
    *  </pre>
    *
-   * @param arg The {@code ArgumentElement} to be re-evaluated.
+   * @param arg the {@code ArgumentElement} to be re-evaluated
    *
-   * @return The new {@code ArgumentElement} with the same type as {@code arg}
-   *         but with the evaluated type.
+   * @return the new {@code ArgumentElement} with the same type as {@code arg}
+   *         but with the evaluated type
    *
    * @throws UnknownArgumentTypeException When the type of the argument cannot be
    *                                      be determined. For example, when it
@@ -257,7 +277,7 @@ class AsmListenerImpl extends AsmBaseListener {
    *  }
    *  </pre>
    *
-   *  @param value The new mapped value of the entries with value -1.
+   *  @param value the new mapped value of the entries with value -1
    */
   private void updateUnsetLabels(Integer value) {
     for (String key : labelMap.keySet()) {

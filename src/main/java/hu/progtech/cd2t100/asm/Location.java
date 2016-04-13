@@ -17,9 +17,9 @@ public final class Location {
   /**
    * Extracts the location of the specified context's starting token.
    *
-   * @param ctx The context we want to get the starting position of.
+   * @param ctx the context we want to get the starting position of
    *
-   * @return The location of the starting token.
+   * @return the location of the starting token
    */
   public static Location fromParserRuleContext(ParserRuleContext ctx) {
     Token start = ctx.getStart();
@@ -30,18 +30,31 @@ public final class Location {
   /**
    * Constructs a new location using the specified line and character positions.
    * Indexing starts from <b>0</b>.
-   * @param line The index of the line.
-   * @param charPositionInLine The character's starting position in the line.
+   *
+   * @param line the index of the line
+   * @param charPositionInLine the character's starting position in the line
    */
   public Location(int line, int charPositionInLine) {
     this.line = line;
     this.charPositionInLine = charPositionInLine;
   }
 
+  /**
+   *  Returns the line element of this {@code Location}. Numbering starts from
+   *  <b>1</b>
+   *
+   *  @return the line
+   */
   public int getLine() {
     return line;
   }
 
+  /**
+   *  Returns the char position element of this {@code Location}'s line.
+   *  Numbering starts from <b>0</b>. 
+   *
+   *  @return the char position in the {@code Location}'s line'
+   */
   public int getCharPositionInLine() {
     return charPositionInLine;
   }

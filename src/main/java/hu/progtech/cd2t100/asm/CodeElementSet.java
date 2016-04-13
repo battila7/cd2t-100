@@ -24,10 +24,10 @@ public final class CodeElementSet {
   /**
    * Constructs a new element set holding the specified data.
    *
-   * @param exceptionList The exceptions to be stored.
-   * @param instructionList The instructions to be stored.
-   * @param labelMap The labels to be stored.
-   * @param ruleMap The rules to be stored.
+   * @param exceptionList the exceptions to be stored
+   * @param instructionList the instructions to be stored
+   * @param labelMap the labels to be stored
+   * @param ruleMap the rules to be stored
    */
   CodeElementSet(List<LineNumberedException> exceptionList,
                  List<InstructionElement> instructionList,
@@ -47,10 +47,10 @@ public final class CodeElementSet {
    * listeners. This method provides a more comfortable way to create a new
    * {@code CodeElementSet}.
    *
-   * @param listener The listener.
-   * @param errorListener The error listener.
+   * @param listener the listener
+   * @param errorListener the error listener
    *
-   * @return The {@code CodeElementSet} instance storing the data extracted from the listeners.
+   * @return the {@code CodeElementSet} instance storing the data extracted from the listeners
    */
   public static CodeElementSet fromListeners(AsmListenerImpl listener,
                                              AsmErrorListener errorListener) {
@@ -68,24 +68,44 @@ public final class CodeElementSet {
   /**
    * Returns whether any exception has occurred.
    *
-   * @return {@code true} if no exception has occurred.
+   * @return {@code true} if no exception has occurred
    */
   public boolean isExceptionOccurred() {
     return exceptionList.size() > 0;
   }
 
+  /**
+   *  Returns the list of exceptions.
+   *
+   *  @return the exception list
+   */
   public List<LineNumberedException> getExceptionList() {
     return exceptionList;
   }
 
+  /**
+   *  Returns the list of instructions.
+   *
+   *  @return the instruction list
+   */
   public List<InstructionElement> getInstructionList() {
     return instructionList;
   }
 
+  /**
+   * Returns the map of labels.
+   *
+   * @return the map of labels
+   */
   public Map<String, Integer> getLabelMap() {
     return labelMap;
   }
 
+  /**
+   *  Returns the map of preprocessor rules.
+   *
+   *  @return the map of preprocessor rules
+   */
   public Map<String, String> getRuleMap() {
     return ruleMap;
   }

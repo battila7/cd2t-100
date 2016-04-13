@@ -11,12 +11,17 @@ abstract class CodeElement {
   /**
    * Consturcts a new code element with the specified location.
    *
-   * @param location The location the {@code CodeElement} is at.
+   * @param location the location the {@code CodeElement} is at
    */
   public CodeElement(Location location) {
     this.location = location;
   }
 
+  /**
+   *  Returns the location of this element.
+   *
+   *  @return the location
+   */
   public Location getLocation() {
     return location;
   }

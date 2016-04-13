@@ -18,9 +18,9 @@ public final class ArgumentElement extends CodeElement {
    * Constructs a new {@code ArgumentElement} at the given location with
    * the specified value and type.
    *
-   * @param location The position at the argument can be found in the source code.
-   * @param value The value of the argument.
-   * @param argumentType The type of the argument.
+   * @param location the position at the argument can be found in the source code
+   * @param value the value of the argument
+   * @param argumentType the type of the argument
    */
   public ArgumentElement(Location location,
                          String value, ArgumentType argumentType) {
@@ -36,8 +36,8 @@ public final class ArgumentElement extends CodeElement {
    * the specified value and the default type which represents an
    * undetermined state.
    *
-   * @param location The position at the argument can be found in the source code.
-   * @param value The value of the argument.
+   * @param location the position at the argument can be found in the source code
+   * @param value the value of the argument
    */
   public ArgumentElement(Location location, String value) {
     super(location);
@@ -47,10 +47,20 @@ public final class ArgumentElement extends CodeElement {
     this.argumentType = ArgumentType.NOT_EVALUATED;
   }
 
+  /**
+   *  Returns the value stored in the element.
+   *
+   *  @return the value
+   */
   public String getValue() {
     return value;
   }
 
+  /**
+   *  Returns the type of the argument value.
+   *
+   *  @return the argument type
+   */
   public ArgumentType getArgumentType() {
     return argumentType;
   }
@@ -59,7 +69,7 @@ public final class ArgumentElement extends CodeElement {
    * Construct the {@code String} representation from the value
    * and the type.
    *
-   * @return The {@code String} representation of the argument.
+   * @return the {@code String} representation of the argument
    */
   @Override
   public String toString() {

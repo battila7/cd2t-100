@@ -19,12 +19,24 @@ import org.antlr.v4.runtime.RecognitionException;
 public final class RecognitionWrapperException extends LineNumberedException {
   private RecognitionException wrappedException;
 
+  /**
+   *  Constructs a new {@code RecognitionWrapperException} with the given location,
+   *  wrapping the specified {@code RecognitionException}.
+   *
+   *  @param location the location of the exception's occurrence
+   *  @param exception the {@code RecognitionException} to be wrapped
+   */
   public RecognitionWrapperException(Location location, RecognitionException exception) {
     super(location);
 
     this.wrappedException = exception;
   }
 
+  /**
+   *  Returns the {@code RecognitionException} wrapped in this instance.
+   *
+   *  @return the wrapped {@code RecognitionException}
+   */
   public RecognitionException getWrappedException() {
     return wrappedException;
   }
