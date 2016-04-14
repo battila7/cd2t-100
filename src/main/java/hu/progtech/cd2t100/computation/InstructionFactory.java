@@ -18,6 +18,11 @@ import hu.progtech.cd2t100.formal.ParameterType;
 import hu.progtech.cd2t100.computation.io.Register;
 import hu.progtech.cd2t100.computation.io.CommunicationPort;
 
+/**
+ *	A factory class constructing executable {@code Instruction}s
+ *	from a {@link hu.progtech.cd2t100.asm.CodeElementSet}. Each node
+ *	has its own {@code InstructionFactory} instance.
+ */
 public final class InstructionFactory {
 	private final InstructionRegistry instructionRegistry;
 
@@ -28,6 +33,16 @@ public final class InstructionFactory {
 	private final ArrayList<LineNumberedException> exceptionList;
 	private final ArrayList<Instruction> instructions;
 
+	/**
+	 * 	Constructs a new {@code InstructionFactory} instance with the specified
+	 *	node-specific information.
+	 *
+	 *	@param instructionRegistry the {@code InstructionRegistry} object injected
+	 *														 into this instance
+	 *	@param registerMap the registers of the node using the factory class
+	 *	@param readablePortMap the readable ports of the node using the factory class
+	 *	@param writeablePortMap the writeable ports of the node using the factory class
+	 */
 	public InstructionFactory(InstructionRegistry instructionRegistry,
 														Map<String, Register> registerMap,
 														Map<String, CommunicationPort> readablePortMap,
@@ -44,6 +59,16 @@ public final class InstructionFactory {
 																					writeablePortMap.keySet());
 	}
 
+	/**
+	 *	Constructs {@code Instruction}s using the provided element set. Any exception
+	 *	thrown during the process is returned. The constructed {@code Instruction}
+	 *	objects can be retrieved using the {@link InstructionFactory#getInstructions()}
+	 *	method.
+	 *
+	 *	@param elementSet the element set used as the source of {@code InstructionElement}s 
+	 *
+	 *	@return the lis of exceptions thrown during the process
+	 */
 	public List<LineNumberedException> makeInstructions(CodeElementSet elementSet) {
 		argumentMatcher.setLabels(elementSet.getLabelMap().keySet());
 
@@ -54,6 +79,12 @@ public final class InstructionFactory {
 		return exceptionList;
 	}
 
+	/**
+	 *	Gets the {@code Instruction} objects constructed by
+	 *	{@link InstructionFactory#makeInstructions(CodeElementSet)}.
+	 *
+	 *	@return the list of constructed instructions
+	 */
 	public List<Instruction> getInstructions() {
 		return instructions;
 	}

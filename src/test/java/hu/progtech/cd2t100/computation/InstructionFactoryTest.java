@@ -44,7 +44,7 @@ public class InstructionFactoryTest {
 
   @Before
   public void setUp() {
-    instructionRegistry = new InstructionRegistry();
+    instructionRegistry = new InstructionRegistry(new HashMap<String, String>());
 
     registerMap = new HashMap<>();
     readablePortMap = new HashMap<>();

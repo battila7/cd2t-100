@@ -27,7 +27,7 @@ public class InstructionRegistryTest {
 
   @Before
   public void setUp() {
-    instructionRegistry = new InstructionRegistry();
+    instructionRegistry = new InstructionRegistry(new HashMap<String, String>());
   }
 
   @Test

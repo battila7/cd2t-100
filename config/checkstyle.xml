@@ -6,7 +6,8 @@
 		<module name="AtclauseOrder"/>
 		<module name="NonEmptyAtclauseDescription"/>
 		<module name="JavadocMethod">
-			<property name="ignoreMethodNamesRegex" value="^(toString|equals|hashCode)$"/> 
+			<property name="scope" value="public"/>
+			<property name="ignoreMethodNamesRegex" value="^(toString|equals|hashCode)$"/>
 		</module>
 		<module name="JavadocStyle"/>
 		<module name="JavadocType"/>

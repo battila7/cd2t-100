@@ -14,6 +14,18 @@ import hu.progtech.cd2t100.formal.InstructionInfo;
 import hu.progtech.cd2t100.formal.FormalParameter;
 import hu.progtech.cd2t100.formal.FormalCall;
 
+/**
+ *  The class responsible for matching the actual arguments
+ *  with the formal parameters and choosing the correct
+ *  {@code apply} method overload. {@code ArgumentMatcher} pairs up
+ *  an {@code InstructionElement} with a {@link hu.progtech.cd2t100.formal.FormalCall}
+ *  that can be executed on a node. An instance is created for each node by the
+ *  node's {link InstructionFactory}.
+ *
+ *  Matching cannot be done without node-specific knowledge
+ *  (registers, readable/writeable ports), so {@code ArgumentMatcher}
+ *  can only be instantiated with the correct node configuration.
+ */
 final class ArgumentMatcher {
   private final Set<String> registerSet;
 	private final Set<String> readablePortSet;
@@ -31,6 +43,14 @@ final class ArgumentMatcher {
 
   private FormalCall matchedCall;
 
+  /**
+   *  Constructs a new {@code ArgumentMatcher} with the
+   *  specified node configuration (register and port names).
+   *
+   *  @param registerSet the register set of the node
+   *  @param readablePortSet readable ports of the node
+   *  @param writeablePortSet writeable ports of the node
+   */
   public ArgumentMatcher(Set<String> registerSet,
                   Set<String> readablePortSet,
                   Set<String> writeablePortSet)
@@ -40,20 +60,50 @@ final class ArgumentMatcher {
 		this.writeablePortSet = writeablePortSet;
   }
 
+  /**
+   *  Sets the {@code InstructionElement} to be matched.
+   *
+   *  @param element the element to be matched
+   */
   public void setInstructionElement(InstructionElement element) {
     this.element = element;
 
     suppliedArguments = element.getArgumentElements();
   }
 
+  /**
+   *  Sets the {@code InstructionInfo} that contains the
+   *  {@link FormalCall}s to match against.
+   *
+   *  @param info the instruction info
+   */
   public void setInstructionInfo(InstructionInfo info) {
     possibleCalls = info.getPossibleCalls();
   }
 
+  /**
+   *  Sets the label set that can be used during matching.
+   *  Because there's only one instance created per node, the labels
+   *  cannot be passed to the constructor.
+   *
+   *  @param labelSet the labels extracted from the source code
+   */
   public void setLabels(Set<String> labelSet) {
     this.labelSet = labelSet;
   }
 
+  /**
+   *  Does the actual matching after the class the
+   *  instruction element and instruction info have been set.
+   *  If the matching was successful, the chosen {@code FormalCall} and
+   *  actual arguments can be retrieved with the corresponding getter methods.
+   *  If the matching fails, an exception is thrown.
+   *
+   *  @throws ArgumentMatchingException If there were no matching {code FormalCall}.
+   *
+   *  @see hu.progtech.cd2t100.formal.FormalCall
+   *  @see Argument
+   */
   public void match() throws ArgumentMatchingException {
     actualArguments = new ArrayList<>();
 
@@ -104,10 +154,23 @@ final class ArgumentMatcher {
     }
   }
 
+  /**
+   *  Gets the list of the actual arguments. If the {@code match} method was not
+   *  successful the list may not contain all arguments.
+   *
+   *  @return the list of actual arguments
+   */
   public List<Argument> getActualArguments() {
     return actualArguments;
   }
 
+  /**
+   *  Gets the matched {@code FormalCall}. If the {@code match} method was not
+   *  succesful, the method returns {@code null}.
+   *
+   *  @return the matched call or {@code null} if an exception was thrown
+   *          in the {@code match} method.
+   */
   public FormalCall getMatchedCall() {
     return matchedCall;
   }
