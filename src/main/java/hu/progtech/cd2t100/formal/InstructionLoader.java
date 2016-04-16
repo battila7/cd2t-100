@@ -196,13 +196,47 @@ public class InstructionLoader {
     for (Method m : applyMethods) {
       if (!(Modifier.isStatic(m.getModifiers()))) {
         throw new InvalidInstructionClassException(
-          "\"apply\" methods must be static.");
+          "\"apply\" methods must be public and static.");
       }
 
-      calls.add(formalCallFromMethod(m));
+      FormalCall f = formalCallFromMethod(m);
+
+      if (checkAmbiguousity(calls, f)) {
+        throw new InvalidInstructionClassException(
+          "\"apply\" methods must not be ambiguous. Check parameters with implicit values.");
+      }
+
+      calls.add(f);
     }
 
     return calls;
+  }
+
+  private static boolean checkAmbiguousity(List<FormalCall> calls, FormalCall f) {
+    for (FormalCall call : calls) {
+      if (isAmbiguous(call, f)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  private static boolean isAmbiguous(FormalCall callA, FormalCall callB) {
+    if (callA.getDemandedParams() != callB.getDemandedParams()) {
+      return false;
+    }
+
+    List<FormalParameter> paramsA = callA.getFormalParameterList(),
+                          paramsB = callB.getFormalParameterList();
+
+    for (int i = 0; i < callA.getDemandedParams(); ++i) {
+      if (paramsA.get(i).getParameterType() != paramsB.get(i).getParameterType()) {
+        return false;
+      }
+    }
+
+    return true;
   }
 
   private static boolean checkModifiers(Method method) {

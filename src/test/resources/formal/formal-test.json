@@ -86,6 +86,14 @@
       "exception": "org.codehaus.groovy.control.CompilationFailedException"
     }
   },
+  {
+    "description": "Ambiguous apply methods.",
+    "groovy": "invalidGroovy/AmbiguousApplies.groovy",
+    "expected": {
+      "exception": "hu.progtech.cd2t100.formal.InvalidInstructionClassException",
+      "exceptionMessage": "must not be ambiguous"
+    }
+  },
 
   {
     "description": "NOP instruction - one apply only with ExecEnv parameter.",
