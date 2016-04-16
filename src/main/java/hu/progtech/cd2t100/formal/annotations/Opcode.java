@@ -13,6 +13,8 @@ import java.lang.annotation.Target;
 public @interface Opcode {
 	/**
 	 *	The opcode handled by the instruction annotated with this annotation.
+	 *
+	 *	@return the value of the annotation
 	 */
 	String value();
 }
