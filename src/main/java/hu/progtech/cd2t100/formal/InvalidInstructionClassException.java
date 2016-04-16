@@ -9,9 +9,10 @@ package hu.progtech.cd2t100.formal;
  *    <li>the class must be annotated with at most one {@code Rules} annotation</li>
  *    <li>the class must contain at least one method with the following signature:
  *        <pre>
- *          public static void apply(ExecutionEnvironment, zero or more other params)
+ *          public static T apply(ExecutionEnvironment, zero or more other params)
  *        </pre>
- *        where other parameters must be of type
+ *        where {@code T} is not restricted, because return values are thrown
+ *        away and parameters other than the first one must be of type
  *        <ul>
  *          <li>{@code int}</li>
  *          <li>{@code int[]}</li>
@@ -19,7 +20,9 @@ package hu.progtech.cd2t100.formal;
  *          <li>{@code ReadResult}</li>
  *          <li>{@code String}</li>
  *        </ul>
- *        any other methods are ignored.
+ *
+ *        any other methods are ignored. Only methods with the exactly same syntax as
+ *        above are processed.
  *    </li>
  *  </ul>
  */

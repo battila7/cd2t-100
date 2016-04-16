@@ -177,13 +177,10 @@ public class InstructionLoader {
     throws InvalidFormalParameterListException,
            InvalidInstructionClassException
   {
-    /*
-     *  map() cannot be used since it is not possible to throw checked
-     *  exceptions from streams
-     */
     List<Method> applyMethods =
       Arrays.stream(instructionClass.getDeclaredMethods())
             .filter(x -> x.getName().equals("apply"))
+            .filter(InstructionLoader::checkModifiers)
             .collect(Collectors.toList());
 
     ArrayList<FormalCall> calls = new ArrayList<>();
@@ -191,9 +188,10 @@ public class InstructionLoader {
     /**
      * TODO: Prevent ambiguous methods
      *       (demanded argument list type and length is the same).
-     *       And only methods with
-     *         static x apply(ExecutionEnvironment, Object...)
-     *       should pass.
+     */
+    /*
+     *  map() cannot be used since it is not possible to throw checked
+     *  exceptions from streams
      */
     for (Method m : applyMethods) {
       if (!(Modifier.isStatic(m.getModifiers()))) {
@@ -205,6 +203,14 @@ public class InstructionLoader {
     }
 
     return calls;
+  }
+
+  private static boolean checkModifiers(Method method) {
+    int permittedModifiers = Modifier.PUBLIC + Modifier.STATIC;
+
+    int actualModifiers = method.getModifiers() & permittedModifiers;
+
+    return permittedModifiers == actualModifiers;
   }
 
   private static FormalCall formalCallFromMethod(Method method)
