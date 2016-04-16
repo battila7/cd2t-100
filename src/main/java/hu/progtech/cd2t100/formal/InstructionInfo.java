@@ -2,6 +2,14 @@ package hu.progtech.cd2t100.formal;
 
 import java.util.List;
 
+/**
+ *  Contains all the information needed for argument matching and
+ *  instantiating {@code Instruction} objects.
+ *  {@code InstructionInfo} objects are directly constructed from Groovy
+ *  code.
+ *
+ *  @see hu.progtech.cd2t100.computation.Instruction
+ */
 public class InstructionInfo {
   private final Class<?> instructionClass;
 
@@ -11,6 +19,16 @@ public class InstructionInfo {
 
   private final List<FormalCall> possibleCalls;
 
+  /**
+   *  Constructs a new {@code InstructionInfo} object
+   *  from the specified parameters.
+   *
+   *  @param opcode the opcode of the instruction
+   *  @param usedRules the rules used by the instruction
+   *  @param instructionClass the {@code Class} object create from the Groovy code
+   *  @param possibleCalls the list of {@code FormalCall}s representing the
+   *                       {@code apply} methods of the {@code instructionClass}
+   */
   public InstructionInfo(String opcode,
                          List<String> usedRules,
                          Class<?> instructionClass,
@@ -24,18 +42,38 @@ public class InstructionInfo {
     this.possibleCalls = possibleCalls;
   }
 
+  /**
+   *  Gets the opcode.
+   *
+   *  @return the opcode
+   */
   public String getOpcode() {
     return opcode;
   }
 
+  /**
+   *  Gets the list of used preprocessor rules.
+   *
+   *  @return the list of used preprocessor rules
+   */
   public List<String> getUsedPreprocessorRules() {
     return usedPreprocessorRules;
   }
 
+  /**
+   *  Gets the Groovy class backing this {@code InstructionInfo} instance.
+   *
+   *  @return the backing instruction class
+   */
   public Class<?> getInstructionClass() {
     return instructionClass;
   }
 
+  /**
+   *  Gets the list of possible valid {@code FormalCall}s of this instruction.
+   *
+   *  @return the list of possible calls
+   */
   public List<FormalCall> getPossibleCalls() {
     return possibleCalls;
   }

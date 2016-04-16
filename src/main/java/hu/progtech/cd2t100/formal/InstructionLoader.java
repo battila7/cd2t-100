@@ -26,6 +26,13 @@ import org.apache.commons.lang3.mutable.MutableInt;
 import hu.progtech.cd2t100.formal.annotations.*;
 import hu.progtech.cd2t100.computation.ExecutionEnvironment;
 
+/**
+ *  The class that's able to load Groovy classes and create new
+ *  {@code InstructionInfo} objects. When loading external Groovy code,
+ *  this class checks if it's valid Groovy code containing one or more
+ *  {@code apply} methods with proper annotations and matching parameter
+ *  types.
+ */
 public class InstructionLoader {
   /*
    * There's no need for ^ and $ because we're going to
@@ -55,6 +62,25 @@ public class InstructionLoader {
      */
   }
 
+  /**
+   *  Loads and creates and {@code InstructionInfo} from the contents
+   *  of the specified {@code InputStream}. Calls
+   *  {@link InstructionLoader#loadInstruction(String)}.
+   *
+   *  @param codeStream an {@code InputStream} of valid Groovy code
+   *
+   *  @return an {@code InstructionInfo} object created from the specified Groovy code
+   *
+   *  @throws IOException If any kind of I/O exception occurs.
+   *  @throws CompilationFailedException If the contents of the specified stream
+   *                                     cannot be parsed into a {@code Class}.
+   *  @throws InvalidInstructionClassException
+   *            If a {@code Class} object can be created but it's not annotated
+   *            properly or does not contain any applicable {@code apply} methods.
+   *  @throws InvalidFormalParameterListException
+   *            If any of the {@code apply} methods has a faulty formal
+   *            parameter list.
+   */
   public static InstructionInfo loadInstruction(InputStream codeStream)
     throws IOException,
            CompilationFailedException,
@@ -66,6 +92,25 @@ public class InstructionLoader {
     return loadInstruction(code);
   }
 
+  /**
+   *  Attempts to parse the Groovy code specified as the parameter and
+   *  instantiates a new {@code InstructionInfo} object. Throws an exception
+   *  if the code cannot be parsed or the parsed {@code Class} object does
+   *  not meet the requirements (methods, annotations).
+   *
+   *  @param classCode the code of a valid Groovy class
+   *
+   *  @return an {@code InstructionInfo} object created from the specified Groovy code
+   *
+   *  @throws CompilationFailedException If the contents of the specified stream
+   *                                     cannot be parsed into a {@code Class}.
+   *  @throws InvalidInstructionClassException
+   *            If a {@code Class} object can be created but it's not annotated
+   *            properly or does not contain any applicable {@code apply} methods.
+   *  @throws InvalidFormalParameterListException
+   *            If any of the {@code apply} methods has a faulty formal
+   *            parameter list.
+   */
   public static InstructionInfo loadInstruction(String classCode)
     throws CompilationFailedException,
            InvalidInstructionClassException,
