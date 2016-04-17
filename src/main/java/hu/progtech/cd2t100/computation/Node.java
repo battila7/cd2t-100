@@ -174,9 +174,12 @@ public class Node {
     return codeElementSet.getExceptionList();
   }
 
-  public List<LineNumberedException> buildInstructions() {
+  public List<LineNumberedException> buildInstructions()
+    throws NodeExecutionException
+  {
     if ((codeElementSet == null) || (codeElementSet.isExceptionOccurred())) {
-      // gonna throw some exception
+      throw new NodeExecutionException(
+        "Instructions cannot be built because of previous errors or empty element set.");
     }
 
     InstructionFactory instructionFactory =
