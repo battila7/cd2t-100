@@ -47,7 +47,7 @@ public class CommunicationPort extends Port {
     /*
      *  Block for a cycle.
      */
-    if ((contents != null) && (containsData == false)) {
+    if ((contents != null) && (!containsData)) {
       containsData = true;
     }
   }

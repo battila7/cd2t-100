@@ -31,7 +31,7 @@ public class Node {
   private final Map<String, CommunicationPort> writeablePortMap;
 
   private final HashSet<String> portNameSet;
-  private HashSet<CommunicationPort> blockedWriteablePorts;
+  private final HashSet<CommunicationPort> blockedWriteablePorts;
 
   private final int maximumSourceCodeLines;
 
@@ -70,6 +70,8 @@ public class Node {
 
     this.portNameSet = new HashSet<>(readablePortMap.keySet());
 
+    this.blockedWriteablePorts = new HashSet<>();
+
     portNameSet.addAll(writeablePortMap.keySet());
 
     execEnv = new ExecutionEnvironment(this);
@@ -100,6 +102,8 @@ public class Node {
     Invoker invoker = new Invoker(this, currentInstruction);
 
     invoker.invoke();
+
+    instructionPointer = nextInstruction;
   }
 
   /**
@@ -120,10 +124,8 @@ public class Node {
    *  @param i the next value of the instruction pointer
    */
   public void setNextInstruction(int i) {
-    if (i < 0) {
+    if ((i < 0) || (i > instructions.size() - 1)) {
       nextInstruction = 0;
-    } else if (i > instructions.size() - 1) {
-      nextInstruction = instructions.size() - 1;
     } else {
       nextInstruction = i;
     }
@@ -242,7 +244,7 @@ public class Node {
 
     private final Instruction instruction;
 
-    private final HashMap<String, MutableInt> writeResults;
+    private final HashMap<CommunicationPort, MutableInt> writeResults;
 
     public Invoker(Node node, Instruction instruction) {
       this.node = node;
@@ -260,8 +262,8 @@ public class Node {
       try {
         m.invoke(null, subsituteArguments());
 
-        for (Map.Entry<String, MutableInt> entry : writeResults.entrySet()) {
-          CommunicationPort port = node.writeablePortMap.get(entry.getKey());
+        for (Map.Entry<CommunicationPort, MutableInt> entry : writeResults.entrySet()) {
+          CommunicationPort port = entry.getKey();
 
           port.write(entry.getValue().intValue());
         }
@@ -282,6 +284,13 @@ public class Node {
 
         switch (arg.getParameterType()) {
           case NUMBER:
+            try {
+              ret[i + 1] = Integer.parseInt(arg.getValue());
+            } catch (NumberFormatException nfe) {
+              ret[i + 1] = 0;
+            }
+
+            break;
           case LABEL:
             ret[i + 1] = arg.getValue();
             break;
@@ -294,9 +303,13 @@ public class Node {
 
             break;
           case WRITE_PORT:
+            CommunicationPort writePort = node.writeablePortMap.get(arg.getValue());
+
             MutableInt writeResult = new MutableInt();
 
-            writeResults.put(arg.getValue(), writeResult);
+            node.blockedWriteablePorts.add(writePort);
+
+            writeResults.put(writePort, writeResult);
 
             ret[i + 1] = writeResult;
 
@@ -309,6 +322,8 @@ public class Node {
             ret[i + 1] = registerContents;
 
             break;
+          default:
+            ret[i + 1] = null;
         }
       }
 
