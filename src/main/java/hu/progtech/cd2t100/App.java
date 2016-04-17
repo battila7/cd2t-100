@@ -2,14 +2,11 @@ package hu.progtech.cd2t100;
 
 import java.util.List;
 import java.util.Scanner;
-import java.util.HashSet;
 import java.util.HashMap;
 import java.util.ArrayList;
 
 import java.io.InputStream;
 
-import hu.progtech.cd2t100.asm.CodeFactory;
-import hu.progtech.cd2t100.asm.CodeElementSet;
 import hu.progtech.cd2t100.asm.LineNumberedException;
 
 import hu.progtech.cd2t100.computation.*;

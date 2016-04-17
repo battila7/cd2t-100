@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
@@ -17,7 +16,6 @@ import hu.progtech.cd2t100.asm.LineNumberedException;
 import hu.progtech.cd2t100.computation.io.Register;
 import hu.progtech.cd2t100.computation.io.CommunicationPort;
 
-import hu.progtech.cd2t100.formal.ParameterType;
 import hu.progtech.cd2t100.formal.ReadResult;
 
 import org.apache.commons.lang3.mutable.MutableInt;
@@ -293,6 +291,7 @@ public class Node {
             break;
           case LABEL:
             ret[i + 1] = arg.getValue();
+
             break;
           case READ_PORT:
             CommunicationPort readPort = node.readablePortMap.get(arg.getValue());
@@ -324,6 +323,8 @@ public class Node {
             break;
           default:
             ret[i + 1] = null;
+
+            break;
         }
       }
 
