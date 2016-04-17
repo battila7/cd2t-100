@@ -1,7 +1,7 @@
 package hu.progtech.cd2t100.computation.io;
 
 abstract class Port {
-  protected final int[] contents;
+  protected int[] contents;
 
   protected final int capacity;
 

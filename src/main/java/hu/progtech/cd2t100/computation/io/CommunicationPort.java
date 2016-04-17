@@ -1,5 +1,7 @@
 package hu.progtech.cd2t100.computation.io;
 
+import java.util.Arrays;
+
 public class CommunicationPort extends Port {
   private static final int COM_PORT_CAPACITY = 1;
 
@@ -16,6 +18,37 @@ public class CommunicationPort extends Port {
   }
 
   public int[] getContents() {
-    return containsData ? contents : null;
+    int[] ret = Arrays.copyOf(contents, capacity);
+
+    return ret;
+  }
+
+  public int[] readContents() {
+    if (!containsData) {
+      return null;
+    }
+
+    int[] ret = Arrays.copyOf(contents, capacity);
+
+    contents = null;
+
+    containsData = false;
+
+    return  ret;
+  }
+
+  public void write(int data) {
+    contents = new int[1];
+
+    contents[0] = data;
+  }
+
+  public void step() {
+    /*
+     *  Block for a cycle.
+     */
+    if ((contents != null) && (containsData == false)) {
+      containsData = true;
+    }
   }
 }
