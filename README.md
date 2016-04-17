@@ -20,13 +20,13 @@ Don't forget to take a look at the <a href="https://github.com/battila7/cd2t-100
 
 ### What's planned
 * Preprocessor rules
-* Custom instructions can be developed in ~~Java~~ **Groovy**
+* Custom instructions can be developed in Groovy
 * Registers over `ACC` and `BAK`
 
 For more information, please check the Wiki and the Javadoc.
 
 ## Current state
-The project has just reached the first milestone! Now it's able to analyze the source code and create elements for further processing. Also, CD2T-100 is capable of perceiving syntactical and some semantical errors. I say "some", because detecting all error without knowing the instruction set is impossible.
+Just another milestone! CD2T-100 is now able to run using one node! Thanks to the hard work on the `asm` and `formal` packages I could finally focus on the `computation` package and push tons of lines of code. I've also implemented 5 basic instructions just to illustrate the capabilities of the architecture. 
 
 ## What's next then?
-Integrating Groovy into the project and implementing processor nodes. Surely, these tasks sound pretty hard but arguably these are the most exciting challenges!
+One node is running, many to come! The next step is implementing the pseudo-concurrent execution model of the nodes.
