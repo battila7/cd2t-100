@@ -10,5 +10,4 @@ before_install:
   - chmod +x install-jpm.sh
   - bash install-jpm.sh
 after_script:
-  - mvn clean install -Pcodacy
   - $HOME/jpm/bin/codacy-coverage-reporter -l Java -r $JACOCO_REPORT_FILE
