@@ -1,16 +1,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
 	<groupId>hu.progtech.cd2t100</groupId>
-	<artifactId>cd2t-100</artifactId>
+	<artifactId>cd2t-100-parent</artifactId>
 	<version>1.0</version>
-	<name>CD2T-100</name>
+	<packaging>pom</packaging>
+  <name>CD2T-100</name>
 	<description>CD2T-100 is a TIS-100-like processor with different functionality.</description>
 
-	<licenses>
+  <licenses>
 		<license>
-			<name>The MIT License</name>
+			<name>MIT License</name>
 			<url>https://opensource.org/licenses/mit-license.php</url>
 		</license>
 	</licenses>
@@ -33,74 +33,92 @@
 		<project.build.outputEncoding>UTF-8</project.build.outputEncoding>
 	</properties>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.antlr</groupId>
-			<artifactId>antlr4-runtime</artifactId>
-			<version>4.5.2-1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>3.4</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>1.7.19</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<version>1.7.19</version>
-			<artifactId>slf4j-simple</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.codehaus.groovy</groupId>
-			<artifactId>groovy</artifactId>
-			<version>2.4.6</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-			<version>2.4</version>
-		</dependency>
+	<modules>
+		<module>cd2t-100-core</module>
+		<module>cd2t-100-cli</module>
+    <module>cd2t-100-sirs</module>
+		<module>build-tools</module>
+	</modules>
 
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.12</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.assertj</groupId>
-			<artifactId>assertj-core</artifactId>
-			<version>3.4.1</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-			<version>2.6.2</version>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
+	<dependencyManagement>
+    <dependencies>
+  		<dependency>
+  			<groupId>org.antlr</groupId>
+  			<artifactId>antlr4-runtime</artifactId>
+  			<version>4.5.2-1</version>
+  		</dependency>
+  		<dependency>
+  			<groupId>org.apache.commons</groupId>
+  			<artifactId>commons-lang3</artifactId>
+  			<version>3.4</version>
+  		</dependency>
+  		<dependency>
+  			<groupId>org.slf4j</groupId>
+  			<artifactId>slf4j-api</artifactId>
+  			<version>1.7.19</version>
+  		</dependency>
+  		<dependency>
+  			<groupId>org.slf4j</groupId>
+  			<version>1.7.19</version>
+  			<artifactId>slf4j-simple</artifactId>
+  		</dependency>
+  		<dependency>
+  			<groupId>org.codehaus.groovy</groupId>
+  			<artifactId>groovy</artifactId>
+  			<version>2.4.6</version>
+  		</dependency>
+  		<dependency>
+  			<groupId>commons-io</groupId>
+  			<artifactId>commons-io</artifactId>
+  			<version>2.4</version>
+  		</dependency>
 
-	<build>
+  		<dependency>
+  			<groupId>com.google.code.gson</groupId>
+  			<artifactId>gson</artifactId>
+  			<version>2.6.2</version>
+  			<scope>test</scope>
+  		</dependency>
+  	</dependencies>
+	</dependencyManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <version>3.4.1</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+  				<groupId>org.antlr</groupId>
+  				<artifactId>antlr4-maven-plugin</artifactId>
+  				<version>4.5.2-1</version>
+        </plugin>
+        <plugin>
+				  <groupId>org.apache.maven.plugins</groupId>
+				  <artifactId>maven-jar-plugin</artifactId>
+				  <version>2.6</version>
+			  </plugin>
+			  <plugin>
+				  <groupId>org.apache.maven.plugins</groupId>
+				  <artifactId>maven-shade-plugin</artifactId>
+				  <version>2.4.3</version>
+			  </plugin>
+      </plugins>
+    </pluginManagement>
+
 		<plugins>
-			<plugin>
-				<groupId>org.antlr</groupId>
-				<artifactId>antlr4-maven-plugin</artifactId>
-				<version>4.5.2-1</version>
-				<executions>
-					<execution>
-						<id>antlr</id>
-						<goals>
-							<goal>antlr4</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
@@ -147,33 +165,6 @@
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.6</version>
-				<configuration>
-					<archive>
-						<manifest>
-							<mainClass>hu.progtech.cd2t100.App</mainClass>
-						</manifest>
-					</archive>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-shade-plugin</artifactId>
-				<version>2.4.3</version>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>shade</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-enforcer-plugin</artifactId>
 				<version>1.4.1</version>
 				<executions>
@@ -205,6 +196,19 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-project-info-reports-plugin</artifactId>
 				<version>2.9</version>
+			</plugin>
+
+      <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>2.17</version>
+        <dependencies>
+					<dependency>
+						<groupId>hu.progtech.cd2t100</groupId>
+						<artifactId>build-tools</artifactId>
+						<version>1.0</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 	</build>
@@ -241,7 +245,7 @@
 				<configuration>
 					<!-- exclude source files generated by ANTLR -->
 					<sourceDirectory>${project.build.sourceDirectory}</sourceDirectory>
-					<configLocation>${basedir}/config/checkstyle.xml</configLocation>
+					<configLocation>checkstyle.xml</configLocation>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -251,4 +255,11 @@
 			</plugin>
 		</plugins>
 	</reporting>
+
+  <distributionManagement>
+		<site>
+			<id>placeholder</id>
+			<url>file://placeholder</url>
+		</site>
+	</distributionManagement>
 </project>
