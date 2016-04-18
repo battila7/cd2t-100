@@ -40,6 +40,83 @@
 		<module>build-tools</module>
 	</modules>
 
+  <profiles>
+    <profile>
+      <id>default-profile</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+    				<groupId>org.jacoco</groupId>
+    				<artifactId>jacoco-maven-plugin</artifactId>
+    				<version>0.7.6.201602180812</version>
+    				<executions>
+    					<execution>
+    						<id>pre-unit-test</id>
+    						<goals>
+    							<goal>prepare-agent</goal>
+    						</goals>
+    						<configuration>
+    							<propertyName>jacocoAgent</propertyName>
+    						</configuration>
+    					</execution>
+    					<execution>
+    						<id>post-unit-test</id>
+    						<goals>
+    							<goal>report</goal>
+    						</goals>
+    					</execution>
+    				</executions>
+    			</plugin>
+        </plugins>
+      </build>
+    </profile>
+    
+    <profile>
+      <id>codacy</id>
+      <build>
+        <plugins>
+          <plugin>
+    				<groupId>org.jacoco</groupId>
+    				<artifactId>jacoco-maven-plugin</artifactId>
+    				<version>0.7.6.201602180812</version>
+            <configuration>
+              <skip>${jacoco.merge.skip}</skip>
+              <fileSets>
+                <fileSet>
+                  <directory>${project.build.directory}</directory>
+                  <includes>
+                    <include>*.exec</include>
+                  </includes>
+                </fileSet>
+              </fileSets>
+              <destFile>${project.parent.build.directory}/jacoco.exec</destFile>
+            </configuration>
+    				<executions>
+    					<execution>
+    						<id>pre-unit-test</id>
+    						<goals>
+    							<goal>prepare-agent</goal>
+    						</goals>
+    						<configuration>
+    							<propertyName>jacocoAgent</propertyName>
+    						</configuration>
+    					</execution>
+    					<execution>
+    						<id>post-unit-test</id>
+    						<goals>
+    							<goal>report</goal>
+    						</goals>
+    					</execution>
+    				</executions>
+    			</plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
 	<dependencyManagement>
     <dependencies>
   		<dependency>
@@ -119,29 +196,7 @@
     </pluginManagement>
 
 		<plugins>
-			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.7.6.201602180812</version>
-				<executions>
-					<execution>
-						<id>pre-unit-test</id>
-						<goals>
-							<goal>prepare-agent</goal>
-						</goals>
-						<configuration>
-							<propertyName>jacocoAgent</propertyName>
-						</configuration>
-					</execution>
-					<execution>
-						<id>post-unit-test</id>
-						<phase>test</phase>
-						<goals>
-							<goal>report</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
