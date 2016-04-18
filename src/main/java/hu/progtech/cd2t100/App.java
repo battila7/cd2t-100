@@ -33,6 +33,8 @@ public class App {
 				builder.setMaximumSourceCodeLines(20)
 							 .addInstructionRegistry(registry)
 							 .addRegister(new Register(1, "ACC"))
+							 .addRegister(new Register(1, "STACKPTR"))
+							 .addRegister(new Register(10, "STACK"))
 							 .build();
 
 			System.out.println("\nPlease enter the program:\n-------------------------------------------------------");
@@ -77,6 +79,11 @@ public class App {
 		names.add("Jmp.groovy");
 		names.add("Dec.groovy");
 		names.add("Nop.groovy");
+		names.add("Jnz.groovy");
+		names.add("Jro.groovy");
+		names.add("Push.groovy");
+		names.add("Pop.groovy");
+		names.add("ClearStack.groovy");
 
 		try {
 			InputStream is;
