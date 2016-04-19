@@ -74,7 +74,7 @@ public class Node {
 
     portNameSet.addAll(writeablePortMap.keySet());
 
-    execEnv = new ExecutionEnvironment(this);
+    execEnv = new ExecutionEnvironment(this, instructionRegistry.getRules());
 
     readyToRun = false;
   }
@@ -91,7 +91,7 @@ public class Node {
 
     if (!blockedWriteablePorts.isEmpty()) {
       return;
-    } 
+    }
 
     Instruction currentInstruction = instructions.get(instructionPointer);
 

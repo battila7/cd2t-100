@@ -5,19 +5,24 @@ import java.util.Optional;
 
 /**
  *  This class makes it possible for Groovy instruction classes to safely
- *  operate on {@code Node} objects. 
+ *  operate on {@code Node} objects.
  */
 public class ExecutionEnvironment {
   private final Node node;
+
+  private final Map<String, String> rules;
 
   /**
    *  Construct a new {@code ExecutionEnvironment} based on the specified {@code Node}.
    *
    *  @param node the {@code Node} object to be hidden behind
    *              the new {@code ExecutionEnvironment} instance
+   *  @param rules the map of preprocessor rules
    */
-  public ExecutionEnvironment(Node node) {
+  public ExecutionEnvironment(Node node, Map<String, String> rules) {
     this.node = node;
+
+    this.rules = rules;
   }
 
   /**
@@ -59,5 +64,16 @@ public class ExecutionEnvironment {
     int iptr = node.getInstructionPointer();
 
     node.setNextInstruction(iptr + position);
+  }
+
+  /**
+   *  Gets the value associated with the specified rule name.
+   *
+   *  @param ruleName the rule's name
+   *
+   *  @return the value of the specified rule
+   */
+  public String getRuleValue(String ruleName) {
+    return rules.get(ruleName);
   }
 }
