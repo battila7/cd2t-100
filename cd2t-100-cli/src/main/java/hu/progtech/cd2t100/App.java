@@ -29,21 +29,37 @@ public class App {
 
 			loadInstructions(registry);
 
-			Node node =
+			CommunicationPort cp1 = new CommunicationPort();
+			CommunicationPort cp2 = new CommunicationPort();
+
+			Node n1 =
 				builder.setMaximumSourceCodeLines(20)
 							 .addInstructionRegistry(registry)
 							 .addRegister(new Register(1, "ACC"))
-							 .addRegister(new Register(1, "STACKPTR"))
-							 .addRegister(new Register(10, "STACK"))
+							 .addWriteablePort("UP", cp1)
+							 .addReadablePort("UP", cp2)
 							 .build();
+
+			cp1.setSourceNode(n1);
+
+
+			builder = new NodeBuilder();
+
+		 	Node n2 =
+ 				builder.setMaximumSourceCodeLines(20)
+ 						 	 .addInstructionRegistry(registry)
+ 						 	 .addRegister(new Register(1, "ACC"))
+							 .addReadablePort("DOWN", cp1)
+							 .addWriteablePort("DOWN", cp2)
+ 						 	 .build();
+
+			cp2.setSourceNode(n2);
 
 			System.out.println("\nPlease enter the program:\n-------------------------------------------------------");
 
-      String code = readCode(sc);
+			n1.setSourceCode(readCode(sc));
 
-			node.setSourceCode(code);
-
-			List<LineNumberedException> exceptionList = node.buildCodeElementSet();
+			List<LineNumberedException> exceptionList = n1.buildCodeElementSet();
 
 			if (!exceptionList.isEmpty()) {
 				System.err.println(exceptionList);
@@ -51,7 +67,25 @@ public class App {
 				return;
 			}
 
-			exceptionList = node.buildInstructions();
+			exceptionList = n1.buildInstructions();
+
+			if (!exceptionList.isEmpty()) {
+				System.err.println(exceptionList);
+
+				return;
+			}
+
+			n2.setSourceCode(readCode(sc));
+
+			exceptionList = n2.buildCodeElementSet();
+
+			if (!exceptionList.isEmpty()) {
+				System.err.println(exceptionList);
+
+				return;
+			}
+
+			exceptionList = n2.buildInstructions();
 
 			if (!exceptionList.isEmpty()) {
 				System.err.println(exceptionList);
@@ -61,10 +95,18 @@ public class App {
 
 			System.out.println("\nNow running:\n-------------------------------------------------------");
 
-			while (true) {
-				node.step();
+			long cycle = 0;
 
-				Thread.sleep(500);
+			while (true) {
+				System.out.println("Cycle " + cycle++);
+				
+				cp1.step();
+				cp2.step();
+
+				n1.step();
+				n2.step();
+
+				sc.nextLine();
 			}
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
@@ -84,6 +126,7 @@ public class App {
 		names.add("Push.groovy");
 		names.add("Pop.groovy");
 		names.add("ClearStack.groovy");
+		names.add("Mov.groovy");
 
 		try {
 			InputStream is;
@@ -103,10 +146,17 @@ public class App {
 	}
 
 	private static String readCode(Scanner sc) {
-		String code = "";
+		String line = "",
+					 code = "";
 
-		while (sc.hasNextLine()) {
-			code += sc.nextLine() + "\n";
+		while (true) {
+			line = sc.nextLine() + "\n";
+
+			if (line.startsWith("<>")) {
+				break;
+			}
+
+			code += line;
 		}
 
 		return code;

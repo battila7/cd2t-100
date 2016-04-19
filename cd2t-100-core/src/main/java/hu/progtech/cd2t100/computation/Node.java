@@ -49,6 +49,8 @@ public class Node {
 
   private CodeElementSet codeElementSet;
 
+  private ExecutionState executionState;
+
   public Node(InstructionRegistry instructionRegistry,
               int maximumSourceCodeLines,
               Map<String, Register> registerMap,
@@ -89,11 +91,13 @@ public class Node {
 
     if (!blockedWriteablePorts.isEmpty()) {
       return;
-    }
+    } 
 
     Instruction currentInstruction = instructions.get(instructionPointer);
 
     if (!readDependenciesFulfilled(currentInstruction)) {
+      executionState = ExecutionState.IDLE;
+
       return;
     }
 
@@ -197,7 +201,13 @@ public class Node {
         instructions = instructionFactory.getInstructions();
     }
 
+    executionState = ExecutionState.IDLE;
+
     return exceptionList;
+  }
+
+  public void onPortRead(CommunicationPort port) {
+    blockedWriteablePorts.remove(port);
   }
 
   /**
@@ -247,12 +257,16 @@ public class Node {
 
     private final HashMap<CommunicationPort, MutableInt> writeResults;
 
+    private boolean isPortRead;
+
     public Invoker(Node node, Instruction instruction) {
       this.node = node;
 
       this.instruction = instruction;
 
       writeResults = new HashMap<>();
+
+      isPortRead = false;
     }
 
     public void invoke() {
@@ -263,10 +277,14 @@ public class Node {
       try {
         m.invoke(null, subsituteArguments());
 
+        node.executionState = isPortRead ? ExecutionState.READ : ExecutionState.RUN;
+
         for (Map.Entry<CommunicationPort, MutableInt> entry : writeResults.entrySet()) {
           CommunicationPort port = entry.getKey();
 
           port.write(entry.getValue().intValue());
+
+          node.executionState = ExecutionState.WRITE;
         }
       } catch (Exception e) {
 
@@ -279,6 +297,8 @@ public class Node {
       Object[] ret = new Object[args.size() + 1];
 
       ret[0] = node.execEnv;
+
+      isPortRead = false;
 
       for (int i = 0; i < args.size(); ++i) {
         Argument arg = args.get(i);
@@ -302,6 +322,8 @@ public class Node {
             int[] portContents = readPort.readContents();
 
             ret[i + 1] = new ReadResult(portContents[0]);
+
+            isPortRead = true;
 
             break;
           case WRITE_PORT:

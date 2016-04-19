@@ -54,10 +54,16 @@ public class NodeBuilder {
   }
 
   public Node build() {
-    return new Node(instructionRegistry,
-                    maximumSourceCodeLines,
-                    registerMap,
-                    readablePortMap,
-                    writeablePortMap);
+    Node n = new Node(instructionRegistry,
+                      maximumSourceCodeLines,
+                      registerMap,
+                      readablePortMap,
+                      writeablePortMap);
+
+    for (CommunicationPort port : writeablePortMap.values()) {
+      port.setSourceNode(n);
+    }
+
+    return n;
   }
 }
