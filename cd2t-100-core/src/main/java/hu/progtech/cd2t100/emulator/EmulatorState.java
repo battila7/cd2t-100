@@ -4,10 +4,16 @@ public enum EmulatorState {
   STOPPED() {
     @Override
     /* package */ void onRequest(Emulator emulator, StateChangeRequest changeRequest) {
-      if (changeRequest == StateChangeRequest.ERROR) {
+      StateChangeRequest req = emulator.generateInstructions();
+
+      if (req == StateChangeRequest.ERROR) {
         emulator.setState(ERROR);
       } else {
-        emulator.setState(READY);
+        emulator.start((changeRequest == StateChangeRequest.STEP) ?
+                                          ExecutionMode.STEPPED :
+                                          ExecutionMode.CONTINUOUS);
+
+        emulator.setState(RUNNING);
       }
     }
   },
@@ -15,21 +21,39 @@ public enum EmulatorState {
   ERROR() {
     @Override
     /* package */ void onRequest(Emulator emulator, StateChangeRequest changeRequest) {
-      emulator.setState(STOPPED);
-    }
-  },
+      emulator.stop();
 
-  READY() {
-    @Override
-    /* package */ void onRequest(Emulator emulator, StateChangeRequest changeRequest) {
-      emulator.setState(RUNNING);
+      emulator.setState(STOPPED);
     }
   },
 
   RUNNING() {
     @Override
     /* package */ void onRequest(Emulator emulator, StateChangeRequest changeRequest) {
-      emulator.setState(RUNNING);
+      if (changeRequest == StateChangeRequest.PAUSE) {
+        emulator.setState(PAUSED);
+      } else {
+        emulator.stop();
+
+        emulator.setState(STOPPED);
+      }
+    }
+  },
+
+  PAUSED() {
+    @Override
+    /* package */ void onRequest(Emulator emulator, StateChangeRequest changeRequest) {
+      if (changeRequest == StateChangeRequest.STOP) {
+        emulator.stop();
+
+        emulator.setState(STOPPED);
+      } else {
+        emulator.start((changeRequest == StateChangeRequest.STEP) ?
+                                          ExecutionMode.STEPPED :
+                                          ExecutionMode.CONTINUOUS);
+
+        emulator.setState(RUNNING);
+      }
     }
   };
 

@@ -29,12 +29,24 @@ public class Emulator {
 
   private ArrayList<CommunicationPort> communicationPorts;
 
-  private Map<String, List<LineNumberedException>> exceptionMap;
+  private Map<String, List<LineNumberedException>> codeExceptionMap;
+
+  private Map<String, Exception> nodeExceptionMap;
 
   private EmulatorState emulatorState;
 
-  public Emulator(long clockFrequency) {
+  private final EmulatorObserver emulatorObserver;
+
+  private EmulatorCycle currentCycle;
+
+  public Emulator(EmulatorObserver emulatorObserver, long clockFrequency) {
+    this.emulatorObserver = emulatorObserver;
+
+    emulatorObserver.setEmulator(this);
+
     this.clockFrequency = clockFrequency;
+
+    clockSignalTimer = new Timer();
 
     cycleDataQueue = new SynchronousQueue<>();
 
@@ -43,12 +55,12 @@ public class Emulator {
     communicationPorts = new ArrayList<>();
 
     emulatorState = EmulatorState.STOPPED;
-
-    exceptionMap = new HashMap<>();
   }
 
-  public synchronized EmulatorState getState() {
-    return emulatorState;
+  public EmulatorState getState() {
+    synchronized (emulatorState) {
+      return emulatorState;
+    }
   }
 
   public void request(StateChangeRequest stateChangeRequest) {
@@ -63,29 +75,54 @@ public class Emulator {
     return cycleDataQueue;
   }
 
-  public void start() {
-    clockSignalTimer = new Timer();
+  /* package */ void start(ExecutionMode executionMode) {
+    currentCycle = new EmulatorCycle(executionMode);
 
     clockSignalTimer.scheduleAtFixedRate(
-      new EmulatorCycle(), 0, clockFrequency);
+      currentCycle, 0, clockFrequency);
   }
 
-  public Map<String, List<LineNumberedException>> getExceptionMap() {
-    return exceptionMap;
+  public Map<String, List<LineNumberedException>> getCodeExceptionMap() {
+    return codeExceptionMap;
+  }
+
+  public Map<String, Exception> getNodeExceptionMap() {
+    return nodeExceptionMap;
+  }
+
+
+  /* package */ void stop() {
+    if (currentCycle != null) {
+      currentCycle.cancel();
+
+      currentCycle = null;
+    }
+
+    reset();
+  }
+
+  private void reset() {
+    for (CommunicationPort port : communicationPorts) {
+      port.reset();
+    }
+
+    for (Node node : nodes.values()) {
+      node.reset();
+    }
   }
 
   /* package */ void setState(EmulatorState emulatorState) {
-    this.emulatorState = emulatorState;
-  }
-
-  public Map<String, Exception> generateInstructions() throws InvalidStateException {
-    if (emulatorState != EmulatorState.STOPPED) {
-      throw new InvalidStateException("Can only generate instructions in STOPPED state.");
+    synchronized (emulatorState) {
+      this.emulatorState = emulatorState;
     }
 
-    HashMap<String, Exception> nodeExceptionMap = new HashMap<>();
+    emulatorObserver.onStateChanged(emulatorState);
+  }
 
-    exceptionMap.clear();
+  /* package */ StateChangeRequest generateInstructions() {
+    nodeExceptionMap = new HashMap<>();
+
+    codeExceptionMap = new HashMap<>();
 
     for (Node node : nodes.values()) {
       List<LineNumberedException> exceptions;
@@ -99,7 +136,7 @@ public class Emulator {
       }
 
       if (!exceptions.isEmpty()) {
-        exceptionMap.put(node.getGlobalName(), exceptions);
+        codeExceptionMap.put(node.getGlobalName(), exceptions);
 
         continue;
       }
@@ -113,20 +150,24 @@ public class Emulator {
       }
 
       if (!exceptions.isEmpty()) {
-        exceptionMap.put(node.getGlobalName(), exceptions);
+        codeExceptionMap.put(node.getGlobalName(), exceptions);
       }
     }
 
-    if (!exceptionMap.isEmpty() || !nodeExceptionMap.isEmpty()) {
-      request(StateChangeRequest.ERROR);
-    } else {
-      request(StateChangeRequest.DEFAULT);
+    if (!codeExceptionMap.isEmpty() || !nodeExceptionMap.isEmpty()) {
+      return StateChangeRequest.ERROR;
     }
 
-    return nodeExceptionMap;
+    return StateChangeRequest.RUN;
   }
 
   private class EmulatorCycle extends TimerTask {
+    private final ExecutionMode executionMode;
+
+    public EmulatorCycle(ExecutionMode executionMode) {
+      this.executionMode = executionMode;
+    }
+
     @Override
     public void run() {
       EmulatorCycleData data = new EmulatorCycleData();
@@ -151,6 +192,12 @@ public class Emulator {
         cycleDataQueue.put(data);
       } catch (InterruptedException e) {
 
+      }
+
+      if (executionMode == ExecutionMode.STEPPED) {
+        cancel();
+
+        request(StateChangeRequest.PAUSE);
       }
     }
   }
