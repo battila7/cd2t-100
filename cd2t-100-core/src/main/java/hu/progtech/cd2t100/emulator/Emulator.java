@@ -51,7 +51,7 @@ public class Emulator {
 
     this.clockFrequency = clockFrequency;
 
-    clockSignalTimer = new Timer();
+    clockSignalTimer = new Timer(true);
 
     cycleDataQueue = new SynchronousQueue<>();
 
@@ -185,16 +185,16 @@ public class Emulator {
       EmulatorCycleData data = new EmulatorCycleData();
 
       for (CommunicationPort cp : communicationPorts) {
-        cp.step();
-
         data.addPortValue(cp);
+
+        cp.step();
       }
 
       for (Node n : nodes.values()) {
         try {
-          n.step();
-
           data.addNodeMemento(n.saveToMemento());
+
+          n.step();
         } catch (NodeExecutionException e) {
 
         }

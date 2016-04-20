@@ -38,4 +38,17 @@ public class EmulatorCycleData {
   public Map<String, NodeMemento> getNodeMementos() {
     return nodeMementos;
   }
+
+  @Override
+  public String toString() {
+    String rep = "COMMPORTS:\n\t";
+
+    rep += portValues.toString() + "\n";
+
+    for (NodeMemento memento : nodeMementos.values()) {
+      rep += memento.toString() + "\n";
+    }
+
+    return rep;
+  }
 }

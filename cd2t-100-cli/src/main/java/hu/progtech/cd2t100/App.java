@@ -5,6 +5,8 @@ import java.util.Scanner;
 import java.util.HashMap;
 import java.util.ArrayList;
 
+import java.util.concurrent.BlockingQueue;
+
 import java.io.InputStream;
 
 import hu.progtech.cd2t100.asm.LineNumberedException;
@@ -14,6 +16,8 @@ import hu.progtech.cd2t100.computation.io.*;
 
 import hu.progtech.cd2t100.formal.InstructionLoader;
 import hu.progtech.cd2t100.formal.InstructionInfo;
+
+import hu.progtech.cd2t100.emulator.*;
 
 public class App {
 
@@ -41,9 +45,6 @@ public class App {
 							 .addReadablePort("UP", cp2)
 							 .build();
 
-			cp1.setSourceNode(n1);
-
-
 			builder = new NodeBuilder();
 
 		 	Node n2 =
@@ -55,60 +56,56 @@ public class App {
 							 .addWriteablePort("DOWN", cp2)
  						 	 .build();
 
-			cp2.setSourceNode(n2);
+			EmulatorObserver emulatorObserver = new EmulatorObserverImpl();
+
+			EmulatorBuilder emulatorBuilder = new EmulatorBuilder();
+
+			Emulator emulator = emulatorBuilder
+													.addNode(n1)
+													.addNode(n2)
+													.addCommunicationPort(cp1)
+													.addCommunicationPort(cp2)
+													.setClockFrequency(1000)
+													.setObserver(emulatorObserver)
+													.build();
 
 			System.out.println("\nPlease enter the program:\n-------------------------------------------------------");
 
-			n1.setSourceCode(readCode(sc));
+			String code = readCode(sc);
 
-			List<LineNumberedException> exceptionList = n1.buildCodeElementSet();
+			emulator.setSourceCode("NODE1", code);
 
-			if (!exceptionList.isEmpty()) {
-				System.err.println(exceptionList);
+			code = readCode(sc);
 
-				return;
-			}
+			emulator.setSourceCode("NODE2", code);
 
-			exceptionList = n1.buildInstructions();
+			emulator.request(StateChangeRequest.RUN);
 
-			if (!exceptionList.isEmpty()) {
-				System.err.println(exceptionList);
-
-				return;
-			}
-
-			n2.setSourceCode(readCode(sc));
-
-			exceptionList = n2.buildCodeElementSet();
-
-			if (!exceptionList.isEmpty()) {
-				System.err.println(exceptionList);
-
-				return;
-			}
-
-			exceptionList = n2.buildInstructions();
-
-			if (!exceptionList.isEmpty()) {
-				System.err.println(exceptionList);
-
-				return;
-			}
-
-			System.out.println("\nNow running:\n-------------------------------------------------------");
-
-			long cycle = 0;
-
+			/*
+			 *	Game loop
+			 */
 			while (true) {
-				System.out.println("Cycle " + cycle++);
+				String line = sc.nextLine();
 
-				cp1.step();
-				cp2.step();
+				if (line.startsWith("EXIT")) {
+					emulator.request(StateChangeRequest.STOP);
 
-				n1.step();
-				n2.step();
+					break;
+				} else if (line.startsWith("STOP")) {
+					emulator.request(StateChangeRequest.STOP);
+				} else if (line.startsWith("RUN")) {
+					System.out.println("\nPlease enter the program:\n-------------------------------------------------------");
 
-				sc.nextLine();
+					code = readCode(sc);
+
+					emulator.setSourceCode("NODE1", code);
+
+					code = readCode(sc);
+
+					emulator.setSourceCode("NODE2", code);
+
+					emulator.request(StateChangeRequest.RUN);
+				}
 			}
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
@@ -144,6 +141,65 @@ public class App {
 			}
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
+		}
+	}
+
+	static class EmulatorObserverImpl implements EmulatorObserver {
+		private Emulator emulator;
+
+		private Thread updaterThread;
+
+		@Override
+		public void onStateChanged(EmulatorState newState) {
+			if (newState == EmulatorState.RUNNING) {
+				/*
+				 *	If in PAUSED state, we reuse the updaterThread.
+				 */
+				if (updaterThread == null) {
+					updaterThread = new Thread(new Updater(emulator.getCycleDataQueue()));
+
+					updaterThread.start();
+				}
+			} else if (newState == EmulatorState.STOPPED) {
+				/*
+				 *	If previous state was ERROR, updaterThread is null.
+				 */
+				if (updaterThread != null) {
+					updaterThread.interrupt();
+
+					updaterThread = null;
+				}
+			} else if (newState == EmulatorState.ERROR) {
+				System.out.println("Now in ERROR state because of the following: ");
+				System.out.println(emulator.getNodeExceptionMap());
+				System.out.println(emulator.getCodeExceptionMap());
+			}
+		}
+
+		@Override
+		public void setEmulator(Emulator emulator) {
+			this.emulator = emulator;
+		}
+	}
+
+	static class Updater implements Runnable {
+		private BlockingQueue<EmulatorCycleData> cycleDataQueue;
+
+		public Updater(BlockingQueue<EmulatorCycleData> cycleDataQueue) {
+			this.cycleDataQueue = cycleDataQueue;
+		}
+
+		@Override
+		public void run() {
+			try {
+				while (true) {
+					EmulatorCycleData ecd = cycleDataQueue.take();
+
+					System.out.println(ecd);
+				}
+			} catch (InterruptedException e) {
+				return;
+			}
 		}
 	}
 

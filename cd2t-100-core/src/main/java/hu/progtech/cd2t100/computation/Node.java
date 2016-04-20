@@ -263,11 +263,15 @@ public class Node {
 
     return new NodeMemento(registerValues, ports,
                            sourceCode,
-                           instructionPointer, nextInstruction,
+                           instructionPointer,
                            executionState, line, globalName);
   }
 
   public void reset() {
+    for (Register r : registerMap.values()) {
+      r.reset();
+    }
+
     instructionPointer = 0;
 
     nextInstruction = 0;

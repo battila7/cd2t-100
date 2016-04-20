@@ -2,6 +2,7 @@ package hu.progtech.cd2t100.computation;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.Arrays;
 
 /**
  *  Stores the state of a {@code Node} object. Used to externalize and save the fields
@@ -24,8 +25,6 @@ public class NodeMemento {
 
   private final int instructionPointer;
 
-  private final int nextInstruction;
-
   private final ExecutionState executionState;
 
   private final int currentLine;
@@ -39,7 +38,6 @@ public class NodeMemento {
    *  @param portNameSet the set of port names
    *  @param sourceCode the source code of the originator {@code Node}
    *  @param instructionPointer the value of the instruction pointer
-   *  @param nextInstruction the pointer to the next instruction
    *  @param executionState the execution state of the originator {@code Node}
    *  @param currentLine the currently executed source code line
    *  @param globalName the global name of the originator
@@ -48,7 +46,6 @@ public class NodeMemento {
                      Set<String> portNameSet,
                      String sourceCode,
                      int instructionPointer,
-                     int nextInstruction,
                      ExecutionState executionState,
                      int currentLine,
                      String globalName)
@@ -60,8 +57,6 @@ public class NodeMemento {
     this.sourceCode = sourceCode;
 
     this.instructionPointer = instructionPointer;
-
-    this.nextInstruction = nextInstruction;
 
     this.executionState = executionState;
 
@@ -107,15 +102,6 @@ public class NodeMemento {
   }
 
   /**
-   *  Gets the next instruction pointer.
-   *
-   *  @return the next instruction pointer
-   */
-  public int getNextInstruction() {
-    return nextInstruction;
-  }
-
-  /**
    *  Gets the execution state.
    *
    *  @return the execution state
@@ -140,5 +126,18 @@ public class NodeMemento {
    */
   public String getGlobalName() {
     return globalName;
+  }
+
+  @Override
+  public String toString() {
+    String rep = globalName + "(" + executionState + ") @l: " + currentLine + "\n";
+
+    rep += "IP: " + instructionPointer + "\n";
+
+    for (Map.Entry<String, int[]> entry : registerValues.entrySet()) {
+      rep += "\t" + entry.getKey() + " = " + Arrays.toString(entry.getValue()) + "\n";
+    }
+
+    return rep;
   }
 }
