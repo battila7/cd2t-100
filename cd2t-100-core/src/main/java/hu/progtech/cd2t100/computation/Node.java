@@ -2,6 +2,7 @@ package hu.progtech.cd2t100.computation;
 
 import java.lang.reflect.Method;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +24,8 @@ import org.apache.commons.lang3.mutable.MutableInt;
 public class Node {
   private static Pattern newlinePattern =
     Pattern.compile("\r\n|\r|\n");
+
+  private final String globalName;
 
   private final Map<String, Register> registerMap;
   private final Map<String, CommunicationPort> readablePortMap;
@@ -53,6 +56,7 @@ public class Node {
 
   public Node(InstructionRegistry instructionRegistry,
               int maximumSourceCodeLines,
+              String globalName,
               Map<String, Register> registerMap,
               Map<String, CommunicationPort> readablePortMap,
               Map<String, CommunicationPort> writeablePortMap)
@@ -71,6 +75,8 @@ public class Node {
     this.portNameSet = new HashSet<>(readablePortMap.keySet());
 
     this.blockedWriteablePorts = new HashSet<>();
+
+    this.globalName = globalName;
 
     portNameSet.addAll(writeablePortMap.keySet());
 
@@ -217,6 +223,31 @@ public class Node {
    */
   public int getMaximumSourceCodeLines() {
     return maximumSourceCodeLines;
+  }
+
+  /**
+   *  Saves the state of the {@code Node} into a {@code NodeMemento} object. Please
+   *  refer to the {@code NodeMemento} class about the saved fields of the {@code Node}.
+   *
+   *  @return a memento object with the {@code Node}'s state
+   */
+  public NodeMemento saveToMemento() {
+    HashMap<String, int[]> registerValues = new HashMap<>();
+
+    for (Register r : registerMap.values()) {
+      registerValues.put(r.getName(), Arrays.copyOf(r.getContents(), r.getCapacity()));
+    }
+
+    HashSet<String> ports = new HashSet<>(portNameSet);
+
+    Instruction currentInstruction = instructions.get(instructionPointer);
+
+    int line = currentInstruction.getLocation().getLine();
+
+    return new NodeMemento(registerValues, ports,
+                           sourceCode,
+                           instructionPointer, nextInstruction,
+                           executionState, line, globalName);
   }
 
   /**

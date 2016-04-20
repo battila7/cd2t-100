@@ -53,11 +53,11 @@ public class InstructionFactoryTest {
     registerMap.put("ACC", new Register(1, "ACC"));
     registerMap.put("BAK", new Register(1, "BAK"));
 
-    readablePortMap.put("UP", new CommunicationPort());
-    readablePortMap.put("DOWN", new CommunicationPort());
+    readablePortMap.put("UP", new CommunicationPort("CP1"));
+    readablePortMap.put("DOWN", new CommunicationPort("CP2"));
 
-    writeablePortMap.put("UP", new CommunicationPort());
-    writeablePortMap.put("LEFT", new CommunicationPort());
+    writeablePortMap.put("UP", new CommunicationPort("CP3"));
+    writeablePortMap.put("LEFT", new CommunicationPort("CP4"));
 
     allPortNames = new HashSet<>(readablePortMap.keySet());
     allPortNames.addAll(writeablePortMap.keySet());

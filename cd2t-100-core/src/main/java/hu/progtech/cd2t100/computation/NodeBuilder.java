@@ -6,6 +6,8 @@ import hu.progtech.cd2t100.computation.io.Register;
 import hu.progtech.cd2t100.computation.io.CommunicationPort;
 
 public class NodeBuilder {
+  private String globalName;
+
   private int maximumSourceCodeLines;
 
   private InstructionRegistry instructionRegistry;
@@ -18,6 +20,12 @@ public class NodeBuilder {
     registerMap = new HashMap<>();
     readablePortMap = new HashMap<>();
     writeablePortMap = new HashMap<>();
+  }
+
+  public NodeBuilder setGlobalName(String globalName) {
+    this.globalName = globalName;
+
+    return this;
   }
 
   public NodeBuilder setMaximumSourceCodeLines(int max) {
@@ -56,6 +64,7 @@ public class NodeBuilder {
   public Node build() {
     Node n = new Node(instructionRegistry,
                       maximumSourceCodeLines,
+                      globalName,
                       registerMap,
                       readablePortMap,
                       writeablePortMap);

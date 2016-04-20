@@ -14,4 +14,8 @@ abstract class Port {
   public abstract int[] getContents();
 
   public abstract boolean hasData();
+
+  public int getCapacity() {
+    return capacity;
+  }
 }

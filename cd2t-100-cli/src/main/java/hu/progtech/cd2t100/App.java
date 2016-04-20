@@ -29,11 +29,12 @@ public class App {
 
 			loadInstructions(registry);
 
-			CommunicationPort cp1 = new CommunicationPort();
-			CommunicationPort cp2 = new CommunicationPort();
+			CommunicationPort cp1 = new CommunicationPort("CP1");
+			CommunicationPort cp2 = new CommunicationPort("CP2");
 
 			Node n1 =
 				builder.setMaximumSourceCodeLines(20)
+							 .setGlobalName("NODE1")
 							 .addInstructionRegistry(registry)
 							 .addRegister(new Register(1, "ACC"))
 							 .addWriteablePort("UP", cp1)
@@ -47,6 +48,7 @@ public class App {
 
 		 	Node n2 =
  				builder.setMaximumSourceCodeLines(20)
+							 .setGlobalName("NODE2")
  						 	 .addInstructionRegistry(registry)
  						 	 .addRegister(new Register(1, "ACC"))
 							 .addReadablePort("DOWN", cp1)
@@ -99,7 +101,7 @@ public class App {
 
 			while (true) {
 				System.out.println("Cycle " + cycle++);
-				
+
 				cp1.step();
 				cp2.step();
 

@@ -7,16 +7,20 @@ import hu.progtech.cd2t100.computation.Node;
 public class CommunicationPort extends Port {
   private static final int COM_PORT_CAPACITY = 1;
 
+  private final String globalName;
+
   private boolean containsData;
 
   private Node sourceNode;
 
-  public CommunicationPort() {
+  public CommunicationPort(String globalName) {
     super(COM_PORT_CAPACITY);
 
     contents = null;
 
     this.containsData = false;
+
+    this.globalName = globalName;
   }
 
   public void setSourceNode(Node sourceNode) {
@@ -62,5 +66,9 @@ public class CommunicationPort extends Port {
     if ((contents != null) && (!containsData)) {
       containsData = true;
     }
+  }
+
+  public String getGlobalName() {
+    return globalName;
   }
 }
