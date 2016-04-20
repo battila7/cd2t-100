@@ -51,7 +51,7 @@ public final class Location {
 
   /**
    *  Returns the char position element of this {@code Location}'s line.
-   *  Numbering starts from <b>0</b>. 
+   *  Numbering starts from <b>0</b>.
    *
    *  @return the char position in the {@code Location}'s line'
    */

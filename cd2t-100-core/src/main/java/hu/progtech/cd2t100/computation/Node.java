@@ -119,6 +119,15 @@ public class Node {
   }
 
   /**
+   *  Gets the global name.
+   *
+   *  @return the global name
+   */
+  public String getGlobalName() {
+    return globalName;
+  }
+
+  /**
    *  Gets the instruction pointer.
    *
    *  @return the instruction pointer
