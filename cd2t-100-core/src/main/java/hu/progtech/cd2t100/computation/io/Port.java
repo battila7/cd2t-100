@@ -15,6 +15,8 @@ abstract class Port {
 
   public abstract boolean hasData();
 
+  public abstract void reset();
+
   public int getCapacity() {
     return capacity;
   }

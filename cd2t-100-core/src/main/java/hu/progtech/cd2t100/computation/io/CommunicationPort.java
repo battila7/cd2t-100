@@ -32,9 +32,19 @@ public class CommunicationPort extends Port {
   }
 
   public int[] getContents() {
-    int[] ret = Arrays.copyOf(contents, capacity);
+    if (contents != null) {
+      int[] ret = Arrays.copyOf(contents, capacity);
 
-    return ret;
+      return ret;
+    } else {
+      return null;
+    }
+  }
+
+  public void reset() {
+    containsData = false;
+
+    contents = null;
   }
 
   public int[] readContents() {

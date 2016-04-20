@@ -46,10 +46,10 @@ public class Emulator {
     clockSignalTimer = new Timer();
 
     clockSignalTimer.scheduleAtFixedRate(
-      new EmulatorTask(), 0, clockFrequency);
+      new EmulatorCycle(), 0, clockFrequency);
   }
 
-  private class EmulatorTask extends TimerTask {
+  private class EmulatorCycle extends TimerTask {
     @Override
     public void run() {
       for (CommunicationPort cp : communicationPorts) {

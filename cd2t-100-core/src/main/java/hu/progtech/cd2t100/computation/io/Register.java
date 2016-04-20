@@ -20,4 +20,8 @@ public class Register extends Port {
   public boolean hasData() {
     return true;
   }
+
+  public void reset() {
+    contents = new int[capacity];
+  }
 }

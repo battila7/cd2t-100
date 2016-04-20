@@ -82,6 +82,10 @@ public class Node {
 
     execEnv = new ExecutionEnvironment(this, instructionRegistry.getRules());
 
+    executionState = ExecutionState.IDLE;
+
+    sourceCode = "";
+
     readyToRun = false;
   }
 
@@ -240,14 +244,38 @@ public class Node {
 
     HashSet<String> ports = new HashSet<>(portNameSet);
 
-    Instruction currentInstruction = instructions.get(instructionPointer);
+    int line;
 
-    int line = currentInstruction.getLocation().getLine();
+    if (instructionPointer < instructions.size()) {
+      Instruction currentInstruction = instructions.get(instructionPointer);
+
+      line = currentInstruction.getLocation().getLine();
+    } else {
+      line = 0;
+    }
 
     return new NodeMemento(registerValues, ports,
                            sourceCode,
                            instructionPointer, nextInstruction,
                            executionState, line, globalName);
+  }
+
+  public void reset() {
+    instructionPointer = 0;
+
+    nextInstruction = 0;
+
+    blockedWriteablePorts.clear();
+
+    executionState = ExecutionState.IDLE;
+
+    sourceCode = "";
+
+    instructions = null;
+
+    codeElementSet = null;
+
+    readyToRun = false;
   }
 
   /**
