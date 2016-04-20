@@ -157,13 +157,7 @@ public class Node {
    *
    *  @param sourceCode the source code
    */
-  public void setSourceCode(String sourceCode)
-    throws SourceCodeFormatException
-  {
-    if (countLines(sourceCode) > maximumSourceCodeLines) {
-      throw new SourceCodeFormatException("Source code is longer than maximum.");
-    }
-
+  public void setSourceCode(String sourceCode) {
     this.sourceCode = sourceCode;
   }
 
@@ -183,6 +177,10 @@ public class Node {
   {
     if (sourceCode == null) {
       throw new SourceCodeFormatException("Source code cannot be null.");
+    }
+
+    if (countLines(sourceCode) > maximumSourceCodeLines) {
+      throw new SourceCodeFormatException("Source code is longer than maximum.");
     }
 
     codeElementSet = CodeFactory.createCodeElementSet(

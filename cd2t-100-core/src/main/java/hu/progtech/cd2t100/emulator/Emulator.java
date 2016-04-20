@@ -3,7 +3,7 @@ package hu.progtech.cd2t100.emulator;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
-import java.util.ArrayList;
+import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.SynchronousQueue;
@@ -21,13 +21,13 @@ import hu.progtech.cd2t100.computation.io.CommunicationPort;
 public class Emulator {
   private Timer clockSignalTimer;
 
-  private BlockingQueue<EmulatorCycleData> cycleDataQueue;
+  private final BlockingQueue<EmulatorCycleData> cycleDataQueue;
 
-  private long clockFrequency;
+  private final long clockFrequency;
 
-  private HashMap<String, Node> nodes;
+  private final Map<String, Node> nodes;
 
-  private ArrayList<CommunicationPort> communicationPorts;
+  private final List<CommunicationPort> communicationPorts;
 
   private Map<String, List<LineNumberedException>> codeExceptionMap;
 
@@ -39,7 +39,12 @@ public class Emulator {
 
   private EmulatorCycle currentCycle;
 
-  public Emulator(EmulatorObserver emulatorObserver, long clockFrequency) {
+  Emulator(Map<String, Node> nodes, List<CommunicationPort> communicationPorts,
+           EmulatorObserver emulatorObserver, long clockFrequency) {
+    this.nodes = nodes;
+
+    this.communicationPorts = communicationPorts;
+
     this.emulatorObserver = emulatorObserver;
 
     emulatorObserver.setEmulator(this);
@@ -49,10 +54,6 @@ public class Emulator {
     clockSignalTimer = new Timer();
 
     cycleDataQueue = new SynchronousQueue<>();
-
-    nodes = new HashMap<>();
-
-    communicationPorts = new ArrayList<>();
 
     emulatorState = EmulatorState.STOPPED;
   }
@@ -69,6 +70,17 @@ public class Emulator {
 
   public long getClockFrequency() {
     return clockFrequency;
+  }
+
+  public void setSourceCode(String nodeName, String sourceCode)
+    throws InvalidStateException
+  {
+    if (getState() != EmulatorState.STOPPED) {
+      throw new InvalidStateException("Source code can only be set in STOPPED state.");
+    }
+
+    Optional.ofNullable(nodes.get(nodeName))
+            .ifPresent(x -> x.setSourceCode(sourceCode));
   }
 
   public BlockingQueue<EmulatorCycleData> getCycleDataQueue() {
