@@ -6,7 +6,7 @@ import hu.progtech.cd2t100.emulator.StateChangeRequest;
 public class ExitCommand implements CliCommand {
   @Override
   public void execute(Emulator emulator) {
-    emulator.request(StateChangeRequest.STOP);
+    //emulator.request(StateChangeRequest.STOP);
 
     App.requestExit();
   }
