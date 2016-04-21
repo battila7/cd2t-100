@@ -103,6 +103,12 @@ public class Emulator {
   }
 
 
+  /* package */ void pause() {
+    currentCycle.cancel();
+
+    currentCycle = null;
+  }
+
   /* package */ void stop() {
     if (currentCycle != null) {
       currentCycle.cancel();

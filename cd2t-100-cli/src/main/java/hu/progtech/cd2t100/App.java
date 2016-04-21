@@ -1,7 +1,9 @@
 package hu.progtech.cd2t100;
 
+import java.util.Optional;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Map;
 import java.util.HashMap;
 import java.util.ArrayList;
 
@@ -20,96 +22,108 @@ import hu.progtech.cd2t100.formal.InstructionInfo;
 import hu.progtech.cd2t100.emulator.*;
 
 public class App {
+	private static Scanner scanner;
+
+	private static boolean exitRequested;
 
 	public static void main(String[] args) {
 		try {
-			Scanner sc = new Scanner(System.in);
+			scanner = new Scanner(System.in);
 
-			InstructionRegistry registry = new InstructionRegistry(new HashMap<String, String>());
+			System.out.println("Setting up the emulator...");
 
-			NodeBuilder builder = new NodeBuilder();
+			Emulator emulator = setupEmulator();
 
-			System.out.println("The following instructions can be used:");
+			System.out.println("The emulator is ready! Entering the game loop.");
 
-			loadInstructions(registry);
+			printHelp();
 
-			CommunicationPort cp1 = new CommunicationPort("CP1");
-			CommunicationPort cp2 = new CommunicationPort("CP2");
-
-			Node n1 =
-				builder.setMaximumSourceCodeLines(20)
-							 .setGlobalName("NODE1")
-							 .addInstructionRegistry(registry)
-							 .addRegister(new Register(1, "ACC"))
-							 .addWriteablePort("UP", cp1)
-							 .addReadablePort("UP", cp2)
-							 .build();
-
-			builder = new NodeBuilder();
-
-		 	Node n2 =
- 				builder.setMaximumSourceCodeLines(20)
-							 .setGlobalName("NODE2")
- 						 	 .addInstructionRegistry(registry)
- 						 	 .addRegister(new Register(1, "ACC"))
-							 .addReadablePort("DOWN", cp1)
-							 .addWriteablePort("DOWN", cp2)
- 						 	 .build();
-
-			EmulatorObserver emulatorObserver = new EmulatorObserverImpl();
-
-			EmulatorBuilder emulatorBuilder = new EmulatorBuilder();
-
-			Emulator emulator = emulatorBuilder
-													.addNode(n1)
-													.addNode(n2)
-													.addCommunicationPort(cp1)
-													.addCommunicationPort(cp2)
-													.setClockFrequency(1000)
-													.setObserver(emulatorObserver)
-													.build();
-
-			System.out.println("\nPlease enter the program:\n-------------------------------------------------------");
-
-			String code = readCode(sc);
-
-			emulator.setSourceCode("NODE1", code);
-
-			code = readCode(sc);
-
-			emulator.setSourceCode("NODE2", code);
-
-			emulator.request(StateChangeRequest.RUN);
-
-			/*
-			 *	Game loop
-			 */
-			while (true) {
-				String line = sc.nextLine();
-
-				if (line.startsWith("EXIT")) {
-					emulator.request(StateChangeRequest.STOP);
-
-					break;
-				} else if (line.startsWith("STOP")) {
-					emulator.request(StateChangeRequest.STOP);
-				} else if (line.startsWith("RUN")) {
-					System.out.println("\nPlease enter the program:\n-------------------------------------------------------");
-
-					code = readCode(sc);
-
-					emulator.setSourceCode("NODE1", code);
-
-					code = readCode(sc);
-
-					emulator.setSourceCode("NODE2", code);
-
-					emulator.request(StateChangeRequest.RUN);
-				}
-			}
+			gameLoop(emulator);
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
+	}
+
+	public static Scanner getStdinScanner() {
+		return scanner;
+	}
+
+	public static void requestExit() {
+		exitRequested = true;
+	}
+
+	private static void printHelp() {
+		System.out.println("You can control the emulator with the following commands:");
+		System.out.println("\tEXIT: STOPs the emulator and exits the program.");
+		System.out.println("\tEDIT: EDIT the source code. Can only be used in STOPPED state.");
+		System.out.println("\tRUN: Initiates CONTINUOUS execution.");
+		System.out.println("\tSTEP: Initiates STEPPED execution.");
+		System.out.println("\tPAUSE: PAUSEs the execution.");
+		System.out.println("\tSTOP: STOPs the emulator.\n");
+	}
+
+	private static void gameLoop(Emulator emulator) {
+		Map<String, CliCommand> commands = new HashMap<>();
+
+		commands.put("EXIT", new ExitCommand());
+		commands.put("EDIT", new EditCommand());
+		commands.put("RUN", new RunCommand());
+		commands.put("STEP", new StepCommand());
+		commands.put("PAUSE", new PauseCommand());
+		commands.put("STOP", new StopCommand());
+
+		while (!exitRequested) {
+			String command = scanner.nextLine();
+
+			Optional.ofNullable(commands.get(command))
+							.ifPresent(x -> x.execute(emulator));
+		}
+	}
+
+	private static Emulator setupEmulator() {
+		InstructionRegistry registry = new InstructionRegistry(new HashMap<String, String>());
+
+		NodeBuilder builder = new NodeBuilder();
+
+		loadInstructions(registry);
+
+		CommunicationPort cp1 = new CommunicationPort("CP1");
+		CommunicationPort cp2 = new CommunicationPort("CP2");
+
+		Node n1 =
+			builder.setMaximumSourceCodeLines(20)
+						 .setGlobalName("NODE1")
+						 .addInstructionRegistry(registry)
+						 .addRegister(new Register(1, "ACC"))
+						 .addWriteablePort("UP", cp1)
+						 .addReadablePort("UP", cp2)
+						 .build();
+
+		builder = new NodeBuilder();
+
+		Node n2 =
+			builder.setMaximumSourceCodeLines(20)
+						 .setGlobalName("NODE2")
+						 .addInstructionRegistry(registry)
+						 .addRegister(new Register(1, "ACC"))
+						 .addReadablePort("DOWN", cp1)
+						 .addWriteablePort("DOWN", cp2)
+						 .build();
+
+		EmulatorObserver emulatorObserver = new EmulatorObserverImpl();
+
+		EmulatorBuilder emulatorBuilder = new EmulatorBuilder();
+
+		Emulator emulator = emulatorBuilder
+												.addNode(n1)
+												.addNode(n2)
+												.addCommunicationPort(cp1)
+												.addCommunicationPort(cp2)
+												.setClockFrequency(1000)
+												.setObserver(emulatorObserver)
+												.build();
+
+		return emulator;
 	}
 
 	private static void loadInstructions(InstructionRegistry registry) {
@@ -201,22 +215,5 @@ public class App {
 				return;
 			}
 		}
-	}
-
-	private static String readCode(Scanner sc) {
-		String line = "",
-					 code = "";
-
-		while (true) {
-			line = sc.nextLine() + "\n";
-
-			if (line.startsWith("<>")) {
-				break;
-			}
-
-			code += line;
-		}
-
-		return code;
 	}
 }

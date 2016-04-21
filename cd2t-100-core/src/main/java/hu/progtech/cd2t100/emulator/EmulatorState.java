@@ -31,6 +31,8 @@ public enum EmulatorState {
     @Override
     /* package */ void onRequest(Emulator emulator, StateChangeRequest changeRequest) {
       if (changeRequest == StateChangeRequest.PAUSE) {
+        emulator.pause();
+
         emulator.setState(PAUSED);
       } else {
         emulator.stop();
