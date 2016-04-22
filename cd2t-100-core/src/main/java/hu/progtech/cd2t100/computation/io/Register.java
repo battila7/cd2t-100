@@ -6,6 +6,8 @@ public class Register extends Port {
   public Register(int capacity, String name) {
     super(capacity);
 
+    contents = new int[capacity];
+
     this.name = name;
   }
 

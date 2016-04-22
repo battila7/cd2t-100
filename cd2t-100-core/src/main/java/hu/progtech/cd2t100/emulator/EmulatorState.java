@@ -14,6 +14,7 @@ package hu.progtech.cd2t100.emulator;
  *      <td>{@code PAUSE}</td>
  *      <td>{@code STOP}</td>
  *      <td>{@code STEP}</td>
+ *      <td>{@code SUCCESS}</td>
  *    </tr>
  *    <tr>
  *      <td>STOPPED</td>
@@ -22,9 +23,11 @@ package hu.progtech.cd2t100.emulator;
  *      <td>{@code RUNNING}</td>
  *      <td>{@code RUNNING}</td>
  *      <td>{@code RUNNING}</td>
+ *      <td>{@code RUNNING}</td>
  *    </tr>
  *    <tr>
  *      <td>ERROR</td>
+ *      <td>{@code STOPPED}</td>
  *      <td>{@code STOPPED}</td>
  *      <td>{@code STOPPED}</td>
  *      <td>{@code STOPPED}</td>
@@ -38,6 +41,7 @@ package hu.progtech.cd2t100.emulator;
  *      <td>{@code PAUSED}</td>
  *      <td>{@code STOPPED}</td>
  *      <td>{@code STOPPED}</td>
+ *      <td>{@code SUCCESS}</td>
  *    </tr>
  *    <tr>
  *      <td>PAUSED</td>
@@ -46,6 +50,16 @@ package hu.progtech.cd2t100.emulator;
  *      <td>{@code RUNNING}</td>
  *      <td>{@code STOPPED}</td>
  *      <td>{@code RUNNING}</td>
+ *      <td>{@code RUNNING}</td>
+ *    </tr>
+ *    <tr>
+ *      <td>SUCCESS</td>
+ *      <td>{@code STOPPED}</td>
+ *      <td>{@code STOPPED}</td>
+ *      <td>{@code STOPPED}</td>
+ *      <td>{@code STOPPED}</td>
+ *      <td>{@code STOPPED}</td>
+ *      <td>{@code STOPPED}</td>
  *    </tr>
  *  </table>
  */
@@ -95,6 +109,10 @@ public enum EmulatorState {
         emulator.pause();
 
         emulator.setState(PAUSED);
+      } else if (changeRequest == StateChangeRequest.SUCCESS) {
+        emulator.stop();
+
+        emulator.setState(SUCCESS);
       } else {
         emulator.stop();
 
@@ -121,6 +139,17 @@ public enum EmulatorState {
 
         emulator.setState(RUNNING);
       }
+    }
+  },
+
+  /**
+   *  The emulator is stopped, but the output ports contain the same values as
+   *  the expected values, which indicates a successful execution.
+   */
+  SUCCESS() {
+    @Override
+    /* package */ void onRequest(Emulator emulator, StateChangeRequest changeRequest) {
+      emulator.setState(STOPPED);
     }
   };
 

@@ -30,5 +30,10 @@ public enum StateChangeRequest {
    *  Indicates a stepped execution mode request when in {@code STOPPED} or in
    *  {@code PAUSED} state.
    */
-  STEP;
+  STEP,
+
+  /**
+   *  Indicates a success request when in {@code RUNNING} state.
+   */
+  SUCCESS;
 }

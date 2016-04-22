@@ -6,8 +6,6 @@ abstract class Port {
   protected final int capacity;
 
   Port(int capacity) {
-    contents = new int[capacity];
-
     this.capacity = capacity;
   }
 

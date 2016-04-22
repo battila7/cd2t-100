@@ -87,6 +87,10 @@ public class App {
 		CommunicationPort cp1 = new CommunicationPort("CP1");
 		CommunicationPort cp2 = new CommunicationPort("CP2");
 
+		int[] input = { 10, 20, 30 };
+
+		InputPort ip1 = new InputPort("IP1", input);
+
 		Node n1 =
 			builder.setMaximumSourceCodeLines(20)
 						 .setGlobalName("NODE1")
@@ -94,6 +98,7 @@ public class App {
 						 .addRegister(new Register(1, "ACC"))
 						 .addWriteablePort("UP", cp1)
 						 .addReadablePort("UP", cp2)
+						 .addReadablePort("DOWN", ip1)
 						 .build();
 
 		builder = new NodeBuilder();
@@ -116,6 +121,7 @@ public class App {
 												.addNode(n2)
 												.addCommunicationPort(cp1)
 												.addCommunicationPort(cp2)
+												.addCommunicationPort(ip1)
 												.setClockFrequency(1000)
 												.setObserver(emulatorObserver)
 												.build();

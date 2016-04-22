@@ -15,14 +15,24 @@ import hu.progtech.cd2t100.computation.Node;
 public class CommunicationPort extends Port {
   private static final int COM_PORT_CAPACITY = 1;
 
-  private final String globalName;
+  protected final String globalName;
 
-  private boolean containsData;
+  protected boolean containsData;
 
-  private Node sourceNode;
+  protected Node sourceNode;
 
   public CommunicationPort(String globalName) {
     super(COM_PORT_CAPACITY);
+
+    contents = null;
+
+    this.containsData = false;
+
+    this.globalName = globalName;
+  }
+
+  public CommunicationPort(String globalName, int capacity) {
+    super(capacity);
 
     contents = null;
 
@@ -72,7 +82,7 @@ public class CommunicationPort extends Port {
   }
 
   public void write(int data) {
-    contents = new int[1];
+    contents = new int[COM_PORT_CAPACITY];
 
     contents[0] = data;
   }
