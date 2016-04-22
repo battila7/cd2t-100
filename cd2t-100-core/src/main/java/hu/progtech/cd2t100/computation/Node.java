@@ -379,7 +379,10 @@ public class Node {
     return lines;
   }
 
-  class Invoker {
+  /**
+   *  Encapsulates the logic of invoking an {@code Instruction}.
+   */
+  private class Invoker {
     private final Node node;
 
     private final Instruction instruction;

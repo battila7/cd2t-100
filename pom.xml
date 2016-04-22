@@ -73,7 +73,7 @@
         </plugins>
       </build>
     </profile>
-    
+
     <profile>
       <id>codacy</id>
       <build>

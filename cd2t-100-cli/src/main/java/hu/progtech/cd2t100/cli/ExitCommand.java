@@ -1,4 +1,4 @@
-package hu.progtech.cd2t100;
+package hu.progtech.cd2t100.cli;
 
 import hu.progtech.cd2t100.emulator.Emulator;
 

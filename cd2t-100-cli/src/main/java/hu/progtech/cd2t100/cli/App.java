@@ -1,4 +1,4 @@
-package hu.progtech.cd2t100;
+package hu.progtech.cd2t100.cli;
 
 import java.util.Optional;
 import java.util.Scanner;

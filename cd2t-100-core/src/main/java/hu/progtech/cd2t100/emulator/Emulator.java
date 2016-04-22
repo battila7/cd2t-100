@@ -246,13 +246,26 @@ public class Emulator {
     return StateChangeRequest.RUN;
   }
 
+  /**
+   *  Represents a processor cycle that's executed on each tick of
+   *  the clock generator.
+   */
   private class EmulatorCycle extends TimerTask {
     private final ExecutionMode executionMode;
 
+    /**
+     *  Constructs a new {@code EmulatorCycle} with the specified
+     *  execution mode.
+     *
+     *  @param executionMode the execution mode
+     */
     public EmulatorCycle(ExecutionMode executionMode) {
       this.executionMode = executionMode;
     }
 
+    /**
+     *  Steps the nodes and the ports.
+     */
     @Override
     public void run() {
       EmulatorCycleData data = new EmulatorCycleData();
