@@ -21,6 +21,12 @@ public class CommunicationPort extends Port {
 
   protected Node sourceNode;
 
+  /**
+   *  Constructs a new {@code CommunicationPort} with the specified global name
+   *  and capacity equal to one.
+   *
+   *  @param globalName the global name
+   */
   public CommunicationPort(String globalName) {
     super(COM_PORT_CAPACITY);
 
@@ -31,6 +37,13 @@ public class CommunicationPort extends Port {
     this.globalName = globalName;
   }
 
+  /**
+   *  Constructs a new {@code CommunicationPort} with the specified global name
+   *  and capacity.
+   *
+   *  @param globalName the global name
+   *  @param capacity the capacity
+   */
   public CommunicationPort(String globalName, int capacity) {
     super(capacity);
 
@@ -41,14 +54,31 @@ public class CommunicationPort extends Port {
     this.globalName = globalName;
   }
 
+  /**
+   *  Sets the source {@code Node}. The source {@code Node} gets notified
+   *  whenever a succesful read operation happens.
+   *
+   *  @param sourceNode the source {@code Node}
+   */
   public void setSourceNode(Node sourceNode) {
     this.sourceNode = sourceNode;
   }
 
+  /**
+   *  Returns whether the port contains readable data.
+   *
+   *  @return whetehr the port has readable data
+   */
   public boolean hasData() {
     return containsData;
   }
 
+  /**
+   *  Performs a <i>soft</i> read operation i.e. does not destroy the contents.
+   *  Used for display purposes.
+   *
+   *  @return the contents
+   */
   public int[] getContents() {
     if (contents != null) {
       int[] ret = Arrays.copyOf(contents, capacity);
@@ -59,12 +89,21 @@ public class CommunicationPort extends Port {
     }
   }
 
+  /**
+   *  Resets the port.
+   */
   public void reset() {
     containsData = false;
 
     contents = null;
   }
 
+  /**
+   *  Performs a <i>hard</i> read operation i.e. destroys the contents. Used by
+   *  node reads.
+   *
+   *  @return the contents
+   */
   public int[] readContents() {
     if (!containsData) {
       return null;
@@ -81,12 +120,20 @@ public class CommunicationPort extends Port {
     return ret;
   }
 
+  /**
+   *  Writes the specified data onto the port.
+   *
+   *  @param data the data to write
+   */
   public void write(int data) {
     contents = new int[COM_PORT_CAPACITY];
 
     contents[0] = data;
   }
 
+  /**
+   *  Steps the port.
+   */
   public void step() {
     /*
      *  Block for a cycle.
@@ -96,6 +143,11 @@ public class CommunicationPort extends Port {
     }
   }
 
+  /**
+   *  Gets the global name.
+   *
+   *  @return the global name.
+   */
   public String getGlobalName() {
     return globalName;
   }

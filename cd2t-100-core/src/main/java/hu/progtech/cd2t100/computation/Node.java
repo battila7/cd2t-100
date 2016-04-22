@@ -118,12 +118,12 @@ public class Node {
    *  The instruction can be executed if and only if all of its read dependencies
    *  are fulfilled and no writeable port contains data.
    *
-   *  @throws NodeExecutionException If there were errors during the instruction
+   *  @throws IllegalStateException If there were errors during the instruction
    *                                 generation.
    */
-  public void step() throws NodeExecutionException {
+  public void step() throws IllegalStateException {
     if (!readyToRun) {
-      throw new NodeExecutionException(
+      throw new IllegalStateException(
         "Node's not able to run because of previous errors.");
     }
 
@@ -234,18 +234,18 @@ public class Node {
    *  Using the code element set built from the source code, builds the actual
    *  executable instructions. A call to this method must be preceded by
    *  a successful invocation of the {@link Node#buildCodeElementSet} method.
-   *  Otherwise it throws a {@code NodeExecutionException} exception.
+   *  Otherwise it throws a {@code IllegalStateException} exception.
    *
    *  @return the list of exceptions
    *
-   *  @throws NodeExecutionException If instructions cannot be built from the
-   *                                 {@code Node}'s code element set.
+   *  @throws IllegalStateException If instructions cannot be built from the
+   *                                {@code Node}'s code element set.
    */
   public List<LineNumberedException> buildInstructions()
-    throws NodeExecutionException
+    throws IllegalStateException
   {
     if ((codeElementSet == null) || (codeElementSet.isExceptionOccurred())) {
-      throw new NodeExecutionException(
+      throw new IllegalStateException(
         "Instructions cannot be built because of previous errors or empty element set.");
     }
 

@@ -12,7 +12,6 @@ import java.util.concurrent.BlockingQueue;
 import hu.progtech.cd2t100.asm.LineNumberedException;
 
 import hu.progtech.cd2t100.computation.Node;
-import hu.progtech.cd2t100.computation.NodeExecutionException;
 import hu.progtech.cd2t100.computation.SourceCodeFormatException;
 
 import hu.progtech.cd2t100.computation.io.CommunicationPort;
@@ -228,7 +227,7 @@ public class Emulator {
 
       try {
         exceptions = node.buildInstructions();
-      } catch (NodeExecutionException e) {
+      } catch (IllegalStateException e) {
         nodeExceptionMap.put(node.getGlobalName(), e);
 
         continue;
@@ -281,7 +280,7 @@ public class Emulator {
           data.addNodeMemento(n.saveToMemento());
 
           n.step();
-        } catch (NodeExecutionException e) {
+        } catch (IllegalStateException e) {
 
         }
       }
