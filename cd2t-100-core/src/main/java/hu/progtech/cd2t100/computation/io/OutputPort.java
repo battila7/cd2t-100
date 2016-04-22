@@ -19,8 +19,10 @@ public class OutputPort extends CommunicationPort {
 
   @Override
   public void step() {
-    contents = null;
-
-    sourceNode.onPortRead(this);
+    if (contents != null) {
+      contents = null;
+    } else {
+      sourceNode.onPortRead(this);
+    }
   }
 }

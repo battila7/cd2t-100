@@ -20,9 +20,7 @@ public class InputPort extends CommunicationPort {
 
     this.contents = Arrays.copyOf(contents, contents.length);
 
-    this.dataPointer = -1;
-
-    this.readPerformed = true;
+    reset();
   }
 
   public int getDataPointer() {
@@ -36,13 +34,9 @@ public class InputPort extends CommunicationPort {
 
   @Override
   public int[] getContents() {
-    if (readPerformed) {
-      return null;
-    }
-    
     int[] ret = null;
 
-    if ((dataPointer < capacity) && (dataPointer >= 0)) {
+    if (isDataPointerValid() && (!readPerformed)) {
       ret = new int[1];
 
       ret[0] = contents[dataPointer];
@@ -56,23 +50,19 @@ public class InputPort extends CommunicationPort {
     dataPointer = -1;
 
     readPerformed = true;
+
+    containsData = false;
   }
 
   @Override
   public int[] readContents() {
-    if (!containsData) {
-      return null;
-    }
-
     int[] ret = new int[1];
 
-    if ((dataPointer < capacity) && (dataPointer >= 0)) {
+    if (isDataPointerValid() && (containsData)) {
       ret[0] = contents[dataPointer];
-    } else {
-      ret[0] = 0;
-    }
 
-    readPerformed = true;
+      readPerformed = true;
+    }
 
     return ret;
   }
@@ -90,12 +80,12 @@ public class InputPort extends CommunicationPort {
       readPerformed = false;
 
       containsData = false;
-
-      return;
-    }
-
-    if ((!containsData) && (dataPointer < capacity) && (dataPointer >= 0)) {
+    } else  if ((!containsData) && (isDataPointerValid())) {
       containsData = true;
     }
+  }
+
+  private boolean isDataPointerValid() {
+    return (dataPointer < capacity) && (dataPointer >= 0);
   }
 }
