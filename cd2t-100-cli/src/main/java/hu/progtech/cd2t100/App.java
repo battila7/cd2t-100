@@ -1,7 +1,6 @@
 package hu.progtech.cd2t100;
 
 import java.util.Optional;
-import java.util.List;
 import java.util.Scanner;
 import java.util.Map;
 import java.util.HashMap;
@@ -10,8 +9,6 @@ import java.util.ArrayList;
 import java.util.concurrent.BlockingQueue;
 
 import java.io.InputStream;
-
-import hu.progtech.cd2t100.asm.LineNumberedException;
 
 import hu.progtech.cd2t100.computation.*;
 import hu.progtech.cd2t100.computation.io.*;

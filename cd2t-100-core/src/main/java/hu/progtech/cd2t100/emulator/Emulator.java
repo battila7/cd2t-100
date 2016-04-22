@@ -14,7 +14,6 @@ import hu.progtech.cd2t100.asm.LineNumberedException;
 import hu.progtech.cd2t100.computation.Node;
 import hu.progtech.cd2t100.computation.NodeExecutionException;
 import hu.progtech.cd2t100.computation.SourceCodeFormatException;
-import hu.progtech.cd2t100.computation.NodeMemento;
 
 import hu.progtech.cd2t100.computation.io.CommunicationPort;
 

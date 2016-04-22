@@ -3,7 +3,6 @@ package hu.progtech.cd2t100;
 import java.util.Scanner;
 
 import hu.progtech.cd2t100.emulator.Emulator;
-import hu.progtech.cd2t100.emulator.StateChangeRequest;
 import hu.progtech.cd2t100.emulator.InvalidStateException;
 
 public class EditCommand implements CliCommand {
