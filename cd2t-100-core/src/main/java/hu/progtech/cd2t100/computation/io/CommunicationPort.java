@@ -4,6 +4,14 @@ import java.util.Arrays;
 
 import hu.progtech.cd2t100.computation.Node;
 
+/**
+ *  A communication port that can be used for internode data exchange.
+ *  Although it extends the {@code Port} class, its capacity is limited to
+ *  one.
+ *
+ *  The data written to a {@code CommunicationPort} is only reachable after
+ *  the port's {@code step()} method has been called.
+ */
 public class CommunicationPort extends Port {
   private static final int COM_PORT_CAPACITY = 1;
 

@@ -1,6 +1,59 @@
 package hu.progtech.cd2t100.emulator;
 
+/**
+ *  Represents the state of an {@code Emulator} object. The following
+ *  table contains the transitions from one state to another for different
+ *  {@code StateChangeRequest} values:
+ *
+ *  <table border="1">
+ *    <caption>The state transition table</caption>
+ *    <tr>
+ *      <td></td>
+ *      <td>{@code RUN}</td>
+ *      <td>{@code ERROR}</td>
+ *      <td>{@code PAUSE}</td>
+ *      <td>{@code STOP}</td>
+ *      <td>{@code STEP}</td>
+ *    </tr>
+ *    <tr>
+ *      <td>STOPPED</td>
+ *      <td>{@code RUNNING}</td>
+ *      <td>{@code ERROR}</td>
+ *      <td>{@code RUNNING}</td>
+ *      <td>{@code RUNNING}</td>
+ *      <td>{@code RUNNING}</td>
+ *    </tr>
+ *    <tr>
+ *      <td>ERROR</td>
+ *      <td>{@code STOPPED}</td>
+ *      <td>{@code STOPPED}</td>
+ *      <td>{@code STOPPED}</td>
+ *      <td>{@code STOPPED}</td>
+ *      <td>{@code STOPPED}</td>
+ *    </tr>
+ *    <tr>
+ *      <td>RUNNING</td>
+ *      <td>{@code STOPPED}</td>
+ *      <td>{@code STOPPED}</td>
+ *      <td>{@code PAUSED}</td>
+ *      <td>{@code STOPPED}</td>
+ *      <td>{@code STOPPED}</td>
+ *    </tr>
+ *    <tr>
+ *      <td>PAUSED</td>
+ *      <td>{@code RUNNING}</td>
+ *      <td>{@code RUNNING}</td>
+ *      <td>{@code RUNNING}</td>
+ *      <td>{@code STOPPED}</td>
+ *      <td>{@code RUNNING}</td>
+ *    </tr>
+ *  </table>
+ */
 public enum EmulatorState {
+  /**
+   *  Indicates that the emulator is in stopped state. The clock generator
+   *  is turned off and the source code of the nodes can be modified.
+   */
   STOPPED() {
     @Override
     /* package */ void onRequest(Emulator emulator, StateChangeRequest changeRequest) {
@@ -18,6 +71,10 @@ public enum EmulatorState {
     }
   },
 
+  /**
+   *  Indicates that the emulator has encountered an error. This state can be
+   *  reached from {@code STOPPED} only, if instruction generation fails.
+   */
   ERROR() {
     @Override
     /* package */ void onRequest(Emulator emulator, StateChangeRequest changeRequest) {
@@ -27,6 +84,10 @@ public enum EmulatorState {
     }
   },
 
+  /**
+   *  The emulator is running and executing instructions. When transitioning into
+   *  {@code STOPPED} state nodes and ports get reset.
+   */
   RUNNING() {
     @Override
     /* package */ void onRequest(Emulator emulator, StateChangeRequest changeRequest) {
@@ -42,6 +103,10 @@ public enum EmulatorState {
     }
   },
 
+  /**
+   *  The emulator is paused, but can continue execution from the point it was
+   *  paused at. When transitioning into {@code STOPPED} state nodes and ports get reset.
+   */
   PAUSED() {
     @Override
     /* package */ void onRequest(Emulator emulator, StateChangeRequest changeRequest) {

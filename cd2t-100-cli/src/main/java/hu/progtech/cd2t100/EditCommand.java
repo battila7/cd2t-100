@@ -3,7 +3,6 @@ package hu.progtech.cd2t100;
 import java.util.Scanner;
 
 import hu.progtech.cd2t100.emulator.Emulator;
-import hu.progtech.cd2t100.emulator.InvalidStateException;
 
 public class EditCommand implements CliCommand {
   @Override
@@ -20,7 +19,7 @@ public class EditCommand implements CliCommand {
       code = readCode(sc);
 
       emulator.setSourceCode("NODE2", code);
-    } catch (InvalidStateException e) {
+    } catch (IllegalStateException e) {
       System.out.println(e.getMessage());
     }
   }

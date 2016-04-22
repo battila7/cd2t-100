@@ -17,8 +17,19 @@ import hu.progtech.cd2t100.computation.SourceCodeFormatException;
 
 import hu.progtech.cd2t100.computation.io.CommunicationPort;
 
+/**
+ *  Emulates a multi-node processor architecture by controlling
+ *  {@code Node}s and ports. The state changes of the {@code Emulator}
+ *  can be observed with an {@code EmulatorObserver}. The actual execution
+ *  data of the last processor cycle (the nodes' mementos and the contents of the ports)
+ *  is published in a blocking queue.
+ *
+ *  If the emulator is in {@code RUNNING} state, its driven by a clock generator
+ *  ticking at a specified frequency passed to the constructor. That way the
+ *  emulator can operate as fast as one may wish.
+ */
 public class Emulator {
-  private Timer clockSignalTimer;
+  private Timer clockGenerator;
 
   private final BlockingQueue<EmulatorCycleData> cycleDataQueue;
 
@@ -38,6 +49,16 @@ public class Emulator {
 
   private EmulatorCycle currentCycle;
 
+  /**
+   *  Constructs a new {@code Emulator} with the specified nodes and ports running
+   *  at the passed frequency. The newly created {@code Emulator} will be in
+   *  {@code STOPPED} state.
+   *
+   *  @param nodes the nodes
+   *  @param communicationPorts the ports between the nodes
+   *  @param emulatorObserver the observer obversing the state changes
+   *  @param clockFrequency the time between the clock generator's ticks in milliseconds
+   */
   Emulator(Map<String, Node> nodes, List<CommunicationPort> communicationPorts,
            EmulatorObserver emulatorObserver, long clockFrequency) {
     this.nodes = nodes;
@@ -50,55 +71,102 @@ public class Emulator {
 
     this.clockFrequency = clockFrequency;
 
-    clockSignalTimer = new Timer(true);
+    clockGenerator = new Timer(true);
 
     cycleDataQueue = new SynchronousQueue<>();
 
     emulatorState = EmulatorState.STOPPED;
   }
 
+  /**
+   *  Gets the state of the {@code Emulator}.
+   *
+   *  @return the state of the {@code Emulator}
+   */
   public EmulatorState getState() {
     synchronized (emulatorState) {
       return emulatorState;
     }
   }
 
+  /**
+   *  Sends a request to the {@code Emulator} to change it's state.
+   *  The states react differently to the request types, please refer to the
+   *  documentation of the {@link EmulatorState}.
+   *
+   *  @param stateChangeRequest the state change request's type
+   */
   public void request(StateChangeRequest stateChangeRequest) {
-    emulatorState.onRequest(this, stateChangeRequest);
+    synchronized (emulatorState) {
+      emulatorState.onRequest(this, stateChangeRequest);
+    }
   }
 
+  /**
+   *  Gets the time between the clock generator tick in milliseconds.
+   *
+   *  @return the time between clock generator ticks
+   */
   public long getClockFrequency() {
     return clockFrequency;
   }
 
+  /**
+   *  Sets the source code of a specified {@code Node}.
+   *
+   *  @param nodeName the global name if the {@code Node}
+   *  @param sourceCode the source code
+   *
+   *  @throws IllegalStateException If the {@code Emulator} is not in
+   *                                {@code STOPPED} state.
+   */
   public void setSourceCode(String nodeName, String sourceCode)
-    throws InvalidStateException
+    throws IllegalStateException
   {
     if (getState() != EmulatorState.STOPPED) {
-      throw new InvalidStateException("Source code can only be set in STOPPED state.");
+      throw new IllegalStateException("Source code can only be set in STOPPED state.");
     }
 
     Optional.ofNullable(nodes.get(nodeName))
             .ifPresent(x -> x.setSourceCode(sourceCode));
   }
 
+  /**
+   *  Gets the queue that contains data from the last processor cycle.
+   *
+   *  @return the queue with the data
+   */
   public BlockingQueue<EmulatorCycleData> getCycleDataQueue() {
     return cycleDataQueue;
+  }
+
+  /**
+   *  Gets the code exception map. Code exceptions are caused by syntactically
+   *  or semantically incorrect source code. The returned map contains the exceptions
+   *  mapped to the global names of the nodes.
+   *
+   *  @return the map of code exceptions
+   */
+  public Map<String, List<LineNumberedException>> getCodeExceptionMap() {
+    return codeExceptionMap;
+  }
+
+  /**
+   *  Gets the node exception map. Node exceptions are caused by too lengthy
+   *  or {@code null} source codes. The returned map contains the exceptions
+   *  mapped to the global names of the nodes.
+   *
+   *  @return the map of node exceptions
+   */
+  public Map<String, Exception> getNodeExceptionMap() {
+    return nodeExceptionMap;
   }
 
   /* package */ void start(ExecutionMode executionMode) {
     currentCycle = new EmulatorCycle(executionMode);
 
-    clockSignalTimer.scheduleAtFixedRate(
+    clockGenerator.scheduleAtFixedRate(
       currentCycle, 0, clockFrequency);
-  }
-
-  public Map<String, List<LineNumberedException>> getCodeExceptionMap() {
-    return codeExceptionMap;
-  }
-
-  public Map<String, Exception> getNodeExceptionMap() {
-    return nodeExceptionMap;
   }
 
 

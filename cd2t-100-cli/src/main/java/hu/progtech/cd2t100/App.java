@@ -90,7 +90,7 @@ public class App {
 		Node n1 =
 			builder.setMaximumSourceCodeLines(20)
 						 .setGlobalName("NODE1")
-						 .addInstructionRegistry(registry)
+						 .setInstructionRegistry(registry)
 						 .addRegister(new Register(1, "ACC"))
 						 .addWriteablePort("UP", cp1)
 						 .addReadablePort("UP", cp2)
@@ -101,7 +101,7 @@ public class App {
 		Node n2 =
 			builder.setMaximumSourceCodeLines(20)
 						 .setGlobalName("NODE2")
-						 .addInstructionRegistry(registry)
+						 .setInstructionRegistry(registry)
 						 .addRegister(new Register(1, "ACC"))
 						 .addReadablePort("DOWN", cp1)
 						 .addWriteablePort("DOWN", cp2)

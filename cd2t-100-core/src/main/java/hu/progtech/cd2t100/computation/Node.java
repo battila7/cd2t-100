@@ -21,6 +21,14 @@ import hu.progtech.cd2t100.formal.ReadResult;
 
 import org.apache.commons.lang3.mutable.MutableInt;
 
+/**
+ *  Represents a processor node that's able to execute instructions. {@code Node}s
+ *  can communicate with each other through {@link CommunicationPort}s and store
+ *  data in {@link Register}s.
+ *
+ *  It's guaranteed that every {@code Node} has at least two registers,
+ *  {@code ACC} and {@code BAK} to ensure compatibility with {@code TIS-100}.'
+ */
 public class Node {
   private static Pattern newlinePattern =
     Pattern.compile("\r\n|\r|\n");
@@ -54,6 +62,19 @@ public class Node {
 
   private ExecutionState executionState;
 
+  /**
+   *  Constructs a new {@code Node} using the specified
+   *  registry and other properties.
+   *
+   *  @param instructionRegistry the {@code InstructionRegistry}
+   *                             the new {@code Node} will be using
+   *  @param maximumSourceCodeLines the maximum length of source code
+   *                                in lines this {@code Node} can store
+   *  @param globalName the global name of the {@code Node}
+   *  @param registerMap the map of registers
+   *  @param readablePortMap the map of readable ports
+   *  @param writeablePortMap the map of writeable ports
+   */
   public Node(InstructionRegistry instructionRegistry,
               int maximumSourceCodeLines,
               String globalName,
@@ -89,6 +110,17 @@ public class Node {
     readyToRun = false;
   }
 
+  /**
+   *  Instructs the {@code Node} to execute its next step. This
+   *  corresponds to one processor cycle.
+   *
+   *  The instruction pointer's value determines the executed instruction.
+   *  The instruction can be executed if and only if all of its read dependencies
+   *  are fulfilled and no writeable port contains data.
+   *
+   *  @throws NodeExecutionException If there were errors during the instruction
+   *                                 generation.
+   */
   public void step() throws NodeExecutionException {
     if (!readyToRun) {
       throw new NodeExecutionException(
@@ -171,6 +203,9 @@ public class Node {
    *  should follow this method.
    *
    *  @return the list of exceptions
+   *
+   *  @throws SourceCodeFormatException If the source code is {@code null}
+   *                                    or longer than the permitted maximal size.
    */
   public List<LineNumberedException> buildCodeElementSet()
     throws SourceCodeFormatException
@@ -195,6 +230,17 @@ public class Node {
     return codeElementSet.getExceptionList();
   }
 
+  /**
+   *  Using the code element set built from the source code, builds the actual
+   *  executable instructions. A call to this method must be preceded by
+   *  a successful invocation of the {@link Node#buildCodeElementSet} method.
+   *  Otherwise it throws a {@code NodeExecutionException} exception.
+   *
+   *  @return the list of exceptions
+   *
+   *  @throws NodeExecutionException If instructions cannot be built from the
+   *                                 {@code Node}'s code element set.
+   */
   public List<LineNumberedException> buildInstructions()
     throws NodeExecutionException
   {
@@ -223,6 +269,12 @@ public class Node {
     return exceptionList;
   }
 
+  /**
+   *  Informs the {@code Node} object that data was read from
+   *  the specified port.
+   *
+   *  @param port the port
+   */
   public void onPortRead(CommunicationPort port) {
     blockedWriteablePorts.remove(port);
   }
@@ -267,6 +319,13 @@ public class Node {
                            executionState, line, globalName);
   }
 
+  /**
+   *  Resets the {@code Node}'s state to the default. Note that
+   *  source code is also deleted along with the registers' contents.
+   *  The instruction pointer is set to zero.
+   *
+   *  The port and register set remains untouched.
+   */
   public void reset() {
     for (Register r : registerMap.values()) {
       r.reset();
