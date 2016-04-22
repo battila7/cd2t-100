@@ -9,6 +9,9 @@ import java.util.TimerTask;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.BlockingQueue;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import hu.progtech.cd2t100.asm.LineNumberedException;
 
 import hu.progtech.cd2t100.computation.Node;
@@ -28,6 +31,8 @@ import hu.progtech.cd2t100.computation.io.CommunicationPort;
  *  emulator can operate as fast as one may wish.
  */
 public class Emulator {
+  private static final Logger	logger = LoggerFactory.getLogger(Emulator.class);
+
   private Timer clockGenerator;
 
   private final BlockingQueue<EmulatorCycleData> cycleDataQueue;
@@ -97,6 +102,8 @@ public class Emulator {
    */
   public void request(StateChangeRequest stateChangeRequest) {
     synchronized (emulatorState) {
+      logger.debug("State change request {}", stateChangeRequest);
+
       emulatorState.onRequest(this, stateChangeRequest);
     }
   }
@@ -198,6 +205,8 @@ public class Emulator {
   /* package */ void setState(EmulatorState emulatorState) {
     synchronized (emulatorState) {
       this.emulatorState = emulatorState;
+
+      logger.debug("New state: {}", emulatorState);
     }
 
     emulatorObserver.onStateChanged(emulatorState);

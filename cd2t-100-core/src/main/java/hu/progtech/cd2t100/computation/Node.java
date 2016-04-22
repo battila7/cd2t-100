@@ -10,6 +10,9 @@ import java.util.HashSet;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import hu.progtech.cd2t100.asm.CodeFactory;
 import hu.progtech.cd2t100.asm.CodeElementSet;
 import hu.progtech.cd2t100.asm.LineNumberedException;
@@ -30,7 +33,9 @@ import org.apache.commons.lang3.mutable.MutableInt;
  *  {@code ACC} and {@code BAK} to ensure compatibility with {@code TIS-100}.'
  */
 public class Node {
-  private static Pattern newlinePattern =
+  private static final Logger	logger = LoggerFactory.getLogger(Node.class);
+
+  private static final Pattern newlinePattern =
     Pattern.compile("\r\n|\r|\n");
 
   private final String globalName;
@@ -419,7 +424,7 @@ public class Node {
           node.executionState = ExecutionState.WRITE;
         }
       } catch (Exception e) {
-
+        logger.warn("Exception encountered during instruction execution: {}", e);
       }
     }
 
@@ -480,6 +485,8 @@ public class Node {
             break;
           default:
             ret[i + 1] = null;
+
+            logger.warn("Runtime argument substitution failure.");
 
             break;
         }

@@ -3,6 +3,9 @@ package hu.progtech.cd2t100.computation;
 import java.util.Map;
 import java.util.HashMap;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import hu.progtech.cd2t100.formal.InstructionInfo;
 
 /**
@@ -14,6 +17,8 @@ import hu.progtech.cd2t100.formal.InstructionInfo;
  *  @see hu.progtech.cd2t100.computation.Instruction
  */
 public final class InstructionRegistry {
+  private static final Logger	logger = LoggerFactory.getLogger(InstructionRegistry.class);
+
   private final Map<String, InstructionInfo> instructionMap;
 
   private final Map<String, String> effectiveRuleMap;
@@ -45,6 +50,9 @@ public final class InstructionRegistry {
    */
   public void registerInstruction(InstructionInfo info)
     throws OpcodeAlreadyRegisteredException {
+
+    logger.info("Attempt to register info for {}", info);
+
     if (instructionMap.putIfAbsent(info.getOpcode(), info) != null) {
       throw new OpcodeAlreadyRegisteredException(
         "Opcode is already registered by " +
@@ -68,6 +76,8 @@ public final class InstructionRegistry {
    *  @param rules the rules to be inserted put into the effective rule map
    */
   public void putRules(Map<String, String> rules) {
+    logger.trace("The following rules have been put into the map: {}", rules);
+
     effectiveRuleMap.putAll(rules);
   }
 

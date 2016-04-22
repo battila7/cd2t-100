@@ -20,6 +20,9 @@ import org.codehaus.groovy.control.CompilationFailedException;
 
 import org.apache.commons.io.IOUtils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.mutable.MutableInt;
 
@@ -34,6 +37,8 @@ import hu.progtech.cd2t100.computation.ExecutionEnvironment;
  *  types.
  */
 public class InstructionLoader {
+  private static final Logger	logger = LoggerFactory.getLogger(InstructionLoader.class);
+
   /*
    * There's no need for ^ and $ because we're going to
    * use Matcher.matches() which matches against the entire string.
@@ -54,6 +59,9 @@ public class InstructionLoader {
       autoImportClasses.stream()
                        .map(x -> "import " + x.getName())
                        .collect(Collectors.joining(";\n", "", ";\n\n"));
+
+    logger.debug("Automatic import statements initialized:\n{}",
+      automaticImportStatement);
   }
 
   private InstructionLoader() {
@@ -146,6 +154,8 @@ public class InstructionLoader {
     String opcode = instructionClass.getDeclaredAnnotation(Opcode.class)
                                     .value();
 
+    logger.debug("Parsing Groovy class for {}.", opcode);
+
     return Optional.ofNullable(opcode)
                    .filter(x -> wordPattern.matcher(x).matches());
   }
@@ -185,10 +195,6 @@ public class InstructionLoader {
 
     ArrayList<FormalCall> calls = new ArrayList<>();
 
-    /**
-     * TODO: Prevent ambiguous methods
-     *       (demanded argument list type and length is the same).
-     */
     /*
      *  map() cannot be used since it is not possible to throw checked
      *  exceptions from streams

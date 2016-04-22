@@ -9,6 +9,9 @@ import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import hu.progtech.cd2t100.computation.ArgumentType;
 
 /**
@@ -26,6 +29,8 @@ import hu.progtech.cd2t100.computation.ArgumentType;
  * This class is only used by the {@link CodeFactory}.
  */
 class AsmListenerImpl extends AsmBaseListener {
+  private static final Logger	logger = LoggerFactory.getLogger(AsmListenerImpl.class);
+
   private List<LineNumberedException> exceptionList;
 
   private List<InstructionElement> instructionList;
@@ -62,6 +67,8 @@ class AsmListenerImpl extends AsmBaseListener {
 
     ruleMap.put(ctx.ruleName().getText(),
                 arg.isPresent() ? arg.get().getText() : "");
+
+    logger.debug("Rule encountered: {}", ctx.ruleName().getText());
   }
 
   @Override
@@ -105,6 +112,8 @@ class AsmListenerImpl extends AsmBaseListener {
     }
 
     updateUnsetLabels(0);
+
+    logger.debug("Parsing is done.");
   }
 
   /**
@@ -182,6 +191,8 @@ class AsmListenerImpl extends AsmBaseListener {
     }
 
     labelMap.put(name, isPositionKnown ? instructionList.size() - 1 : -1);
+
+    logger.debug("Label parsed: {}", name);
   }
 
   /**
@@ -210,6 +221,8 @@ class AsmListenerImpl extends AsmBaseListener {
     instructionList.add(new InstructionElement(
                           Location.fromParserRuleContext(ctx.opcode()),
                           opcode, args));
+
+    logger.debug("Instruction parsed: {}", opcode);
   }
 
   /**
@@ -258,6 +271,8 @@ class AsmListenerImpl extends AsmBaseListener {
                                                argValue);
       }
     }
+
+    logger.trace("Argument with type {} and value {} evaluated.", argType, argValue);
 
     return new ArgumentElement(arg.getLocation(),
                                argValue, argType);

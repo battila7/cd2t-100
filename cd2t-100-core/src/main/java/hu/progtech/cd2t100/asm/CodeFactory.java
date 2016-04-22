@@ -8,6 +8,9 @@ import org.antlr.v4.runtime.ConsoleErrorListener;
 
 import org.apache.commons.lang3.StringUtils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Initiates the lexing and parsing of source codes and collects the data
  * extracted from the code. Its public interface only consists of the
@@ -15,6 +18,8 @@ import org.apache.commons.lang3.StringUtils;
  * orchestrating the process.
  */
 public final class CodeFactory {
+  private static final Logger	logger = LoggerFactory.getLogger(CodeFactory.class);
+
   /**
    * Only implemented in order to hide the constructor,
    * so the class cannot be instantiated.
@@ -24,6 +29,7 @@ public final class CodeFactory {
      *  Hidden empty constructor.
      */
   }
+
   /**
    * Removes trailing whitespaces from the specified text and
    * appends a newline to the end of the this trimmed text. This method is
@@ -81,6 +87,8 @@ public final class CodeFactory {
     asmParser.addErrorListener(asmErrorListener);
 
     asmParser.addParseListener(asmListener);
+
+    logger.debug("Creating code element set...");
 
     asmParser.program();
 

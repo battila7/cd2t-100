@@ -2,6 +2,9 @@ package hu.progtech.cd2t100.computation;
 
 import java.util.HashMap;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import hu.progtech.cd2t100.computation.io.Register;
 import hu.progtech.cd2t100.computation.io.CommunicationPort;
 
@@ -10,6 +13,8 @@ import hu.progtech.cd2t100.computation.io.CommunicationPort;
  *  {@code Node} objects.
  */
 public class NodeBuilder {
+  private static final Logger	logger = LoggerFactory.getLogger(NodeBuilder.class);
+
   private String globalName;
 
   private int maximumSourceCodeLines;
@@ -125,6 +130,8 @@ public class NodeBuilder {
                       registerMap,
                       readablePortMap,
                       writeablePortMap);
+
+    logger.info("Node {} has been built.", globalName);
 
     for (CommunicationPort port : writeablePortMap.values()) {
       port.setSourceNode(n);

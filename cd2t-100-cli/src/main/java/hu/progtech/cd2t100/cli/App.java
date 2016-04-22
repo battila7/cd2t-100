@@ -10,6 +10,9 @@ import java.util.concurrent.BlockingQueue;
 
 import java.io.InputStream;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import hu.progtech.cd2t100.computation.*;
 import hu.progtech.cd2t100.computation.io.*;
 
@@ -19,6 +22,8 @@ import hu.progtech.cd2t100.formal.InstructionInfo;
 import hu.progtech.cd2t100.emulator.*;
 
 public class App {
+	private static final Logger logger = LoggerFactory.getLogger(App.class);
+
 	private static Scanner scanner;
 
 	private static boolean exitRequested;
@@ -27,11 +32,11 @@ public class App {
 		try {
 			scanner = new Scanner(System.in);
 
-			System.out.println("Setting up the emulator...");
+			logger.info("Setting up the emulator...");
 
 			Emulator emulator = setupEmulator();
 
-			System.out.println("The emulator is ready! Entering the game loop.");
+			logger.info("The emulator is ready! Entering the game loop.");
 
 			printHelp();
 
@@ -155,12 +160,10 @@ public class App {
 
 				InstructionInfo info = InstructionLoader.loadInstruction(is);
 
-				System.err.println(info);
-
 				registry.registerInstruction(info);
 			}
 		} catch (Exception e) {
-			System.err.println(e.getMessage());
+			logger.warn(e.getMessage());
 		}
 	}
 
