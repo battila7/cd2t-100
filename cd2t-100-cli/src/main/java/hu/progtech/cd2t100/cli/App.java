@@ -140,17 +140,17 @@ public class App {
 	private static void loadInstructions(InstructionRegistry registry) {
 		ArrayList<String> names = new ArrayList<>();
 
-		names.add("Print.groovy");
-		names.add("Set.groovy");
-		names.add("Jmp.groovy");
-		names.add("Dec.groovy");
-		names.add("Nop.groovy");
-		names.add("Jnz.groovy");
-		names.add("Jro.groovy");
-		names.add("Push.groovy");
-		names.add("Pop.groovy");
-		names.add("ClearStack.groovy");
-		names.add("Mov.groovy");
+		names.add("groovy/Print.groovy");
+		names.add("groovy/Set.groovy");
+		names.add("groovy/Jmp.groovy");
+		names.add("groovy/Dec.groovy");
+		names.add("groovy/Nop.groovy");
+		names.add("groovy/Jnz.groovy");
+		names.add("groovy/Jro.groovy");
+		names.add("groovy/Push.groovy");
+		names.add("groovy/Pop.groovy");
+		names.add("groovy/ClearStack.groovy");
+		names.add("groovy/Mov.groovy");
 
 		try {
 			InputStream is;
