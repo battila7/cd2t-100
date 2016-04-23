@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 public class PuzzleDaoXml implements PuzzleDao {
   private static final Logger logger =
-    LoggerFactory.getLogger(InstructionDescriptorDaoXml.class);
+    LoggerFactory.getLogger(PuzzleDaoXml.class);
 
   private final String xmlFile;
 

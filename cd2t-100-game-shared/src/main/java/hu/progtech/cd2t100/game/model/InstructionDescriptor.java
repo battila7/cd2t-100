@@ -33,4 +33,13 @@ public class InstructionDescriptor {
   public void setGroovyFile(String groovyFile) {
     this.groovyFile = groovyFile;
   }
+
+  @Override
+  public String toString() {
+    String str = opcode + " (" + groovyFile + ")\n";
+
+    str += description;
+
+    return str;
+  }
 }

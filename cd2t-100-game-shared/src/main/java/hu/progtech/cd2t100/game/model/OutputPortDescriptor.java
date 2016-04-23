@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.XmlList;
 public class OutputPortDescriptor {
   private String globalName;
 
-  private List<Integer> expectedContents;
+  private int[] expectedContents;
 
   private String writeableByNode;
 
@@ -35,11 +35,11 @@ public class OutputPortDescriptor {
 
   @XmlElement(name = "expected")
   @XmlList
-  public List<Integer> getExpectedContens() {
+  public int[] getExpectedContens() {
     return expectedContents;
   }
 
-  public void setExpectedContents(List<Integer> expectedContents) {
+  public void setExpectedContents(int[] expectedContents) {
     this.expectedContents = expectedContents;
   }
 }

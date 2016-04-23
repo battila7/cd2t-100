@@ -1,0 +1,75 @@
+<instructionDescriptors>
+  <instructionDescriptor>
+    <description>
+      Clears the stack register i.e. sets the stack pointer to zero.
+    </description>
+    <opcode>CLRSTACK</opcode>
+    <groovyFile>groovy/ClearStack.groovy</groovyFile>
+  </instructionDescriptor>
+  <instructionDescriptor>
+    <description>
+      Decreases the specified register's value by one. If the
+      register stores multiple values decreases the first only.
+    </description>
+    <opcode>DEC</opcode>
+    <groovyFile>groovy/Dec.groovy</groovyFile>
+  </instructionDescriptor>
+  <instructionDescriptor>
+    <description>
+      Performs an unconditional jump to the specified label.
+    </description>
+    <opcode>JMP</opcode>
+    <groovyFile>groovy/Jmp.groovy</groovyFile>
+  </instructionDescriptor>
+  <instructionDescriptor>
+    <description>
+      Performs a jump to the specified label if the ACC register's value
+      is not zero.
+    </description>
+    <opcode>JNZ</opcode>
+    <groovyFile>groovy/Jnz.groovy</groovyFile>
+  </instructionDescriptor>
+  <instructionDescriptor>
+    <description>
+      Performs a relative jump to the specified value. If zero is specified as the
+      argument, initiates an infinite loop.
+    </description>
+    <opcode>JRO</opcode>
+    <groovyFile>groovy/Jro.groovy</groovyFile>
+  </instructionDescriptor>
+  <instructionDescriptor>
+    <description>
+      General value moving instruction between ports and registers.
+    </description>
+    <opcode>MOV</opcode>
+    <groovyFile>groovy/Mov.groovy</groovyFile>
+  </instructionDescriptor>
+  <instructionDescriptor>
+    <description>
+      Does nothing.
+    </description>
+    <opcode>NOP</opcode>
+    <groovyFile>groovy/Nop.groovy</groovyFile>
+  </instructionDescriptor>
+  <instructionDescriptor>
+    <description>
+      Pops the top value from the stack into the accumulator.
+    </description>
+    <opcode>POP</opcode>
+    <groovyFile>groovy/Pop.groovy</groovyFile>
+  </instructionDescriptor>
+  <instructionDescriptor>
+    <description>
+      Pushes the ACC register's value to the top of the stack.
+    </description>
+    <opcode>PUSH</opcode>
+    <groovyFile>groovy/Push.groovy</groovyFile>
+  </instructionDescriptor>
+  <instructionDescriptor>
+    <description>
+      Sets the specified register's value to the specified number.
+    </description>
+    <opcode>SET</opcode>
+    <groovyFile>groovy/Set.groovy</groovyFile>
+  </instructionDescriptor>
+</instructionDescriptors>

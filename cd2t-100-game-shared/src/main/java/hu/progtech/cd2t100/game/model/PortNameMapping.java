@@ -1,14 +1,22 @@
 package hu.progtech.cd2t100.game.model;
 
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlAttribute;
 
-@XmlRootElement(name = "communicationPort")
-public class CommunicationPortDescriptor {
+public class PortNameMapping {
+  private String localName;
+
   private String globalName;
 
-  @XmlAttribute
+  @XmlAttribute(name = "local")
+  public String getLocalName() {
+    return localName;
+  }
+
+  public void setLocalName(String localName) {
+    this.localName = localName;
+  }
+
+  @XmlAttribute(name = "global")
   public String getGlobalName() {
     return globalName;
   }

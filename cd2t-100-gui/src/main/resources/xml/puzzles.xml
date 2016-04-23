@@ -10,27 +10,34 @@
           <register name="ACC" capacity="1" />
           <register name="BAK" capacity="1" />
         </registers>
+        <readablePorts>
+          <port local="UP"   global="IP1" />
+          <port local="DOWN" global="CP1" />
+        </readablePorts>
+        <writeablePorts>
+          <port local="DOWN" global="CP2" />
+        </writeablePorts>
       </node>
       <node globalName="NODE1" maxLines="20" row="1" column="2">
         <registers>
           <register name="ACC" capacity="1" />
           <register name="BAK" capacity="1" />
         </registers>
+        <readablePorts>
+          <port local="UP" global="CP2" />
+        </readablePorts>
+        <writeablePorts>
+          <port local="UP"   global="CP1" />
+          <port local="DOWN" global="OP2" />
+        </writeablePorts>
       </node>
     </nodes>
     <communicationPorts>
-      <communicationPort globalName="CP1">
-        <readableBy>NODE1</readableBy>
-        <writeableBy>NODE2</writeableBy>
-      </communicationPort>
-      <communicationPort globalName="CP2">
-        <readableBy>NODE2</readableBy>
-        <writeableBy>NODE1</writeableBy>
-      </communicationPort>
+      <communicationPort globalName="CP1" />
+      <communicationPort globalName="CP2" />
     </communicationPorts>
     <inputPorts>
       <inputPort globalName="IP1">
-        <readableBy>NODE1</readableBy>
         <contents>
           10 10 10 10 10 10
         </contents>
@@ -38,7 +45,6 @@
     </inputPorts>
     <outputPorts>
       <outputPort globalName="OP1">
-        <writeableBy>NODE2</writeableBy>
         <expected>
           20 20 20 20 20 20
         </expected>

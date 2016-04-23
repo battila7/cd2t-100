@@ -1,4 +1,4 @@
-package hu.progtech.cd2t100.gui.game;
+package hu.progtech.cd2t100.game.gui;
 
 import javafx.application.Application;
 import javafx.stage.Stage;

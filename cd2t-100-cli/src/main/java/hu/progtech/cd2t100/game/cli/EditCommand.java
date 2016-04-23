@@ -7,7 +7,7 @@ import hu.progtech.cd2t100.emulator.Emulator;
 public class EditCommand implements CliCommand {
   @Override
   public void execute(Emulator emulator) {
-    System.out.println("\nPlease enter the program:\n-------------------------------------------------------");
+    /*System.out.println("\nPlease enter the program:\n-------------------------------------------------------");
 
     Scanner sc = App.getStdinScanner();
 
@@ -21,7 +21,7 @@ public class EditCommand implements CliCommand {
       emulator.setSourceCode("NODE2", code);
     } catch (IllegalStateException e) {
       System.out.println(e.getMessage());
-    }
+    }*/
   }
 
   private String readCode(Scanner sc) {

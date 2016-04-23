@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.XmlList;
 public class InputPortDescriptor {
   private String globalName;
 
-  private List<Integer> contents;
+  private int[] contents;
 
   private String readableByNode;
 
@@ -35,11 +35,11 @@ public class InputPortDescriptor {
 
   @XmlElement(name = "contents")
   @XmlList
-  public List<Integer> getContens() {
+  public int[] getContents() {
     return contents;
   }
 
-  public void setContents(List<Integer> contents) {
+  public void setContents(int[] contents) {
     this.contents = contents;
   }
 }

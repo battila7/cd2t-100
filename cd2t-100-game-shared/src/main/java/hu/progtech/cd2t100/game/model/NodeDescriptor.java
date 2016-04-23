@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlAttribute;
 
 @XmlRootElement(name = "node")
@@ -17,6 +18,10 @@ public class NodeDescriptor {
   private int column;
 
   private List<RegisterDescriptor> registerDescriptors;
+
+  private List<PortNameMapping> readablePorts;
+
+  private List<PortNameMapping> writeablePorts;
 
   @XmlAttribute
   public String getGlobalName() {
@@ -61,5 +66,25 @@ public class NodeDescriptor {
 
   public void setRegisterDescriptors(List<RegisterDescriptor> lst) {
     registerDescriptors = lst;
+  }
+
+  @XmlElementWrapper(name = "readablePorts")
+  @XmlElement(name = "port")
+  public List<PortNameMapping> getReadablePorts() {
+    return readablePorts;
+  }
+
+  public void setReadablePorts(List<PortNameMapping> ports) {
+    this.readablePorts = ports;
+  }
+
+  @XmlElementWrapper(name = "writeablePorts")
+  @XmlElement(name = "port")
+  public List<PortNameMapping> getWriteablePorts() {
+    return writeablePorts;
+  }
+
+  public void setWriteablePorts(List<PortNameMapping> ports) {
+    this.writeablePorts = ports;
   }
 }

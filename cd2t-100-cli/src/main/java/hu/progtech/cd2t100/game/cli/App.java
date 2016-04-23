@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.Scanner;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
 import java.util.ArrayList;
 
 import java.util.concurrent.BlockingQueue;
@@ -19,39 +20,13 @@ import hu.progtech.cd2t100.computation.io.*;
 import hu.progtech.cd2t100.formal.InstructionLoader;
 import hu.progtech.cd2t100.formal.InstructionInfo;
 
-import hu.progtech.cd2t100.emulator.*;
-
 public class App {
-	private static final Logger logger = LoggerFactory.getLogger(App.class);
-
-	private static Scanner scanner;
-
-	private static boolean exitRequested;
+	private static GameManager gameManager;
 
 	public static void main(String[] args) {
-		try {
-			scanner = new Scanner(System.in);
+		gameManager = new GameManager();
 
-			logger.info("Setting up the emulator...");
-
-			Emulator emulator = setupEmulator();
-
-			logger.info("The emulator is ready! Entering the game loop.");
-
-			printHelp();
-
-			gameLoop(emulator);
-		} catch (Exception e) {
-			System.err.println(e.getMessage());
-		}
-	}
-
-	public static Scanner getStdinScanner() {
-		return scanner;
-	}
-
-	public static void requestExit() {
-		exitRequested = true;
+		gameManager.launch();
 	}
 
 	private static void printHelp() {
@@ -64,7 +39,7 @@ public class App {
 		System.out.println("\tSTOP: STOPs the emulator.\n");
 	}
 
-	private static void gameLoop(Emulator emulator) {
+	/*private static void gameLoop(Emulator emulator) {
 		Map<String, CliCommand> commands = new HashMap<>();
 
 		commands.put("EXIT", new ExitCommand());
@@ -80,14 +55,15 @@ public class App {
 			Optional.ofNullable(commands.get(command))
 							.ifPresent(x -> x.execute(emulator));
 		}
-	}
+	}*/
 
-	private static Emulator setupEmulator() {
+	/*private static Emulator setupEmulator() {
 		InstructionRegistry registry = new InstructionRegistry(new HashMap<String, String>());
 
-		NodeBuilder builder = new NodeBuilder();
-
 		loadInstructions(registry);
+
+		EmulatorFactory emulatorFactory =
+			EmulatorFactory.newInstance(registry);
 
 		CommunicationPort cp1 = new CommunicationPort("CP1");
 		CommunicationPort cp2 = new CommunicationPort("CP2");
@@ -135,59 +111,31 @@ public class App {
 												.build();
 
 		return emulator;
-	}
 
-	private static void loadInstructions(InstructionRegistry registry) {
-		ArrayList<String> names = new ArrayList<>();
+		return null;
+	}*/
 
-		names.add("groovy/Print.groovy");
-		names.add("groovy/Set.groovy");
-		names.add("groovy/Jmp.groovy");
-		names.add("groovy/Dec.groovy");
-		names.add("groovy/Nop.groovy");
-		names.add("groovy/Jnz.groovy");
-		names.add("groovy/Jro.groovy");
-		names.add("groovy/Push.groovy");
-		names.add("groovy/Pop.groovy");
-		names.add("groovy/ClearStack.groovy");
-		names.add("groovy/Mov.groovy");
-
-		try {
-			InputStream is;
-
-			for (String s : names) {
-				is = App.class.getClassLoader().getResourceAsStream(s);
-
-				InstructionInfo info = InstructionLoader.loadInstruction(is);
-
-				registry.registerInstruction(info);
-			}
-		} catch (Exception e) {
-			logger.warn(e.getMessage());
-		}
-	}
-
-	static class EmulatorObserverImpl implements EmulatorObserver {
+	/*static class EmulatorObserverImpl implements EmulatorObserver {
 		private Emulator emulator;
 
 		private Thread updaterThread;
 
 		@Override
 		public void onStateChanged(EmulatorState newState) {
-			if (newState == EmulatorState.RUNNING) {
+			if (newState == EmulatorState.RUNNING) {*/
 				/*
 				 *	If in PAUSED state, we reuse the updaterThread.
 				 */
-				if (updaterThread == null) {
+				/*if (updaterThread == null) {
 					updaterThread = new Thread(new Updater(emulator.getCycleDataQueue()));
 
 					updaterThread.start();
 				}
-			} else if (newState == EmulatorState.STOPPED) {
+			} else if (newState == EmulatorState.STOPPED) {*/
 				/*
 				 *	If previous state was ERROR, updaterThread is null.
 				 */
-				if (updaterThread != null) {
+				/*if (updaterThread != null) {
 					updaterThread.interrupt();
 
 					updaterThread = null;
@@ -224,5 +172,5 @@ public class App {
 				return;
 			}
 		}
-	}
+	}*/
 }
