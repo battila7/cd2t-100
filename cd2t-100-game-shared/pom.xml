@@ -1,0 +1,40 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>hu.progtech.cd2t100</groupId>
+	<artifactId>cd2t-100-game-shared</artifactId>
+	<version>1.0</version>
+	<name>CD2T-100 Game Shared Classes</name>
+	<description>Module providing classes to utilize the CD2T-100 Core in a game.</description>
+
+	<parent>
+		<groupId>hu.progtech.cd2t100</groupId>
+		<artifactId>cd2t-100-parent</artifactId>
+		<version>1.0</version>
+	</parent>
+
+	<dependencies>
+    <dependency>
+      <groupId>hu.progtech.cd2t100</groupId>
+      <artifactId>cd2t-100-core</artifactId>
+      <version>1.0</version>
+    </dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+</project>

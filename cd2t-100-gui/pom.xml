@@ -3,10 +3,10 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>hu.progtech.cd2t100</groupId>
-	<artifactId>cd2t-100-cli</artifactId>
+	<artifactId>cd2t-100-gui</artifactId>
 	<version>1.0</version>
-	<name>CD2T-100 CLI</name>
-	<description>Command Line Interface to play with the CD2T-100 Core.</description>
+	<name>CD2T-100 GUI</name>
+	<description>A JavaFX GUI implementation of a CD2T-100 based game.</description>
 
 	<parent>
 		<groupId>hu.progtech.cd2t100</groupId>
@@ -16,20 +16,20 @@
 
 	<dependencies>
     <dependency>
-			<groupId>hu.progtech.cd2t100</groupId>
-			<artifactId>cd2t-100-core</artifactId>
+      <groupId>hu.progtech.cd2t100</groupId>
+      <artifactId>cd2t-100-core</artifactId>
       <version>1.0</version>
-		</dependency>
+    </dependency>
 		<dependency>
-			<groupId>hu.progtech.cd2t100</groupId>
-			<artifactId>cd2t-100-sirs</artifactId>
+      <groupId>hu.progtech.cd2t100</groupId>
+      <artifactId>cd2t-100-sirs</artifactId>
       <version>1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>hu.progtech.cd2t100</groupId>
-			<artifactId>cd2t-100-game-shared</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>hu.progtech.cd2t100</groupId>
+      <artifactId>cd2t-100-game-shared</artifactId>
       <version>1.0</version>
-		</dependency>
+    </dependency>
 
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -39,16 +39,14 @@
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-core</artifactId>
-			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
-			<scope>runtime</scope>
 		</dependency>
 	</dependencies>
 
-	<build>
+  <build>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -56,7 +54,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>hu.progtech.cd2t100.game.cli.App</mainClass>
+							<mainClass>hu.progtech.cd2t100.game.gui.App</mainClass>
 						</manifest>
 					</archive>
 				</configuration>

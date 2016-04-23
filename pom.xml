@@ -37,7 +37,8 @@
 
 	<modules>
 		<module>cd2t-100-core</module>
-		<module>cd2t-100-game</module>
+		<module>cd2t-100-game-shared</module>
+		<module>cd2t-100-gui</module>
 		<module>cd2t-100-cli</module>
     <module>cd2t-100-sirs</module>
 		<module>build-tools</module>
