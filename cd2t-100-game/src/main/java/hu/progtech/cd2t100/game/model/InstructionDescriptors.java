@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "instructionDescriptors")
-public class InstructionDescriptors {
+class InstructionDescriptors {
   private List<InstructionDescriptor> descriptorList;
 
   @XmlElement(name = "instructionDescriptor")

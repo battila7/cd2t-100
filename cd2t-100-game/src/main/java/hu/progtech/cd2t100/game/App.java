@@ -22,6 +22,10 @@ public class App extends Application {
 
     System.out.println(idd.getAllInstructionDescriptors());
 
+    PuzzleDao pd = new PuzzleDaoXml();
+
+    System.out.println(pd.getAllPuzzles());
+
     launch(args);
   }
 }
