@@ -1,0 +1,7 @@
+<instructionDescriptors>
+  <instructionDescriptor>
+    <description>Decrease instruction.</description>
+    <opcode>DEC</opcode>
+    <groovyFile>Dec.groovy</groovyFile>
+  </instructionDescriptor>
+</instructionDescriptors>
