@@ -1,0 +1,62 @@
+<puzzles>
+  <puzzle>
+    <name>Sample puzzle</name>
+    <task>
+      Explains what to do.
+    </task>
+    <nodes>
+      <node>
+        <globalName>NODE1</globalName>
+        <registers>
+          <register name="ACC" capacity="1" />
+          <register name="BAK" capacity="1" />
+        </registers>
+        <position>
+          <row>1</row>
+          <column>1</column>
+        </position>
+      </node>
+      <node>
+        <globalName>NODE2</globalName>
+        <registers>
+          <register name="ACC" capacity="1" />
+          <register name="BAK" capacity="1" />
+        </registers>
+        <position>
+          <row>2</row>
+          <column>1</column>
+        </position>
+      </node>
+    </nodes>
+    <communicationPorts>
+      <communicationPort>
+        <globalName>CP1</globalName>
+        <readableBy>NODE1</readableBy>
+        <writeableBy>NODE2</writeableBy>
+      </communicationPort>
+      <communicationPort>
+        <globalName>CP2</globalName>
+        <readableBy>NODE2</readableBy>
+        <writeableBy>NODE1</writeableBy>
+      </communicationPort>
+    </communicationPorts>
+    <inputPorts>
+      <inputPort>
+        <globalName>IP1</globalName>
+        <readableBy>NODE1</readableBy>
+        <contents>
+          10, 10, 10, 10, 10, 10
+        </contents>
+      </inputPort>
+    </inputPorts>
+    <outputPorts>
+      <outputPort>
+        <globalName>OP1</globalName>
+        <writeableBy>NODE2</writeableBy>
+        <expected>
+          20, 20, 20, 20, 20, 20
+        </expected>
+      </outputPort>
+    </outputPorts>
+  </puzzle>
+</puzzles>
