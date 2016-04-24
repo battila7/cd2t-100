@@ -2,24 +2,27 @@ package hu.progtech.cd2t100.game.cli;
 
 import java.util.Scanner;
 
+import hu.progtech.cd2t100.game.model.Puzzle;
+import hu.progtech.cd2t100.game.model.NodeDescriptor;
+
 public class EditCommand implements GameSceneCommand {
   @Override
   public void execute(GameScene gameScene) {
-    /*System.out.println("\nPlease enter the program:\n-------------------------------------------------------");
+    Scanner scanner = gameScene.getStdinScanner();
 
-    Scanner sc = App.getStdinScanner();
+    Puzzle puzzle = gameScene.getPuzzle();
 
     try {
-      String code = readCode(sc);
+      for (NodeDescriptor descriptor : puzzle.getNodeDescriptors()) {
+        System.out.println("Enter the source code for " + descriptor.getGlobalName());
 
-      emulator.setSourceCode("NODE1", code);
+        String code = readCode(scanner);
 
-      code = readCode(sc);
-
-      emulator.setSourceCode("NODE2", code);
+        gameScene.setNodeSourceCode(descriptor.getGlobalName(), code);
+      }
     } catch (IllegalStateException e) {
       System.out.println(e.getMessage());
-    }*/
+    }
   }
 
   private String readCode(Scanner sc) {

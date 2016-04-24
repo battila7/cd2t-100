@@ -23,6 +23,7 @@ import hu.progtech.cd2t100.game.model.NodeDescriptor;
 import hu.progtech.cd2t100.game.model.CommunicationPortDescriptor;
 import hu.progtech.cd2t100.game.model.InputPortDescriptor;
 import hu.progtech.cd2t100.game.model.OutputPortDescriptor;
+import hu.progtech.cd2t100.game.model.RegisterDescriptor;
 import hu.progtech.cd2t100.game.model.PortNameMapping;
 
 public class EmulatorFactory {
@@ -122,6 +123,11 @@ public class EmulatorFactory {
       nodeBuilder.setGlobalName(descriptor.getGlobalName())
                  .setMaximumSourceCodeLines(descriptor.getMaximumSourceCodeLines())
                  .setInstructionRegistry(registry);
+
+      for (RegisterDescriptor register : descriptor.getRegisterDescriptors()) {
+        nodeBuilder.addRegister(new Register(register.getCapacity(),
+                                             register.getName()));
+      }
 
       for (PortNameMapping mapping : descriptor.getReadablePorts()) {
         nodeBuilder.addReadablePort(mapping.getLocalName(),
