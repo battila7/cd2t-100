@@ -171,7 +171,9 @@ public enum EmulatorState {
   SUCCESS() {
     @Override
     /* package */ void onRequest(Emulator emulator, StateChangeRequest changeRequest) {
-      return;
+      /*
+       *  Do nothing.
+       */
     }
   };
 

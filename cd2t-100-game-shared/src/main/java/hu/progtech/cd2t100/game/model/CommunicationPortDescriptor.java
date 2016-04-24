@@ -1,7 +1,6 @@
 package hu.progtech.cd2t100.game.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlAttribute;
 
 @XmlRootElement(name = "communicationPortDescriptor")

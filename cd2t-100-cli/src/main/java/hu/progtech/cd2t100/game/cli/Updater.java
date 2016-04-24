@@ -7,7 +7,6 @@ import java.util.Optional;
 import java.util.concurrent.BlockingQueue;
 
 import hu.progtech.cd2t100.emulator.Emulator;
-import hu.progtech.cd2t100.emulator.EmulatorState;
 import hu.progtech.cd2t100.emulator.EmulatorCycleData;
 import hu.progtech.cd2t100.emulator.StateChangeRequest;
 

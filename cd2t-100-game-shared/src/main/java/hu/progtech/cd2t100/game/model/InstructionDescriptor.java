@@ -1,8 +1,5 @@
 package hu.progtech.cd2t100.game.model;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
 public class InstructionDescriptor {
   private String opcode;
 

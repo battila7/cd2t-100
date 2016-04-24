@@ -17,13 +17,10 @@ import hu.progtech.cd2t100.computation.io.*;
 import hu.progtech.cd2t100.formal.InstructionLoader;
 import hu.progtech.cd2t100.formal.InstructionInfo;
 
-import hu.progtech.cd2t100.game.model.NodeDescriptor;
-import hu.progtech.cd2t100.game.model.CommunicationPortDescriptor;
 import hu.progtech.cd2t100.game.model.InstructionDescriptor;
 import hu.progtech.cd2t100.game.model.InstructionDescriptorDao;
 import hu.progtech.cd2t100.game.model.InstructionDescriptorDaoXml;
 
-import hu.progtech.cd2t100.game.model.Puzzle;
 import hu.progtech.cd2t100.game.model.PuzzleDao;
 import hu.progtech.cd2t100.game.model.PuzzleDaoXml;
 
@@ -36,8 +33,6 @@ public class GameManager {
 
   private static final String PUZZLE_XML =
     Paths.get("xml", "puzzles.xml").toString();
-
-  private Scene activeScene;
 
   private final InstructionRegistry instructionRegistry;
 
@@ -62,7 +57,7 @@ public class GameManager {
   }
 
   public void launch() {
-    activeScene = new WelcomeScene();
+    Scene activeScene = new WelcomeScene();
 
     while (activeScene != null) {
       activeScene = activeScene.focus(this);

@@ -1,7 +1,5 @@
 package hu.progtech.cd2t100.computation.io;
 
-import java.util.Arrays;
-
 /**
  *  {@code OutputPort} acts as a sink port. It can consume any number of values
  *  but only one at a time. It does not keep track of the values written to it,

@@ -88,7 +88,9 @@ public class InputPort extends CommunicationPort {
    */
   @Override
   public void write(int data) {
-    return;
+    /*
+     *  Do nothing.
+     */
   }
 
   @Override

@@ -1,7 +1,5 @@
 package hu.progtech.cd2t100.game.cli;
 
-import hu.progtech.cd2t100.emulator.StateChangeRequest;
-
 import hu.progtech.cd2t100.game.model.Puzzle;
 import hu.progtech.cd2t100.game.model.NodeDescriptor;
 

@@ -7,13 +7,8 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Scanner;
 
-import java.util.concurrent.BlockingQueue;
-
 import hu.progtech.cd2t100.emulator.Emulator;
-import hu.progtech.cd2t100.emulator.EmulatorObserver;
-import hu.progtech.cd2t100.emulator.EmulatorState;
 import hu.progtech.cd2t100.emulator.StateChangeRequest;
-import hu.progtech.cd2t100.emulator.EmulatorCycleData;
 
 import hu.progtech.cd2t100.game.model.Puzzle;
 import hu.progtech.cd2t100.game.model.NodeDescriptor;
