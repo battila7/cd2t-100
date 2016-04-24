@@ -11,9 +11,10 @@ public class App extends Application {
 
   @Override
   public void start(Stage stage) {
-    stage.setTitle("CD2T-100");
+    GameManager gameManager =
+      new GameManager(stage);
 
-    stage.show();
+    gameManager.start();
   }
 
   public static void main(String[] args) {
