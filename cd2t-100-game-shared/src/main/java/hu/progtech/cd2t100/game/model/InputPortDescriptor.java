@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlList;
 
-@XmlRootElement(name = "InputPort")
+@XmlRootElement(name="inputPortDescriptor")
 public class InputPortDescriptor {
   private String globalName;
 

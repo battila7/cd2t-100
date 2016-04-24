@@ -1,16 +1,18 @@
 package hu.progtech.cd2t100.game.model;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElementWrapper;
 
 public class Puzzle {
   private String name;
 
   private String task;
 
-  private List<NodeDescriptor> nodeDescriptors;
+  private ArrayList<NodeDescriptor> nodeDescriptors;
 
   private List<CommunicationPortDescriptor> communicationPortDescriptors;
 
@@ -34,16 +36,18 @@ public class Puzzle {
     this.task = task;
   }
 
-  @XmlElement(name = "nodes")
-  public List<NodeDescriptor> getNodeDescriptors() {
+  @XmlElement(name="nodeDescriptor", type=NodeDescriptor.class)
+  @XmlElementWrapper(name="nodes")
+  public ArrayList<NodeDescriptor> getNodeDescriptors() {
     return nodeDescriptors;
   }
 
-  public void setNodeDescriptors(List<NodeDescriptor> lst) {
-    nodeDescriptors = lst;
+  public void setNodeDescriptors(ArrayList<NodeDescriptor> nodeDescriptors) {
+    this.nodeDescriptors = nodeDescriptors;
   }
 
-  @XmlElement(name = "communicationPort")
+  @XmlElement(name="communicationPortDescriptor", type=CommunicationPortDescriptor.class)
+  @XmlElementWrapper(name="communicationPorts")
   public List<CommunicationPortDescriptor> getCommunicationPortDescriptors() {
     return communicationPortDescriptors;
   }
@@ -52,7 +56,8 @@ public class Puzzle {
     communicationPortDescriptors = lst;
   }
 
-  @XmlElement(name = "inputPort")
+  @XmlElement(name="inputPortDescriptor", type=InputPortDescriptor.class)
+  @XmlElementWrapper(name="inputPorts")
   public List<InputPortDescriptor> getInputPortDescriptors() {
     return inputPortDescriptors;
   }
@@ -61,7 +66,8 @@ public class Puzzle {
     inputPortDescriptors = lst;
   }
 
-  @XmlElement(name = "outputPort")
+  @XmlElement(name="outputPortDescriptor", type=OutputPortDescriptor.class)
+  @XmlElementWrapper(name="outputPorts")
   public List<OutputPortDescriptor> getOutputPortDescriptors() {
     return outputPortDescriptors;
   }

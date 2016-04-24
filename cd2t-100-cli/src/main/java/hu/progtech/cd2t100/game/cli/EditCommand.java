@@ -2,11 +2,9 @@ package hu.progtech.cd2t100.game.cli;
 
 import java.util.Scanner;
 
-import hu.progtech.cd2t100.emulator.Emulator;
-
-public class EditCommand implements CliCommand {
+public class EditCommand implements GameSceneCommand {
   @Override
-  public void execute(Emulator emulator) {
+  public void execute(GameScene gameScene) {
     /*System.out.println("\nPlease enter the program:\n-------------------------------------------------------");
 
     Scanner sc = App.getStdinScanner();

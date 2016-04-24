@@ -97,6 +97,8 @@ public class InstructionLoader {
   {
     String code = IOUtils.toString(codeStream, "UTF-8");
 
+    logger.trace(code);
+
     return loadInstruction(code);
   }
 
@@ -131,12 +133,20 @@ public class InstructionLoader {
 
     Class<?> instructionClass = groovyClassLoader.parseClass(actualCode);
 
+    logger.trace("Class parsed.");
+
     String opcode = checkOpcode(instructionClass)
                     .orElseThrow(InvalidInstructionClassException::new);
 
+    logger.trace("Opcode checked.");
+
     List<String> rules = getUsedPreprocessorRules(instructionClass);
 
+    logger.trace("Used rules retrieved.");
+
     List<FormalCall> calls = getFormalCalls(instructionClass);
+
+    logger.trace("Calls discovered.");
 
     if (calls.isEmpty()) {
       throw new InvalidInstructionClassException(
@@ -153,8 +163,6 @@ public class InstructionLoader {
 
     String opcode = instructionClass.getDeclaredAnnotation(Opcode.class)
                                     .value();
-
-    logger.debug("Parsing Groovy class for {}.", opcode);
 
     return Optional.ofNullable(opcode)
                    .filter(x -> wordPattern.matcher(x).matches());

@@ -52,7 +52,7 @@ public class EmulatorFactory {
   public Emulator emulatorFromPuzzle(Puzzle puzzle, EmulatorObserver observer) {
     EmulatorBuilder emulatorBuilder = new EmulatorBuilder();
 
-    logger.info("Building emuator from puzzle.");
+    logger.info("Building emulator from puzzle.");
 
     emulatorBuilder.setObserver(observer)
                    .setClockFrequency(defaultClockFrequency);

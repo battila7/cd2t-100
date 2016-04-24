@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 
 import java.util.Scanner;
 import java.util.List;
+import java.util.HashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,10 +17,13 @@ import hu.progtech.cd2t100.computation.io.*;
 import hu.progtech.cd2t100.formal.InstructionLoader;
 import hu.progtech.cd2t100.formal.InstructionInfo;
 
+import hu.progtech.cd2t100.game.model.NodeDescriptor;
+import hu.progtech.cd2t100.game.model.CommunicationPortDescriptor;
 import hu.progtech.cd2t100.game.model.InstructionDescriptor;
 import hu.progtech.cd2t100.game.model.InstructionDescriptorDao;
 import hu.progtech.cd2t100.game.model.InstructionDescriptorDaoXml;
 
+import hu.progtech.cd2t100.game.model.Puzzle;
 import hu.progtech.cd2t100.game.model.PuzzleDao;
 import hu.progtech.cd2t100.game.model.PuzzleDaoXml;
 
@@ -35,7 +39,7 @@ public class GameManager {
 
   private Scene activeScene;
 
-  private InstructionRegistry instructionRegistry;
+  private final InstructionRegistry instructionRegistry;
 
   private final Scanner scanner;
 
@@ -51,6 +55,8 @@ public class GameManager {
 
     puzzleDao =
       new PuzzleDaoXml(PUZZLE_XML);
+
+    instructionRegistry = new InstructionRegistry(new HashMap<>());
 
     loadInstructions();
   }
@@ -85,6 +91,8 @@ public class GameManager {
 				descriptorDao.getAllInstructionDescriptors();
 
 			for (InstructionDescriptor descriptor : descriptors) {
+        System.out.println(descriptor);
+
 				InputStream is =
 					this.getClass().getClassLoader()
                          .getResourceAsStream(descriptor.getGroovyFile());

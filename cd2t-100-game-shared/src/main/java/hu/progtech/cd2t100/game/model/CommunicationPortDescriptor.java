@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlAttribute;
 
-@XmlRootElement(name = "communicationPort")
+@XmlRootElement(name = "communicationPortDescriptor")
 public class CommunicationPortDescriptor {
   private String globalName;
 

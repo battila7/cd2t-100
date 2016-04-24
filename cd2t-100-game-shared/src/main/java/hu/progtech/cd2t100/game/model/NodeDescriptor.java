@@ -4,10 +4,10 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElementWrapper;
 
-@XmlRootElement(name = "node")
+@XmlRootElement(name="nodeDescriptor")
 public class NodeDescriptor {
   private String globalName;
 
@@ -23,7 +23,7 @@ public class NodeDescriptor {
 
   private List<PortNameMapping> writeablePorts;
 
-  @XmlAttribute
+  @XmlAttribute(name="globalName")
   public String getGlobalName() {
     return globalName;
   }
@@ -59,7 +59,8 @@ public class NodeDescriptor {
     this.column = column;
   }
 
-  @XmlElement(name = "registers")
+  @XmlElement(name="registerDescriptor", type=RegisterDescriptor.class)
+  @XmlElementWrapper(name="registers")
   public List<RegisterDescriptor> getRegisterDescriptors() {
     return registerDescriptors;
   }
@@ -68,8 +69,8 @@ public class NodeDescriptor {
     registerDescriptors = lst;
   }
 
-  @XmlElementWrapper(name = "readablePorts")
-  @XmlElement(name = "port")
+  @XmlElement(name="portNameMapping", type=PortNameMapping.class)
+  @XmlElementWrapper(name="readablePorts")
   public List<PortNameMapping> getReadablePorts() {
     return readablePorts;
   }
@@ -78,13 +79,34 @@ public class NodeDescriptor {
     this.readablePorts = ports;
   }
 
-  @XmlElementWrapper(name = "writeablePorts")
-  @XmlElement(name = "port")
+  @XmlElement(name="portNameMapping", type=PortNameMapping.class)
+  @XmlElementWrapper(name="writeablePorts")
   public List<PortNameMapping> getWriteablePorts() {
     return writeablePorts;
   }
 
   public void setWriteablePorts(List<PortNameMapping> ports) {
     this.writeablePorts = ports;
+  }
+
+  @Override
+  public String toString() {
+    String ret = globalName + ", max: " + maximumSourceCodeLines + "\n";
+
+    ret += row + " " + column + "\n";
+
+    if (registerDescriptors != null) {
+      ret += registerDescriptors.toString() + "\n";
+    }
+
+    if (readablePorts != null) {
+      ret += readablePorts.toString() + "\n";
+    }
+
+    if (writeablePorts != null) {
+      ret += writeablePorts.toString() + "\n";
+    }
+
+    return ret;
   }
 }
