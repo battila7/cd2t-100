@@ -1,5 +1,9 @@
 package hu.progtech.cd2t100.game.model;
 
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import hu.progtech.cd2t100.game.util.TrimmingNormalizerAdapter;
+
 public class InstructionDescriptor {
   private String opcode;
 
@@ -11,6 +15,7 @@ public class InstructionDescriptor {
     return opcode;
   }
 
+  @XmlJavaTypeAdapter(TrimmingNormalizerAdapter.class)
   public String getDescription() {
     return description;
   }

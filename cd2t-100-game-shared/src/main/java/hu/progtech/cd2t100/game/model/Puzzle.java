@@ -5,6 +5,9 @@ import java.util.ArrayList;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import hu.progtech.cd2t100.game.util.TrimmingNormalizerAdapter;
 
 public class Puzzle {
   private String name;
@@ -27,6 +30,7 @@ public class Puzzle {
     this.name = name;
   }
 
+  @XmlJavaTypeAdapter(TrimmingNormalizerAdapter.class)
   public String getTask() {
     return task;
   }

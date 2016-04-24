@@ -1,0 +1,522 @@
+<puzzles>
+  <puzzle>
+    <name>Signal amplifier</name>
+    <task>
+        Add one to each input value.
+    </task>
+    <nodes>
+      <nodeDescriptor globalName="NODE1" maxLines="10" row="1" column="1">
+        <registers>
+          <registerDescriptor name="ACC" capacity="1" />
+          <registerDescriptor name="BAK" capacity="1" />
+        </registers>
+        <readablePorts>
+          <portNameMapping local="UP"   global="IP1" />
+          <portNameMapping local="DOWN" global="CP1" />
+        </readablePorts>
+        <writeablePorts>
+          <portNameMapping local="DOWN" global="CP2" />
+        </writeablePorts>
+      </nodeDescriptor>
+      <nodeDescriptor globalName="NODE2" maxLines="10" row="1" column="2">
+        <registers>
+          <registerDescriptor name="ACC" capacity="1" />
+          <registerDescriptor name="BAK" capacity="1" />
+        </registers>
+        <readablePorts>
+          <portNameMapping local="UP" global="CP2" />
+        </readablePorts>
+        <writeablePorts>
+          <portNameMapping local="UP"   global="CP1" />
+          <portNameMapping local="DOWN" global="OP1" />
+        </writeablePorts>
+      </nodeDescriptor>
+    </nodes>
+    <communicationPorts>
+      <communicationPortDescriptor globalName="CP1" />
+      <communicationPortDescriptor globalName="CP2" />
+    </communicationPorts>
+    <inputPorts>
+      <inputPortDescriptor globalName="IP1">
+        <contents>
+          -5 10 -7 800 -55 43 92 33, 30, -345
+        </contents>
+      </inputPortDescriptor>
+    </inputPorts>
+    <outputPorts>
+      <outputPortDescriptor globalName="OP1">
+        <expected>
+          -4 11 -6 801 -54 44 93 34, 31, -344
+        </expected>
+      </outputPortDescriptor>
+    </outputPorts>
+  </puzzle>
+  <puzzle>
+    <name>Signal amplifier</name>
+    <task>
+        Add one to each input value.
+    </task>
+    <nodes>
+      <nodeDescriptor globalName="NODE1" maxLines="10" row="1" column="1">
+        <registers>
+          <registerDescriptor name="ACC" capacity="1" />
+          <registerDescriptor name="BAK" capacity="1" />
+        </registers>
+        <readablePorts>
+          <portNameMapping local="UP"   global="IP1" />
+          <portNameMapping local="DOWN" global="CP1" />
+        </readablePorts>
+        <writeablePorts>
+          <portNameMapping local="DOWN" global="CP2" />
+        </writeablePorts>
+      </nodeDescriptor>
+      <nodeDescriptor globalName="NODE2" maxLines="10" row="1" column="2">
+        <registers>
+          <registerDescriptor name="ACC" capacity="1" />
+          <registerDescriptor name="BAK" capacity="1" />
+        </registers>
+        <readablePorts>
+          <portNameMapping local="UP" global="CP2" />
+        </readablePorts>
+        <writeablePorts>
+          <portNameMapping local="UP"   global="CP1" />
+          <portNameMapping local="DOWN" global="OP1" />
+        </writeablePorts>
+      </nodeDescriptor>
+    </nodes>
+    <communicationPorts>
+      <communicationPortDescriptor globalName="CP1" />
+      <communicationPortDescriptor globalName="CP2" />
+    </communicationPorts>
+    <inputPorts>
+      <inputPortDescriptor globalName="IP1">
+        <contents>
+          -5 10 -7 800 -55 43 92 33, 30, -345
+        </contents>
+      </inputPortDescriptor>
+    </inputPorts>
+    <outputPorts>
+      <outputPortDescriptor globalName="OP1">
+        <expected>
+          -4 11 -6 801 -54 44 93 34, 31, -344
+        </expected>
+      </outputPortDescriptor>
+    </outputPorts>
+  </puzzle>
+  <puzzle>
+    <name>Signal amplifier</name>
+    <task>
+        Add one to each input value.
+    </task>
+    <nodes>
+      <nodeDescriptor globalName="NODE1" maxLines="10" row="1" column="1">
+        <registers>
+          <registerDescriptor name="ACC" capacity="1" />
+          <registerDescriptor name="BAK" capacity="1" />
+        </registers>
+        <readablePorts>
+          <portNameMapping local="UP"   global="IP1" />
+          <portNameMapping local="DOWN" global="CP1" />
+        </readablePorts>
+        <writeablePorts>
+          <portNameMapping local="DOWN" global="CP2" />
+        </writeablePorts>
+      </nodeDescriptor>
+      <nodeDescriptor globalName="NODE2" maxLines="10" row="1" column="2">
+        <registers>
+          <registerDescriptor name="ACC" capacity="1" />
+          <registerDescriptor name="BAK" capacity="1" />
+        </registers>
+        <readablePorts>
+          <portNameMapping local="UP" global="CP2" />
+        </readablePorts>
+        <writeablePorts>
+          <portNameMapping local="UP"   global="CP1" />
+          <portNameMapping local="DOWN" global="OP1" />
+        </writeablePorts>
+      </nodeDescriptor>
+    </nodes>
+    <communicationPorts>
+      <communicationPortDescriptor globalName="CP1" />
+      <communicationPortDescriptor globalName="CP2" />
+    </communicationPorts>
+    <inputPorts>
+      <inputPortDescriptor globalName="IP1">
+        <contents>
+          -5 10 -7 800 -55 43 92 33, 30, -345
+        </contents>
+      </inputPortDescriptor>
+    </inputPorts>
+    <outputPorts>
+      <outputPortDescriptor globalName="OP1">
+        <expected>
+          -4 11 -6 801 -54 44 93 34, 31, -344
+        </expected>
+      </outputPortDescriptor>
+    </outputPorts>
+  </puzzle>
+  <puzzle>
+    <name>Signal amplifier</name>
+    <task>
+        Add one to each input value.
+    </task>
+    <nodes>
+      <nodeDescriptor globalName="NODE1" maxLines="10" row="1" column="1">
+        <registers>
+          <registerDescriptor name="ACC" capacity="1" />
+          <registerDescriptor name="BAK" capacity="1" />
+        </registers>
+        <readablePorts>
+          <portNameMapping local="UP"   global="IP1" />
+          <portNameMapping local="DOWN" global="CP1" />
+        </readablePorts>
+        <writeablePorts>
+          <portNameMapping local="DOWN" global="CP2" />
+        </writeablePorts>
+      </nodeDescriptor>
+      <nodeDescriptor globalName="NODE2" maxLines="10" row="1" column="2">
+        <registers>
+          <registerDescriptor name="ACC" capacity="1" />
+          <registerDescriptor name="BAK" capacity="1" />
+        </registers>
+        <readablePorts>
+          <portNameMapping local="UP" global="CP2" />
+        </readablePorts>
+        <writeablePorts>
+          <portNameMapping local="UP"   global="CP1" />
+          <portNameMapping local="DOWN" global="OP1" />
+        </writeablePorts>
+      </nodeDescriptor>
+    </nodes>
+    <communicationPorts>
+      <communicationPortDescriptor globalName="CP1" />
+      <communicationPortDescriptor globalName="CP2" />
+    </communicationPorts>
+    <inputPorts>
+      <inputPortDescriptor globalName="IP1">
+        <contents>
+          -5 10 -7 800 -55 43 92 33, 30, -345
+        </contents>
+      </inputPortDescriptor>
+    </inputPorts>
+    <outputPorts>
+      <outputPortDescriptor globalName="OP1">
+        <expected>
+          -4 11 -6 801 -54 44 93 34, 31, -344
+        </expected>
+      </outputPortDescriptor>
+    </outputPorts>
+  </puzzle>
+  <puzzle>
+    <name>Signal amplifier</name>
+    <task>
+        Add one to each input value.
+    </task>
+    <nodes>
+      <nodeDescriptor globalName="NODE1" maxLines="10" row="1" column="1">
+        <registers>
+          <registerDescriptor name="ACC" capacity="1" />
+          <registerDescriptor name="BAK" capacity="1" />
+        </registers>
+        <readablePorts>
+          <portNameMapping local="UP"   global="IP1" />
+          <portNameMapping local="DOWN" global="CP1" />
+        </readablePorts>
+        <writeablePorts>
+          <portNameMapping local="DOWN" global="CP2" />
+        </writeablePorts>
+      </nodeDescriptor>
+      <nodeDescriptor globalName="NODE2" maxLines="10" row="1" column="2">
+        <registers>
+          <registerDescriptor name="ACC" capacity="1" />
+          <registerDescriptor name="BAK" capacity="1" />
+        </registers>
+        <readablePorts>
+          <portNameMapping local="UP" global="CP2" />
+        </readablePorts>
+        <writeablePorts>
+          <portNameMapping local="UP"   global="CP1" />
+          <portNameMapping local="DOWN" global="OP1" />
+        </writeablePorts>
+      </nodeDescriptor>
+    </nodes>
+    <communicationPorts>
+      <communicationPortDescriptor globalName="CP1" />
+      <communicationPortDescriptor globalName="CP2" />
+    </communicationPorts>
+    <inputPorts>
+      <inputPortDescriptor globalName="IP1">
+        <contents>
+          -5 10 -7 800 -55 43 92 33, 30, -345
+        </contents>
+      </inputPortDescriptor>
+    </inputPorts>
+    <outputPorts>
+      <outputPortDescriptor globalName="OP1">
+        <expected>
+          -4 11 -6 801 -54 44 93 34, 31, -344
+        </expected>
+      </outputPortDescriptor>
+    </outputPorts>
+  </puzzle>
+  <puzzle>
+    <name>Signal amplifier</name>
+    <task>
+        Add one to each input value.
+    </task>
+    <nodes>
+      <nodeDescriptor globalName="NODE1" maxLines="10" row="1" column="1">
+        <registers>
+          <registerDescriptor name="ACC" capacity="1" />
+          <registerDescriptor name="BAK" capacity="1" />
+        </registers>
+        <readablePorts>
+          <portNameMapping local="UP"   global="IP1" />
+          <portNameMapping local="DOWN" global="CP1" />
+        </readablePorts>
+        <writeablePorts>
+          <portNameMapping local="DOWN" global="CP2" />
+        </writeablePorts>
+      </nodeDescriptor>
+      <nodeDescriptor globalName="NODE2" maxLines="10" row="1" column="2">
+        <registers>
+          <registerDescriptor name="ACC" capacity="1" />
+          <registerDescriptor name="BAK" capacity="1" />
+        </registers>
+        <readablePorts>
+          <portNameMapping local="UP" global="CP2" />
+        </readablePorts>
+        <writeablePorts>
+          <portNameMapping local="UP"   global="CP1" />
+          <portNameMapping local="DOWN" global="OP1" />
+        </writeablePorts>
+      </nodeDescriptor>
+    </nodes>
+    <communicationPorts>
+      <communicationPortDescriptor globalName="CP1" />
+      <communicationPortDescriptor globalName="CP2" />
+    </communicationPorts>
+    <inputPorts>
+      <inputPortDescriptor globalName="IP1">
+        <contents>
+          -5 10 -7 800 -55 43 92 33, 30, -345
+        </contents>
+      </inputPortDescriptor>
+    </inputPorts>
+    <outputPorts>
+      <outputPortDescriptor globalName="OP1">
+        <expected>
+          -4 11 -6 801 -54 44 93 34, 31, -344
+        </expected>
+      </outputPortDescriptor>
+    </outputPorts>
+  </puzzle>
+  <puzzle>
+    <name>Signal amplifier</name>
+    <task>
+        Add one to each input value.
+    </task>
+    <nodes>
+      <nodeDescriptor globalName="NODE1" maxLines="10" row="1" column="1">
+        <registers>
+          <registerDescriptor name="ACC" capacity="1" />
+          <registerDescriptor name="BAK" capacity="1" />
+        </registers>
+        <readablePorts>
+          <portNameMapping local="UP"   global="IP1" />
+          <portNameMapping local="DOWN" global="CP1" />
+        </readablePorts>
+        <writeablePorts>
+          <portNameMapping local="DOWN" global="CP2" />
+        </writeablePorts>
+      </nodeDescriptor>
+      <nodeDescriptor globalName="NODE2" maxLines="10" row="1" column="2">
+        <registers>
+          <registerDescriptor name="ACC" capacity="1" />
+          <registerDescriptor name="BAK" capacity="1" />
+        </registers>
+        <readablePorts>
+          <portNameMapping local="UP" global="CP2" />
+        </readablePorts>
+        <writeablePorts>
+          <portNameMapping local="UP"   global="CP1" />
+          <portNameMapping local="DOWN" global="OP1" />
+        </writeablePorts>
+      </nodeDescriptor>
+    </nodes>
+    <communicationPorts>
+      <communicationPortDescriptor globalName="CP1" />
+      <communicationPortDescriptor globalName="CP2" />
+    </communicationPorts>
+    <inputPorts>
+      <inputPortDescriptor globalName="IP1">
+        <contents>
+          -5 10 -7 800 -55 43 92 33, 30, -345
+        </contents>
+      </inputPortDescriptor>
+    </inputPorts>
+    <outputPorts>
+      <outputPortDescriptor globalName="OP1">
+        <expected>
+          -4 11 -6 801 -54 44 93 34, 31, -344
+        </expected>
+      </outputPortDescriptor>
+    </outputPorts>
+  </puzzle>
+  <puzzle>
+    <name>Signal amplifier</name>
+    <task>
+        Add one to each input value.
+    </task>
+    <nodes>
+      <nodeDescriptor globalName="NODE1" maxLines="10" row="1" column="1">
+        <registers>
+          <registerDescriptor name="ACC" capacity="1" />
+          <registerDescriptor name="BAK" capacity="1" />
+        </registers>
+        <readablePorts>
+          <portNameMapping local="UP"   global="IP1" />
+          <portNameMapping local="DOWN" global="CP1" />
+        </readablePorts>
+        <writeablePorts>
+          <portNameMapping local="DOWN" global="CP2" />
+        </writeablePorts>
+      </nodeDescriptor>
+      <nodeDescriptor globalName="NODE2" maxLines="10" row="1" column="2">
+        <registers>
+          <registerDescriptor name="ACC" capacity="1" />
+          <registerDescriptor name="BAK" capacity="1" />
+        </registers>
+        <readablePorts>
+          <portNameMapping local="UP" global="CP2" />
+        </readablePorts>
+        <writeablePorts>
+          <portNameMapping local="UP"   global="CP1" />
+          <portNameMapping local="DOWN" global="OP1" />
+        </writeablePorts>
+      </nodeDescriptor>
+    </nodes>
+    <communicationPorts>
+      <communicationPortDescriptor globalName="CP1" />
+      <communicationPortDescriptor globalName="CP2" />
+    </communicationPorts>
+    <inputPorts>
+      <inputPortDescriptor globalName="IP1">
+        <contents>
+          -5 10 -7 800 -55 43 92 33, 30, -345
+        </contents>
+      </inputPortDescriptor>
+    </inputPorts>
+    <outputPorts>
+      <outputPortDescriptor globalName="OP1">
+        <expected>
+          -4 11 -6 801 -54 44 93 34, 31, -344
+        </expected>
+      </outputPortDescriptor>
+    </outputPorts>
+  </puzzle>
+  <puzzle>
+    <name>Signal amplifier</name>
+    <task>
+        Add one to each input value.
+    </task>
+    <nodes>
+      <nodeDescriptor globalName="NODE1" maxLines="10" row="1" column="1">
+        <registers>
+          <registerDescriptor name="ACC" capacity="1" />
+          <registerDescriptor name="BAK" capacity="1" />
+        </registers>
+        <readablePorts>
+          <portNameMapping local="UP"   global="IP1" />
+          <portNameMapping local="DOWN" global="CP1" />
+        </readablePorts>
+        <writeablePorts>
+          <portNameMapping local="DOWN" global="CP2" />
+        </writeablePorts>
+      </nodeDescriptor>
+      <nodeDescriptor globalName="NODE2" maxLines="10" row="1" column="2">
+        <registers>
+          <registerDescriptor name="ACC" capacity="1" />
+          <registerDescriptor name="BAK" capacity="1" />
+        </registers>
+        <readablePorts>
+          <portNameMapping local="UP" global="CP2" />
+        </readablePorts>
+        <writeablePorts>
+          <portNameMapping local="UP"   global="CP1" />
+          <portNameMapping local="DOWN" global="OP1" />
+        </writeablePorts>
+      </nodeDescriptor>
+    </nodes>
+    <communicationPorts>
+      <communicationPortDescriptor globalName="CP1" />
+      <communicationPortDescriptor globalName="CP2" />
+    </communicationPorts>
+    <inputPorts>
+      <inputPortDescriptor globalName="IP1">
+        <contents>
+          -5 10 -7 800 -55 43 92 33, 30, -345
+        </contents>
+      </inputPortDescriptor>
+    </inputPorts>
+    <outputPorts>
+      <outputPortDescriptor globalName="OP1">
+        <expected>
+          -4 11 -6 801 -54 44 93 34, 31, -344
+        </expected>
+      </outputPortDescriptor>
+    </outputPorts>
+  </puzzle>
+  <puzzle>
+    <name>Signal amplifier</name>
+    <task>
+        Add one to each input value.
+    </task>
+    <nodes>
+      <nodeDescriptor globalName="NODE1" maxLines="10" row="1" column="1">
+        <registers>
+          <registerDescriptor name="ACC" capacity="1" />
+          <registerDescriptor name="BAK" capacity="1" />
+        </registers>
+        <readablePorts>
+          <portNameMapping local="UP"   global="IP1" />
+          <portNameMapping local="DOWN" global="CP1" />
+        </readablePorts>
+        <writeablePorts>
+          <portNameMapping local="DOWN" global="CP2" />
+        </writeablePorts>
+      </nodeDescriptor>
+      <nodeDescriptor globalName="NODE2" maxLines="10" row="1" column="2">
+        <registers>
+          <registerDescriptor name="ACC" capacity="1" />
+          <registerDescriptor name="BAK" capacity="1" />
+        </registers>
+        <readablePorts>
+          <portNameMapping local="UP" global="CP2" />
+        </readablePorts>
+        <writeablePorts>
+          <portNameMapping local="UP"   global="CP1" />
+          <portNameMapping local="DOWN" global="OP1" />
+        </writeablePorts>
+      </nodeDescriptor>
+    </nodes>
+    <communicationPorts>
+      <communicationPortDescriptor globalName="CP1" />
+      <communicationPortDescriptor globalName="CP2" />
+    </communicationPorts>
+    <inputPorts>
+      <inputPortDescriptor globalName="IP1">
+        <contents>
+          -5 10 -7 800 -55 43 92 33, 30, -345
+        </contents>
+      </inputPortDescriptor>
+    </inputPorts>
+    <outputPorts>
+      <outputPortDescriptor globalName="OP1">
+        <expected>
+          -4 11 -6 801 -54 44 93 34, 31, -344
+        </expected>
+      </outputPortDescriptor>
+    </outputPorts>
+  </puzzle>
+</puzzles>
