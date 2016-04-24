@@ -12,10 +12,12 @@ import java.util.concurrent.BlockingQueue;
 import hu.progtech.cd2t100.emulator.Emulator;
 import hu.progtech.cd2t100.emulator.EmulatorObserver;
 import hu.progtech.cd2t100.emulator.EmulatorState;
+import hu.progtech.cd2t100.emulator.StateChangeRequest;
 import hu.progtech.cd2t100.emulator.EmulatorCycleData;
 
 import hu.progtech.cd2t100.game.model.Puzzle;
 import hu.progtech.cd2t100.game.model.NodeDescriptor;
+import hu.progtech.cd2t100.game.model.OutputPortDescriptor;
 import hu.progtech.cd2t100.game.util.EmulatorFactory;
 
 public class GameScene extends Scene {
@@ -31,9 +33,13 @@ public class GameScene extends Scene {
 		commands.put("STEP",  new StepCommand());
 		commands.put("PAUSE", new PauseCommand());
 		commands.put("STOP",  new StopCommand());
+    commands.put("STATE", new StateCommand());
+    commands.put("INFO",  new InfoCommand());
   }
 
   private Map<String, String> nodeSourceCodes;
+
+  // private Map<String, List<Integer>> outputPortContents;
 
   private final Puzzle puzzle;
 
@@ -49,23 +55,6 @@ public class GameScene extends Scene {
     abortRequested = false;
   }
 
-  /*
-  commands.put("ABORT -\tSTOPs the emulator and exits to the Main Menu.",
-               new AbortCommand());
-  commands.put("EDIT -\tEDIT the source code. Can only be used in STOPPED state.",
-               new EditCommand());
-  commands.put("PRINT -\tPRINT the current source code.",
-               new PrintCommand());
-  commands.put("RUN -\tInitiates CONTINUOUS execution.",
-               new RunCommand());
-  commands.put("STEP -\tInitiates STEPPED execution.",
-               new StepCommand());
-  commands.put("PAUSE -\tPAUSEs the execution.",
-               new PauseCommand());
-  commands.put("STOP -\tSTOPs the emulator.",
-               new StopCommand());
-  */
-
   public Scene focus(GameManager parent) {
     this.scanner = parent.getStdinScanner();
 
@@ -79,6 +68,8 @@ public class GameScene extends Scene {
 			Optional.ofNullable(commands.get(command))
 							.ifPresent(x -> x.execute(this));
 		}
+
+    emulator.request(StateChangeRequest.STOP);
 
     return new MenuScene();
   }
@@ -127,66 +118,29 @@ public class GameScene extends Scene {
       nodeSourceCodes.put(descriptor.getGlobalName(), "");
     }
 
-    return emulatorFactory.emulatorFromPuzzle(puzzle,
-                                              new EmulatorObserverImpl());
+    Map<String, List<Integer>> outputPortContents = new HashMap<>();
+
+    Map<String, List<Integer>> expectedPortContents = new HashMap<>();
+
+    for (OutputPortDescriptor descriptor : puzzle.getOutputPortDescriptors()) {
+      outputPortContents.put(descriptor.getGlobalName(), new ArrayList<>());
+
+      expectedPortContents.put(descriptor.getGlobalName(),
+                               clonePortContents(descriptor));
+    }
+
+    return emulatorFactory.emulatorFromPuzzle(
+            puzzle, new EmulatorObserverImpl(outputPortContents,
+                                             expectedPortContents));
 	}
 
-	static class EmulatorObserverImpl implements EmulatorObserver {
-		private Emulator emulator;
+  private List<Integer> clonePortContents(OutputPortDescriptor port) {
+    ArrayList<Integer> list = new ArrayList<>();
 
-		private Thread updaterThread;
+    for (Integer i : port.getExpectedContents()) {
+      list.add(new Integer(i));
+    }
 
-		@Override
-		public void onStateChanged(EmulatorState newState) {
-			if (newState == EmulatorState.RUNNING) {
-				/*
-				 *	If in PAUSED state, we reuse the updaterThread.
-				 */
-				if (updaterThread == null) {
-					updaterThread = new Thread(new Updater(emulator.getCycleDataQueue()));
-
-					updaterThread.start();
-				}
-			} else if (newState == EmulatorState.STOPPED) {
-				/*
-				 *	If previous state was ERROR, updaterThread is null.
-				 */
-				if (updaterThread != null) {
-					updaterThread.interrupt();
-
-					updaterThread = null;
-				}
-			} else if (newState == EmulatorState.ERROR) {
-				System.out.println("Now in ERROR state because of the following: ");
-				System.out.println(emulator.getNodeExceptionMap());
-				System.out.println(emulator.getCodeExceptionMap());
-			}
-		}
-
-		@Override
-		public void setEmulator(Emulator emulator) {
-			this.emulator = emulator;
-		}
-	}
-
-	static class Updater implements Runnable {
-		private BlockingQueue<EmulatorCycleData> cycleDataQueue;
-
-		public Updater(BlockingQueue<EmulatorCycleData> cycleDataQueue) {
-			this.cycleDataQueue = cycleDataQueue;
-		}
-
-		@Override
-		public void run() {
-			try {
-				while (true) {
-					EmulatorCycleData ecd = cycleDataQueue.take();
-
-					System.out.println(ecd);
-				}
-			} catch (InterruptedException e) {
-				return;
-			}
-		}
-	}
+    return list;
+  }
 }

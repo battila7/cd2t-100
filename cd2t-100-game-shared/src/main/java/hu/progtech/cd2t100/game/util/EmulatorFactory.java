@@ -106,7 +106,15 @@ public class EmulatorFactory {
     {
       String globalName = port.getGlobalName();
 
-      ports.put(globalName, new InputPort(globalName, port.getContents()));
+      /*
+       *  Function.indentity() is not useful here sadly because of the
+       *  difference between the types (boxed and unboxed type).
+       */
+      ports.put(globalName,
+                new InputPort(globalName, port.getContents()
+                                              .stream()
+                                              .mapToInt(x -> x)
+                                              .toArray()));
     }
 
     return ports;

@@ -1,11 +1,11 @@
 <puzzles>
   <puzzle>
-    <name>Sample puzzle</name>
+    <name>Signal amplifier</name>
     <task>
-      Explains what to do.
+      Add one to each input value.
     </task>
     <nodes>
-      <nodeDescriptor globalName="NODE1" maxLines="20" row="1" column="1">
+      <nodeDescriptor globalName="NODE1" maxLines="10" row="1" column="1">
         <registers>
           <registerDescriptor name="ACC" capacity="1" />
           <registerDescriptor name="BAK" capacity="1" />
@@ -18,7 +18,7 @@
           <portNameMapping local="DOWN" global="CP2" />
         </writeablePorts>
       </nodeDescriptor>
-      <nodeDescriptor globalName="NODE2" maxLines="20" row="1" column="2">
+      <nodeDescriptor globalName="NODE2" maxLines="10" row="1" column="2">
         <registers>
           <registerDescriptor name="ACC" capacity="1" />
           <registerDescriptor name="BAK" capacity="1" />
@@ -39,14 +39,14 @@
     <inputPorts>
       <inputPortDescriptor globalName="IP1">
         <contents>
-          10 10 10 10 10 10
+          -5 10 -7 800 -55 43 92 33, 30, -345
         </contents>
       </inputPortDescriptor>
     </inputPorts>
     <outputPorts>
       <outputPortDescriptor globalName="OP1">
         <expected>
-          20 20 20 20 20 20
+          -4 11 -6 801 -54 44 93 34, 31, -344
         </expected>
       </outputPortDescriptor>
     </outputPorts>

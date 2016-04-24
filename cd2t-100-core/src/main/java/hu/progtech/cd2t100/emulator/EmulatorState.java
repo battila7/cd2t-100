@@ -20,15 +20,15 @@ package hu.progtech.cd2t100.emulator;
  *      <td>STOPPED</td>
  *      <td>{@code RUNNING}</td>
  *      <td>{@code ERROR}</td>
+ *      <td>{@code STOPPED}</td>
+ *      <td>{@code STOPPED}</td>
  *      <td>{@code RUNNING}</td>
- *      <td>{@code RUNNING}</td>
- *      <td>{@code RUNNING}</td>
- *      <td>{@code RUNNING}</td>
+ *      <td>{@code STOPPED}</td>
  *    </tr>
  *    <tr>
  *      <td>ERROR</td>
  *      <td>{@code STOPPED}</td>
- *      <td>{@code STOPPED}</td>
+ *      <td>{@code ERROR}</td>
  *      <td>{@code STOPPED}</td>
  *      <td>{@code STOPPED}</td>
  *      <td>{@code STOPPED}</td>
@@ -36,7 +36,7 @@ package hu.progtech.cd2t100.emulator;
  *    </tr>
  *    <tr>
  *      <td>RUNNING</td>
- *      <td>{@code STOPPED}</td>
+ *      <td>{@code RUNNING}</td>
  *      <td>{@code STOPPED}</td>
  *      <td>{@code PAUSED}</td>
  *      <td>{@code STOPPED}</td>
@@ -46,20 +46,20 @@ package hu.progtech.cd2t100.emulator;
  *    <tr>
  *      <td>PAUSED</td>
  *      <td>{@code RUNNING}</td>
- *      <td>{@code RUNNING}</td>
- *      <td>{@code RUNNING}</td>
+ *      <td>{@code STOPPED}</td>
+ *      <td>{@code PAUSED}</td>
  *      <td>{@code STOPPED}</td>
  *      <td>{@code RUNNING}</td>
- *      <td>{@code RUNNING}</td>
+ *      <td>{@code SUCCESS}</td>
  *    </tr>
  *    <tr>
  *      <td>SUCCESS</td>
- *      <td>{@code STOPPED}</td>
- *      <td>{@code STOPPED}</td>
- *      <td>{@code STOPPED}</td>
- *      <td>{@code STOPPED}</td>
- *      <td>{@code STOPPED}</td>
- *      <td>{@code STOPPED}</td>
+ *      <td>{@code SUCCESS}</td>
+ *      <td>{@code SUCCESS}</td>
+ *      <td>{@code SUCCESS}</td>
+ *      <td>{@code SUCCESS}</td>
+ *      <td>{@code SUCCESS}</td>
+ *      <td>{@code SUCCESS}</td>
  *    </tr>
  *  </table>
  */
@@ -73,14 +73,20 @@ public enum EmulatorState {
     /* package */ void onRequest(Emulator emulator, StateChangeRequest changeRequest) {
       StateChangeRequest req = emulator.generateInstructions();
 
-      if (req == StateChangeRequest.ERROR) {
-        emulator.setState(ERROR);
-      } else {
-        emulator.start((changeRequest == StateChangeRequest.STEP) ?
-                                          ExecutionMode.STEPPED :
-                                          ExecutionMode.CONTINUOUS);
-
-        emulator.setState(RUNNING);
+      switch (req) {
+        case ERROR:
+          emulator.setState(ERROR);
+          break;
+        case RUN:
+          emulator.start(ExecutionMode.CONTINUOUS);
+          emulator.setState(RUNNING);
+          break;
+        case STEP:
+          emulator.start(ExecutionMode.STEPPED);
+          emulator.setState(RUNNING);
+          break;
+        default:
+          break;
       }
     }
   },
@@ -92,6 +98,10 @@ public enum EmulatorState {
   ERROR() {
     @Override
     /* package */ void onRequest(Emulator emulator, StateChangeRequest changeRequest) {
+      if (changeRequest == StateChangeRequest.ERROR) {
+        return;
+      }
+
       emulator.stop();
 
       emulator.setState(STOPPED);
@@ -105,6 +115,9 @@ public enum EmulatorState {
   RUNNING() {
     @Override
     /* package */ void onRequest(Emulator emulator, StateChangeRequest changeRequest) {
+      if (changeRequest == StateChangeRequest.RUN) {
+        return;
+      }
       if (changeRequest == StateChangeRequest.PAUSE) {
         emulator.pause();
 
@@ -128,16 +141,25 @@ public enum EmulatorState {
   PAUSED() {
     @Override
     /* package */ void onRequest(Emulator emulator, StateChangeRequest changeRequest) {
-      if (changeRequest == StateChangeRequest.STOP) {
-        emulator.stop();
-
-        emulator.setState(STOPPED);
-      } else {
-        emulator.start((changeRequest == StateChangeRequest.STEP) ?
-                                          ExecutionMode.STEPPED :
-                                          ExecutionMode.CONTINUOUS);
-
-        emulator.setState(RUNNING);
+      switch (changeRequest) {
+        case RUN:
+          emulator.start(ExecutionMode.CONTINUOUS);
+          emulator.setState(RUNNING);
+          break;
+        case STEP:
+          emulator.start(ExecutionMode.STEPPED);
+          emulator.setState(RUNNING);
+          break;
+        case PAUSE:
+          return;
+        case SUCCESS:
+          emulator.stop();
+          emulator.setState(SUCCESS);
+          break;
+        default:
+          emulator.stop();
+          emulator.setState(STOPPED);
+          break;
       }
     }
   },
@@ -149,7 +171,7 @@ public enum EmulatorState {
   SUCCESS() {
     @Override
     /* package */ void onRequest(Emulator emulator, StateChangeRequest changeRequest) {
-      emulator.setState(STOPPED);
+      return;
     }
   };
 

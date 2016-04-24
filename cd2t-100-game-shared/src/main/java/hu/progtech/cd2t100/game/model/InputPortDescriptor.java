@@ -11,9 +11,7 @@ import javax.xml.bind.annotation.XmlList;
 public class InputPortDescriptor {
   private String globalName;
 
-  private int[] contents;
-
-  private String readableByNode;
+  private List<Integer> contents;
 
   @XmlAttribute
   public String getGlobalName() {
@@ -24,22 +22,18 @@ public class InputPortDescriptor {
     this.globalName = globalName;
   }
 
-  @XmlElement(name = "readableBy")
-  public String getReadableByNode() {
-    return readableByNode;
-  }
-
-  public void setReadableByNode(String node) {
-    readableByNode = node;
-  }
-
   @XmlElement(name = "contents")
   @XmlList
-  public int[] getContents() {
+  public List<Integer> getContents() {
     return contents;
   }
 
-  public void setContents(int[] contents) {
+  public void setContents(List<Integer> contents) {
     this.contents = contents;
+  }
+
+  @Override
+  public String toString() {
+    return globalName + " provided input " + contents.toString();
   }
 }

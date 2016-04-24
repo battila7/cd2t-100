@@ -1,6 +1,13 @@
 <instructionDescriptors>
   <instructionDescriptor>
     <description>
+      Add the specified number to the specified register.
+    </description>
+    <opcode>ADD</opcode>
+    <groovyFile>groovy/Add.groovy</groovyFile>
+  </instructionDescriptor>
+  <instructionDescriptor>
+    <description>
       Clears the stack register i.e. sets the stack pointer to zero.
     </description>
     <opcode>CLRSTACK</opcode>

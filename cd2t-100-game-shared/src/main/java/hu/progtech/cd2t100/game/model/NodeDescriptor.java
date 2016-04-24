@@ -91,18 +91,22 @@ public class NodeDescriptor {
 
   @Override
   public String toString() {
-    String ret = globalName + ", max: " + maximumSourceCodeLines + "\n";
+    String ret = globalName + "\nMaximum number of source code lines: "
+               + maximumSourceCodeLines + "\n";
 
-    ret += row + " " + column + "\n";
+    ret += "Registers:\n";
 
     if (registerDescriptors != null) {
       ret += registerDescriptors.toString() + "\n";
     }
 
+    ret += "Readable Ports:\n";
     if (readablePorts != null) {
       ret += readablePorts.toString() + "\n";
     }
 
+    ret += "Writeable Ports:\n";
+    
     if (writeablePorts != null) {
       ret += writeablePorts.toString() + "\n";
     }

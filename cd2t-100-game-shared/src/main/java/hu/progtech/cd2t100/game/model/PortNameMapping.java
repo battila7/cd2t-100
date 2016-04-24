@@ -26,4 +26,9 @@ public class PortNameMapping {
   public void setGlobalName(String globalName) {
     this.globalName = globalName;
   }
+
+  @Override
+  public String toString() {
+    return globalName + " as " + localName;
+  }
 }
