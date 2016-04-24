@@ -1,7 +1,6 @@
 package hu.progtech.cd2t100.game.model;
 
 import java.io.InputStream;
-import java.nio.file.Paths;
 
 import java.util.List;
 
