@@ -15,7 +15,6 @@ import javafx.scene.layout.Priority;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 
-import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
 
 import hu.progtech.cd2t100.game.model.Puzzle;

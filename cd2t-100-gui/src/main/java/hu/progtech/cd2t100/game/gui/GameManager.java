@@ -4,9 +4,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Map;
 import java.util.HashMap;
+import java.util.Optional;
 
-import javafx.application.Application;
 import javafx.scene.text.Font;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -39,8 +40,12 @@ public class GameManager {
 
   private InstructionRegistry instructionRegistry;
 
+  private Map<Class<?>, Scene> sceneMap;
+
   public GameManager(Stage stage) {
     this.stage = stage;
+
+    sceneMap = new HashMap<>();
   }
 
   public void start() {
@@ -49,23 +54,9 @@ public class GameManager {
 
       initializeStage();
 
-      FXMLLoader fxmlLoader = new FXMLLoader();
+      initializeScenes();
 
-      String fxmlPath = Paths.get("fxml", "SelectPuzzle.fxml").toString();
-
-      Parent selectPuzzleLayout =
-        (Parent)fxmlLoader.load(getClass().getClassLoader().getResourceAsStream(fxmlPath));
-
-      SelectPuzzleController selectPuzzleController =
-        (SelectPuzzleController)fxmlLoader.getController();
-
-      selectPuzzleController.setGameManager(this);
-
-      Scene selectPuzzleScene = new Scene(selectPuzzleLayout);
-
-      selectPuzzleScene.getStylesheets().add("css/base.css");
-
-      stage.setScene(selectPuzzleScene);
+      changeScene(SelectPuzzleController.class);
 
       stage.show();
     } catch (IOException e) {
@@ -75,6 +66,11 @@ public class GameManager {
 
   public void requestExit() {
     stage.close();
+  }
+
+  public void changeScene(Class<?> sceneClass) {
+    Optional.ofNullable(sceneMap.get(sceneClass))
+            .ifPresent(x -> stage.setScene(x));
   }
 
   private void loadResources() {
@@ -120,5 +116,25 @@ public class GameManager {
     stage.centerOnScreen();
 
     logger.info("Stage initialized");
+  }
+
+  private void initializeScenes() throws IOException {
+    FXMLLoader fxmlLoader = new FXMLLoader();
+
+    String fxmlPath = Paths.get("fxml", "SelectPuzzle.fxml").toString();
+
+    Parent selectPuzzleLayout =
+      (Parent)fxmlLoader.load(getClass().getClassLoader().getResourceAsStream(fxmlPath));
+
+    SelectPuzzleController selectPuzzleController =
+      (SelectPuzzleController)fxmlLoader.getController();
+
+    selectPuzzleController.setGameManager(this);
+
+    Scene selectPuzzleScene = new Scene(selectPuzzleLayout);
+
+    selectPuzzleScene.getStylesheets().add("css/base.css");
+
+    sceneMap.put(SelectPuzzleController.class, selectPuzzleScene);
   }
 }
