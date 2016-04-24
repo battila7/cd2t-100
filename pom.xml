@@ -8,10 +8,16 @@
   <name>CD2T-100</name>
 	<description>CD2T-100 is a TIS-100-like processor with different functionality.</description>
 
+	<organization>
+		<name>Attila Bagossy</name>
+	</organization>
+	
+	<inceptionYear>2016</inceptionYear>
+
   <licenses>
 		<license>
 			<name>MIT License</name>
-			<url>https://opensource.org/licenses/mit-license.php</url>
+			<url>http://www.opensource.org/licenses/mit-license.php</url>
 		</license>
 	</licenses>
 
