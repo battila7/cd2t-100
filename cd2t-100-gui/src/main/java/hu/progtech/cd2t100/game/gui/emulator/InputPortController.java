@@ -1,4 +1,4 @@
-package hu.progtech.cd2t100.game.gui;
+package hu.progtech.cd2t100.game.gui.emulator;
 
 import javafx.application.Platform;
 import javafx.scene.control.Tab;
@@ -19,7 +19,7 @@ public class InputPortController {
 
   private ObservableList<InputPortValueMapping> backingList;
 
-  InputPortController(TabPane parentTabPane, InputPortDescriptor descriptor) {
+  public InputPortController(TabPane parentTabPane, InputPortDescriptor descriptor) {
     this.parentTabPane = parentTabPane;
 
     this.descriptor = descriptor;

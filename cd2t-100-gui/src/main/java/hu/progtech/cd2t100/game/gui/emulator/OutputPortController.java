@@ -1,4 +1,4 @@
-package hu.progtech.cd2t100.game.gui;
+package hu.progtech.cd2t100.game.gui.emulator;
 
 import javafx.application.Platform;
 import javafx.scene.control.Tab;
@@ -21,7 +21,7 @@ public class OutputPortController {
 
   private ObservableList<OutputPortValueMapping> backingList;
 
-  OutputPortController(TabPane parentTabPane, OutputPortDescriptor descriptor) {
+  public OutputPortController(TabPane parentTabPane, OutputPortDescriptor descriptor) {
     this.parentTabPane = parentTabPane;
 
     this.descriptor = descriptor;

@@ -1,4 +1,4 @@
-package hu.progtech.cd2t100.game.gui;
+package hu.progtech.cd2t100.game.gui.emulator;
 
 import java.util.List;
 import java.util.Map;

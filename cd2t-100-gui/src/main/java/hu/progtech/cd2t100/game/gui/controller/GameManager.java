@@ -1,4 +1,4 @@
-package hu.progtech.cd2t100.game.gui;
+package hu.progtech.cd2t100.game.gui.controller;
 
 import java.io.IOException;
 import java.io.InputStream;

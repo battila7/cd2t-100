@@ -1,4 +1,4 @@
-package hu.progtech.cd2t100.game.gui;
+package hu.progtech.cd2t100.game.gui.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -29,6 +29,9 @@ import org.slf4j.LoggerFactory;
 import hu.progtech.cd2t100.game.model.Puzzle;
 import hu.progtech.cd2t100.game.model.OutputPortDescriptor;
 import hu.progtech.cd2t100.game.model.InputPortDescriptor;
+
+import hu.progtech.cd2t100.game.gui.emulator.InputPortController;
+import hu.progtech.cd2t100.game.gui.emulator.OutputPortController;
 
 public class EmulatorController extends ManagedController {
   private static final Logger logger = LoggerFactory.getLogger(EmulatorController.class);

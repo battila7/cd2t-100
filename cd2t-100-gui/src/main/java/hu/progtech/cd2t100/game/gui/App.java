@@ -6,6 +6,8 @@ import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import hu.progtech.cd2t100.game.gui.controller.GameManager;
+
 public class App extends Application {
   private static final Logger logger = LoggerFactory.getLogger(App.class);
 
