@@ -13,9 +13,9 @@ import javafx.collections.ObservableList;
 import hu.progtech.cd2t100.game.model.OutputPortDescriptor;
 
 public class OutputPortController {
-  private OutputPortDescriptor descriptor;
+  private final OutputPortDescriptor descriptor;
 
-  private TabPane parentTabPane;
+  private final TabPane parentTabPane;
 
   private int dataPointer;
 

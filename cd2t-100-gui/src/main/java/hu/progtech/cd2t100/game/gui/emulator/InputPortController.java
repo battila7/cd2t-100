@@ -13,9 +13,9 @@ import javafx.collections.ObservableList;
 import hu.progtech.cd2t100.game.model.InputPortDescriptor;
 
 public class InputPortController {
-  private InputPortDescriptor descriptor;
+  private final InputPortDescriptor descriptor;
 
-  private TabPane parentTabPane;
+  private final TabPane parentTabPane;
 
   private ObservableList<InputPortValueMapping> backingList;
 
