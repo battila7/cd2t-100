@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 
 import hu.progtech.cd2t100.game.model.InstructionDescriptor;
 
-public class InstructionsController {
+public class InstructionsController extends ManagedController {
   private static final Logger logger = LoggerFactory.getLogger(SelectPuzzleController.class);
 
   @FXML
@@ -36,12 +36,6 @@ public class InstructionsController {
 
   @FXML
   private VBox instructionsVBox;
-
-  private GameManager gameManager;
-
-  public void setGameManager(GameManager gameManager) {
-    this.gameManager = gameManager;
-  }
 
   public void populateList(List<InstructionDescriptor> list) {
     for (InstructionDescriptor descriptor : list) {

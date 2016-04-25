@@ -24,7 +24,7 @@ import hu.progtech.cd2t100.game.model.Puzzle;
 import hu.progtech.cd2t100.game.model.PuzzleDao;
 import hu.progtech.cd2t100.game.model.PuzzleDaoXml;
 
-public class SelectPuzzleController {
+public class SelectPuzzleController extends ManagedController {
   private static final Logger logger = LoggerFactory.getLogger(SelectPuzzleController.class);
 
   private static final String PUZZLE_XML = "xml/puzzles.xml";
@@ -47,13 +47,7 @@ public class SelectPuzzleController {
   @FXML
   private VBox puzzlesVBox;
 
-  private GameManager gameManager;
-
   private PuzzleDao puzzleDao;
-
-  public void setGameManager(GameManager gameManager) {
-    this.gameManager = gameManager;
-  }
 
   @FXML
   private void handleExitButtonClick() {
@@ -65,8 +59,7 @@ public class SelectPuzzleController {
     gameManager.changeScene(InstructionsController.class);
   }
 
-  @FXML
-  private void initialize() {
+  public void populatePuzzles() {
     puzzleDao = new PuzzleDaoXml(PUZZLE_XML);
 
     List<Puzzle> puzzles = puzzleDao.getAllPuzzles();
@@ -87,9 +80,18 @@ public class SelectPuzzleController {
   }
 
   private Pane createPuzzleItem(Puzzle puzzle) {
+    EmulatorController emuCtrl =
+      (EmulatorController)gameManager.getController(EmulatorController.class);
+
     Button playButton = new Button("Play");
     playButton.setPrefHeight(45.0);
     playButton.setMaxHeight(Double.MAX_VALUE);
+
+    playButton.setOnAction((evt) -> {
+      emuCtrl.setPuzzle(puzzle);
+
+      gameManager.changeScene(EmulatorController.class);
+    });
 
     Label nameLabel = new Label(puzzle.getName());
     nameLabel.setAlignment(Pos.TOP_LEFT);

@@ -32,6 +32,9 @@ public class GameManager {
 
   private static final String INSTRUCTIONS_XML = "xml/instructions.xml";
 
+  private static final String[] FXML_FILES =
+    { "fxml/SelectPuzzle.fxml", "fxml/Instructions.fxml", "fxml/Emulator.fxml" };
+
   private Stage stage;
 
   private InstructionDescriptorDao instructionDescriptorDao;
@@ -40,10 +43,13 @@ public class GameManager {
 
   private Map<Class<?>, Scene> sceneMap;
 
+  private Map<Class<?>, ManagedController> controllerMap;
+
   public GameManager(Stage stage) {
     this.stage = stage;
 
     sceneMap = new HashMap<>();
+    controllerMap = new HashMap<>();
   }
 
   public void start() {
@@ -75,6 +81,10 @@ public class GameManager {
   public void changeScene(Class<?> sceneClass) {
     Optional.ofNullable(sceneMap.get(sceneClass))
             .ifPresent(x -> stage.setScene(x));
+  }
+
+  public ManagedController getController(Class<?> controllerClass) {
+    return controllerMap.get(controllerClass);
   }
 
   private void loadResources() {
@@ -138,47 +148,41 @@ public class GameManager {
   private void initializeStage() {
     stage.setTitle("CD2T-100");
 
-    stage.setResizable(false);
-
     stage.centerOnScreen();
 
     logger.info("Stage initialized");
   }
 
   private void initializeScenes() throws IOException {
-    FXMLLoader fxmlLoader =
-      new FXMLLoader(getClass().getClassLoader().getResource("fxml/SelectPuzzle.fxml"));
+    for (String fxmlPath : FXML_FILES) {
+      FXMLLoader fxmlLoader =
+        new FXMLLoader(getClass().getClassLoader().getResource(fxmlPath));
 
-    Parent selectPuzzleLayout = (Parent)fxmlLoader.load();
+      Parent layout = (Parent)fxmlLoader.load();
 
-    SelectPuzzleController selectPuzzleController =
-      (SelectPuzzleController)fxmlLoader.getController();
+      ManagedController controller =
+        (ManagedController)fxmlLoader.getController();
 
-    selectPuzzleController.setGameManager(this);
+      controller.setGameManager(this);
 
-    Scene selectPuzzleScene = new Scene(selectPuzzleLayout);
+      Scene scene = new Scene(layout);
 
-    selectPuzzleScene.getStylesheets().add("css/base.css");
+      scene.getStylesheets().add("css/base.css");
 
-    sceneMap.put(SelectPuzzleController.class, selectPuzzleScene);
+      sceneMap.put(controller.getClass(), scene);
+      controllerMap.put(controller.getClass(), controller);
 
-    fxmlLoader =
-      new FXMLLoader(getClass().getClassLoader().getResource("fxml/Instructions.fxml"));
+      logger.info("Loaded scene from FXML: {}", fxmlPath);
+    }
 
-    Parent instructionsLayout = (Parent)fxmlLoader.load();
+    SelectPuzzleController spCtrl =
+      (SelectPuzzleController)controllerMap.get(SelectPuzzleController.class);
 
-    InstructionsController instructionsController =
-      (InstructionsController)fxmlLoader.getController();
+    spCtrl.populatePuzzles();
 
-    instructionsController.setGameManager(this);
+    InstructionsController iCtrl =
+      (InstructionsController)controllerMap.get(InstructionsController.class);
 
-    instructionsController.populateList(
-      instructionDescriptorDao.getAllInstructionDescriptors());
-
-    Scene instructionsScene = new Scene(instructionsLayout);
-
-    instructionsScene.getStylesheets().add("css/base.css");
-
-    sceneMap.put(InstructionsController.class, instructionsScene);
+    iCtrl.populateList(instructionDescriptorDao.getAllInstructionDescriptors());
   }
 }

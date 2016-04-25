@@ -39,14 +39,14 @@
     <inputPorts>
       <inputPortDescriptor globalName="IP1">
         <contents>
-          -5 10 -7 800 -55 43 92 33, 30, -345
+          -5 10 -7 800 -55 43 92 33 30 -345
         </contents>
       </inputPortDescriptor>
     </inputPorts>
     <outputPorts>
       <outputPortDescriptor globalName="OP1">
         <expected>
-          -4 11 -6 801 -54 44 93 34, 31, -344
+          -4 11 -6 801 -54 44 93 34 31 -344
         </expected>
       </outputPortDescriptor>
     </outputPorts>
