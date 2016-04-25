@@ -47,19 +47,25 @@ public class GameManager {
   }
 
   public void start() {
+    loadResources();
+
+    initializeStage();
+
     try {
-      loadResources();
-
-      initializeStage();
-
       initializeScenes();
-
-      changeScene(SelectPuzzleController.class);
-
-      stage.show();
     } catch (IOException e) {
+      logger.error("Could not load and initialize scenes.");
+
       logger.error(e.getMessage());
+
+      logger.error("Terminating...");
+
+      Platform.exit();
     }
+
+    changeScene(SelectPuzzleController.class);
+
+    stage.show();
   }
 
   public void requestExit() {
@@ -140,12 +146,10 @@ public class GameManager {
   }
 
   private void initializeScenes() throws IOException {
-    FXMLLoader fxmlLoader = new FXMLLoader();
+    FXMLLoader fxmlLoader =
+      new FXMLLoader(getClass().getClassLoader().getResource("fxml/SelectPuzzle.fxml"));
 
-    String fxmlPath = "fxml/SelectPuzzle.fxml";
-
-    Parent selectPuzzleLayout =
-      (Parent)fxmlLoader.load(getClass().getClassLoader().getResourceAsStream(fxmlPath));
+    Parent selectPuzzleLayout = (Parent)fxmlLoader.load();
 
     SelectPuzzleController selectPuzzleController =
       (SelectPuzzleController)fxmlLoader.getController();
@@ -157,5 +161,24 @@ public class GameManager {
     selectPuzzleScene.getStylesheets().add("css/base.css");
 
     sceneMap.put(SelectPuzzleController.class, selectPuzzleScene);
+
+    fxmlLoader =
+      new FXMLLoader(getClass().getClassLoader().getResource("fxml/Instructions.fxml"));
+
+    Parent instructionsLayout = (Parent)fxmlLoader.load();
+
+    InstructionsController instructionsController =
+      (InstructionsController)fxmlLoader.getController();
+
+    instructionsController.setGameManager(this);
+
+    instructionsController.populateList(
+      instructionDescriptorDao.getAllInstructionDescriptors());
+
+    Scene instructionsScene = new Scene(instructionsLayout);
+
+    instructionsScene.getStylesheets().add("css/base.css");
+
+    sceneMap.put(InstructionsController.class, instructionsScene);
   }
 }

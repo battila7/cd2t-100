@@ -2,7 +2,7 @@
   <puzzle>
     <name>Signal amplifier</name>
     <task>
-        Add one to each input value.
+      Add one to each input value.
     </task>
     <nodes>
       <nodeDescriptor globalName="NODE1" maxLines="10" row="1" column="1">
@@ -51,10 +51,11 @@
       </outputPortDescriptor>
     </outputPorts>
   </puzzle>
+
   <puzzle>
     <name>Signal amplifier</name>
     <task>
-        Add one to each input value.
+      Add one to each input value.
     </task>
     <nodes>
       <nodeDescriptor globalName="NODE1" maxLines="10" row="1" column="1">
@@ -103,10 +104,11 @@
       </outputPortDescriptor>
     </outputPorts>
   </puzzle>
+
   <puzzle>
     <name>Signal amplifier</name>
     <task>
-        Add one to each input value.
+      Add one to each input value.
     </task>
     <nodes>
       <nodeDescriptor globalName="NODE1" maxLines="10" row="1" column="1">
@@ -155,10 +157,11 @@
       </outputPortDescriptor>
     </outputPorts>
   </puzzle>
+
   <puzzle>
     <name>Signal amplifier</name>
     <task>
-        Add one to each input value.
+      Add one to each input value.
     </task>
     <nodes>
       <nodeDescriptor globalName="NODE1" maxLines="10" row="1" column="1">
@@ -207,10 +210,11 @@
       </outputPortDescriptor>
     </outputPorts>
   </puzzle>
+
   <puzzle>
     <name>Signal amplifier</name>
     <task>
-        Add one to each input value.
+      Add one to each input value.
     </task>
     <nodes>
       <nodeDescriptor globalName="NODE1" maxLines="10" row="1" column="1">
@@ -259,10 +263,11 @@
       </outputPortDescriptor>
     </outputPorts>
   </puzzle>
+
   <puzzle>
     <name>Signal amplifier</name>
     <task>
-        Add one to each input value.
+      Add one to each input value.
     </task>
     <nodes>
       <nodeDescriptor globalName="NODE1" maxLines="10" row="1" column="1">
@@ -311,10 +316,11 @@
       </outputPortDescriptor>
     </outputPorts>
   </puzzle>
+
   <puzzle>
     <name>Signal amplifier</name>
     <task>
-        Add one to each input value.
+      Add one to each input value.
     </task>
     <nodes>
       <nodeDescriptor globalName="NODE1" maxLines="10" row="1" column="1">
@@ -363,10 +369,11 @@
       </outputPortDescriptor>
     </outputPorts>
   </puzzle>
+
   <puzzle>
     <name>Signal amplifier</name>
     <task>
-        Add one to each input value.
+      Add one to each input value.
     </task>
     <nodes>
       <nodeDescriptor globalName="NODE1" maxLines="10" row="1" column="1">
@@ -415,10 +422,11 @@
       </outputPortDescriptor>
     </outputPorts>
   </puzzle>
+
   <puzzle>
     <name>Signal amplifier</name>
     <task>
-        Add one to each input value.
+      Add one to each input value.
     </task>
     <nodes>
       <nodeDescriptor globalName="NODE1" maxLines="10" row="1" column="1">
@@ -467,10 +475,11 @@
       </outputPortDescriptor>
     </outputPorts>
   </puzzle>
+
   <puzzle>
     <name>Signal amplifier</name>
     <task>
-        Add one to each input value.
+      Add one to each input value.
     </task>
     <nodes>
       <nodeDescriptor globalName="NODE1" maxLines="10" row="1" column="1">

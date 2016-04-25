@@ -10,7 +10,7 @@ import hu.progtech.cd2t100.computation.io.CommunicationPort;
 
 /**
  *  A builder class that makes easier the instantiation of
- *  {@code Node} objects.
+ *  {@code Node} objects. 
  */
 public class NodeBuilder {
   private static final Logger	logger = LoggerFactory.getLogger(NodeBuilder.class);

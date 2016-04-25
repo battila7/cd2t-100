@@ -61,6 +61,11 @@ public class SelectPuzzleController {
   }
 
   @FXML
+  private void handleInstructionsButtonClick() {
+    gameManager.changeScene(InstructionsController.class);
+  }
+
+  @FXML
   private void initialize() {
     puzzleDao = new PuzzleDaoXml(PUZZLE_XML);
 
