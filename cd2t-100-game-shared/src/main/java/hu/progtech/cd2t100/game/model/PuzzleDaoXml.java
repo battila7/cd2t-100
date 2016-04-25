@@ -35,6 +35,10 @@ public class PuzzleDaoXml implements PuzzleDao {
       InputStream is =
         this.getClass().getClassLoader().getResourceAsStream(xmlFile);
 
+      if (is == null) {
+        return null;
+      }
+
       Puzzles p =
         (Puzzles)unmarshaller.unmarshal(is);
 
@@ -53,7 +57,9 @@ public class PuzzleDaoXml implements PuzzleDao {
       /*
        *  Call just for the side-effect.
        */
-      getAllPuzzles();
+      if (getAllPuzzles() == null) {
+        return null;
+      }
     }
 
     for (Puzzle puzzle : puzzleList) {

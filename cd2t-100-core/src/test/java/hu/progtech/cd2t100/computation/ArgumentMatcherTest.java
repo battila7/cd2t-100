@@ -41,8 +41,7 @@ import hu.progtech.cd2t100.formal.InvalidFormalParameterListException;
 
 @RunWith(Parameterized.class)
 public class ArgumentMatcherTest {
-  private static String CODE_FILE = Paths.get("computation", "arg-matcher-test.json")
-                                         .toString();
+  private static String CODE_FILE = "computation/arg-matcher-test.json";
 
   private static int PARAMETER_COUNT = 6;
 

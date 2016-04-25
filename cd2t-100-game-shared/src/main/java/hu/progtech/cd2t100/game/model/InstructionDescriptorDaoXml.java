@@ -33,6 +33,10 @@ public class InstructionDescriptorDaoXml implements InstructionDescriptorDao {
       InputStream is =
         this.getClass().getClassLoader().getResourceAsStream(xmlFile);
 
+      if (is == null) {
+        return null;
+      }
+
       InstructionDescriptors descriptors =
         (InstructionDescriptors)unmarshaller.unmarshal(is);
 

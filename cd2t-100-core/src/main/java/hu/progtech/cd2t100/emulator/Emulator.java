@@ -212,7 +212,7 @@ public class Emulator {
     emulatorObserver.onStateChanged(emulatorState);
   }
 
-  /* package */ StateChangeRequest generateInstructions() {
+  /* package */ boolean generateInstructions() {
     nodeExceptionMap = new HashMap<>();
 
     codeExceptionMap = new HashMap<>();
@@ -247,11 +247,7 @@ public class Emulator {
       }
     }
 
-    if (!codeExceptionMap.isEmpty() || !nodeExceptionMap.isEmpty()) {
-      return StateChangeRequest.ERROR;
-    }
-
-    return StateChangeRequest.RUN;
+    return codeExceptionMap.isEmpty() && nodeExceptionMap.isEmpty();
   }
 
   /**

@@ -2,8 +2,6 @@ package hu.progtech.cd2t100.game.cli;
 
 import java.io.InputStream;
 
-import java.nio.file.Paths;
-
 import java.util.Scanner;
 import java.util.List;
 import java.util.HashMap;
@@ -28,11 +26,9 @@ public class GameManager {
   private static final Logger logger =
     LoggerFactory.getLogger(GameManager.class);
 
-  private static final String INSTRUCTION_XML =
-    Paths.get("xml", "instructions.xml").toString();
+  private static final String INSTRUCTION_XML = "xml/instructions.xml";
 
-  private static final String PUZZLE_XML =
-    Paths.get("xml", "puzzles.xml").toString();
+  private static final String PUZZLE_XML = "xml/puzzles.xml";
 
   private final InstructionRegistry instructionRegistry;
 

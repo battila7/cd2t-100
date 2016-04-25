@@ -31,8 +31,7 @@ import org.apache.commons.lang3.StringUtils;
 
 @RunWith(Parameterized.class)
 public class CodeFactoryTest {
-  private static String CODE_FILE = Paths.get("asm", "test-code.json")
-                                         .toString();
+  private static String CODE_FILE = "asm/test-code.json";
 
   private static int PARAMETER_COUNT = 5;
 

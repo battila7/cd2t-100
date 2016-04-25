@@ -3,8 +3,8 @@ package hu.progtech.cd2t100.game.gui;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.List;
-import java.nio.file.Paths;
 
+import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Control;
@@ -17,13 +17,17 @@ import javafx.geometry.Pos;
 
 import javafx.fxml.FXML;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import hu.progtech.cd2t100.game.model.Puzzle;
 import hu.progtech.cd2t100.game.model.PuzzleDao;
 import hu.progtech.cd2t100.game.model.PuzzleDaoXml;
 
 public class SelectPuzzleController {
-  private static final String PUZZLE_XML =
-    Paths.get("xml", "puzzles.xml").toString();
+  private static final Logger logger = LoggerFactory.getLogger(SelectPuzzleController.class);
+
+  private static final String PUZZLE_XML = "xml/puzzles.xml";
 
   @FXML
   private ResourceBundle resources;
@@ -59,6 +63,16 @@ public class SelectPuzzleController {
   @FXML
   private void initialize() {
     puzzleDao = new PuzzleDaoXml(PUZZLE_XML);
+
+    List<Puzzle> puzzles = puzzleDao.getAllPuzzles();
+
+    if (puzzles == null) {
+      logger.error("Could not load puzzles from {}", PUZZLE_XML);
+
+      logger.error("Terminating...");
+
+      Platform.exit();
+    }
 
     for (Puzzle puzzle : puzzleDao.getAllPuzzles()) {
       Pane p = createPuzzleItem(puzzle);

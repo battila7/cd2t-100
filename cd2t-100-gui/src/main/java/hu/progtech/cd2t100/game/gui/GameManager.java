@@ -2,12 +2,12 @@ package hu.progtech.cd2t100.game.gui;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Optional;
 
+import javafx.application.Platform;
 import javafx.scene.text.Font;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -28,11 +28,9 @@ import hu.progtech.cd2t100.game.model.InstructionDescriptorDaoXml;
 public class GameManager {
   private static final Logger logger = LoggerFactory.getLogger(GameManager.class);
 
-  private static final String FONT_PATH =
-    Paths.get("fonts", "Nouveau_IBM.ttf").toString();
+  private static final String FONT_PATH = "fonts/Nouveau_IBM.ttf";
 
-  private static final String INSTRUCTIONS_XML =
-    Paths.get("xml", "instructions.xml").toString();
+  private static final String INSTRUCTIONS_XML = "xml/instructions.xml";
 
   private Stage stage;
 
@@ -88,24 +86,47 @@ public class GameManager {
   }
 
   private void loadInstructions() {
-		try {
-			List<InstructionDescriptor> descriptors =
-				instructionDescriptorDao.getAllInstructionDescriptors();
+		List<InstructionDescriptor> descriptors =
+			instructionDescriptorDao.getAllInstructionDescriptors();
 
-			for (InstructionDescriptor descriptor : descriptors) {
-        System.out.println(descriptor);
+    if (descriptors == null) {
+      logger.error("Could not load instruction descriptors from {}", INSTRUCTIONS_XML);
 
-				InputStream is =
-					this.getClass().getClassLoader()
-                         .getResourceAsStream(descriptor.getGroovyFile());
+      logger.error("Terminating....");
 
-				InstructionInfo info = InstructionLoader.loadInstruction(is);
+      Platform.exit();
+    }
 
-				instructionRegistry.registerInstruction(info);
-			}
-		} catch (Exception e) {
-			logger.warn(e.getMessage());
-		}
+    int loadedCount = 0;
+
+		for (InstructionDescriptor descriptor : descriptors) {
+      try {
+			  InputStream is = this.getClass().getClassLoader()
+                          .getResourceAsStream(descriptor.getGroovyFile());
+
+        if (is == null) {
+          logger.warn("Failed to load instruction from {}", descriptor.getGroovyFile());
+
+          logger.warn("Skipping");
+
+          continue;
+        }
+
+			  InstructionInfo info = InstructionLoader.loadInstruction(is);
+
+			  instructionRegistry.registerInstruction(info);
+
+        ++loadedCount;
+		  } catch (Exception e) {
+        logger.warn("Failed to load instruction from {}", descriptor.getGroovyFile());
+
+        logger.warn("Details: {}", e.getMessage());
+
+        logger.warn("Skipping");
+      }
+    }
+
+    logger.info("{}/{} instructions successfully loaded.", loadedCount, descriptors.size());
   }
 
   private void initializeStage() {
@@ -121,7 +142,7 @@ public class GameManager {
   private void initializeScenes() throws IOException {
     FXMLLoader fxmlLoader = new FXMLLoader();
 
-    String fxmlPath = Paths.get("fxml", "SelectPuzzle.fxml").toString();
+    String fxmlPath = "fxml/SelectPuzzle.fxml";
 
     Parent selectPuzzleLayout =
       (Parent)fxmlLoader.load(getClass().getClassLoader().getResourceAsStream(fxmlPath));

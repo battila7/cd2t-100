@@ -27,8 +27,7 @@ import static org.assertj.core.api.Assertions.*;
 
 @RunWith(Parameterized.class)
 public class InstructionLoaderTest {
-  private static String CODE_FILE = Paths.get("formal", "formal-test.json")
-                                         .toString();
+  private static String CODE_FILE = "formal/formal-test.json";
 
   private static int PARAMETER_COUNT = 3;
 

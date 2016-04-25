@@ -71,23 +71,24 @@ public enum EmulatorState {
   STOPPED() {
     @Override
     /* package */ void onRequest(Emulator emulator, StateChangeRequest changeRequest) {
-      StateChangeRequest req = emulator.generateInstructions();
-
-      switch (req) {
-        case ERROR:
-          emulator.setState(ERROR);
-          break;
-        case RUN:
-          emulator.start(ExecutionMode.CONTINUOUS);
-          emulator.setState(RUNNING);
-          break;
-        case STEP:
-          emulator.start(ExecutionMode.STEPPED);
-          emulator.setState(RUNNING);
-          break;
-        default:
-          break;
+      if ((changeRequest != StateChangeRequest.RUN) &&
+          (changeRequest != StateChangeRequest.STEP)) {
+        return;
       }
+
+      boolean result = emulator.generateInstructions();
+
+      if (!result) {
+        emulator.setState(ERROR);
+
+        return;
+      }
+
+      emulator.start(changeRequest == StateChangeRequest.RUN ?
+                        ExecutionMode.CONTINUOUS :
+                        ExecutionMode.STEPPED);
+
+      emulator.setState(RUNNING);
     }
   },
 
