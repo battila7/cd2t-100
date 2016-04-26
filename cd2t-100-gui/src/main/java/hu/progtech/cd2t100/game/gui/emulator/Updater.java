@@ -3,6 +3,7 @@ package hu.progtech.cd2t100.game.gui.emulator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 import java.util.concurrent.BlockingQueue;
 
@@ -19,9 +20,12 @@ class Updater implements Runnable {
 
   private Map<String, List<Integer>> outputPortContents;
 
+  private Consumer<EmulatorCycleData> cycleDataConsumer;
+
   public Updater(Emulator emulator,
                  Map<String, List<Integer>> outputPortContents,
-                 Map<String, List<Integer>> expectedPortContents) {
+                 Map<String, List<Integer>> expectedPortContents,
+                 Consumer<EmulatorCycleData> cycleDataConsumer) {
     this.emulator = emulator;
 
     this.cycleDataQueue = emulator.getCycleDataQueue();
@@ -29,6 +33,8 @@ class Updater implements Runnable {
     this.outputPortContents = outputPortContents;
 
     this.expectedPortContents = expectedPortContents;
+
+    this.cycleDataConsumer = cycleDataConsumer;
   }
 
   @Override
@@ -55,7 +61,7 @@ class Updater implements Runnable {
           }
         }
 
-        System.out.println(ecd);
+        cycleDataConsumer.accept(ecd);
 
         if (success) {
           emulator.request(StateChangeRequest.SUCCESS);

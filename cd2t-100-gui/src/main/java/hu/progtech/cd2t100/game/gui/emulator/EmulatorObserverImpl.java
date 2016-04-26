@@ -2,12 +2,14 @@ package hu.progtech.cd2t100.game.gui.emulator;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 import hu.progtech.cd2t100.emulator.Emulator;
 import hu.progtech.cd2t100.emulator.EmulatorState;
 import hu.progtech.cd2t100.emulator.EmulatorObserver;
+import hu.progtech.cd2t100.emulator.EmulatorCycleData;
 
-class EmulatorObserverImpl implements EmulatorObserver {
+public class EmulatorObserverImpl implements EmulatorObserver {
   private Emulator emulator;
 
   private Thread updaterThread;
@@ -16,12 +18,17 @@ class EmulatorObserverImpl implements EmulatorObserver {
 
   private Map<String, List<Integer>> outputPortContents;
 
+  private Consumer<EmulatorCycleData> cycleDataConsumer;
+
   public EmulatorObserverImpl(Map<String, List<Integer>> outputPortContents,
-                              Map<String, List<Integer>> expectedPortContents)
+                              Map<String, List<Integer>> expectedPortContents,
+                              Consumer<EmulatorCycleData> cycleDataConsumer)
   {
     this.outputPortContents = outputPortContents;
 
     this.expectedPortContents = expectedPortContents;
+
+    this.cycleDataConsumer = cycleDataConsumer;
   }
 
   @Override
@@ -33,7 +40,8 @@ class EmulatorObserverImpl implements EmulatorObserver {
       if (updaterThread == null) {
         updaterThread = new Thread(new Updater(emulator,
                                                outputPortContents,
-                                               expectedPortContents));
+                                               expectedPortContents,
+                                               cycleDataConsumer));
 
         updaterThread.start();
       }

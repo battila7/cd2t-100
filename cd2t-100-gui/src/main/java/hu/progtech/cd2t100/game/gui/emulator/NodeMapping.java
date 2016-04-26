@@ -44,6 +44,10 @@ public class NodeMapping {
     return new NodeMapping(descriptor.getGlobalName(), mappings);
   }
 
+  public Map<String, RegisterMapping> getMapping() {
+    return registerMappings;
+  }
+
   public String getGlobalName() {
     return globalName;
   }

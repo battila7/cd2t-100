@@ -1,5 +1,6 @@
 package hu.progtech.cd2t100.game.gui.emulator;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
@@ -25,6 +26,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import javafx.beans.property.StringProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.ObjectProperty;
+
+import hu.progtech.cd2t100.emulator.EmulatorCycleData;
 
 import hu.progtech.cd2t100.game.model.Puzzle;
 import hu.progtech.cd2t100.game.model.NodeDescriptor;
@@ -43,12 +47,16 @@ public class NodeController {
 
   private final Map<String, NodeMapping>  nodeMappings;
 
-  public NodeController(Puzzle puzzle) {
+  public NodeController(Puzzle puzzle, ObjectProperty<EmulatorCycleData> emulatorCycleData) {
     this.puzzle = puzzle;
 
     selectedNodeName = new SimpleStringProperty();
 
     nodeMappings = new HashMap<>();
+
+    emulatorCycleData.addListener(
+      (observable, oldValue, newValue) -> refresh(newValue)
+    );
   }
 
   public void link(GridPane sourceCodeGridPane, Tab nodeStatusTab,
@@ -146,6 +154,22 @@ public class NodeController {
 
   private void changeStatusTab(NodeMapping mapping) {
     registerTable.setItems(mapping.getMappingList());
+  }
+
+  private void refresh(EmulatorCycleData emulatorCycleData) {
+    for (NodeMemento memento : emulatorCycleData.getNodeMementos().values()) {
+      refreshNode(memento);
+    }
+  }
+
+  private void refreshNode(NodeMemento memento) {
+    NodeMapping mapping = nodeMappings.get(memento.getGlobalName());
+
+    Map<String, RegisterMapping> registerMapping = mapping.getMapping();
+
+    for (Map.Entry<String, int[]> entry : memento.getRegisterValues().entrySet()) {
+      registerMapping.get(entry.getKey()).setValues(Arrays.toString(entry.getValue()));
+    }
   }
 
   public Map<String, String> getSourceCodes() {

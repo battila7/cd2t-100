@@ -10,6 +10,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import javafx.beans.property.ObjectProperty;
+
+import hu.progtech.cd2t100.emulator.EmulatorCycleData;
+
 import hu.progtech.cd2t100.game.model.Puzzle;
 import hu.progtech.cd2t100.game.model.PortNameMapping;
 import hu.progtech.cd2t100.game.model.OutputPortDescriptor;
@@ -24,7 +28,7 @@ public class PortMappingController {
 
   private ObservableList<PortMapping> backingList;
 
-  public PortMappingController(Puzzle puzzle) {
+  public PortMappingController(Puzzle puzzle, ObjectProperty<EmulatorCycleData> emulatorCycleData) {
     this.puzzle = puzzle;
 
     this.parentTableView = parentTableView;

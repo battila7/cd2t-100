@@ -184,5 +184,10 @@ public class GameManager {
       (InstructionsController)controllerMap.get(InstructionsController.class);
 
     iCtrl.populateList(instructionDescriptorDao.getAllInstructionDescriptors());
+
+    EmulatorController emuCtrl =
+      (EmulatorController)controllerMap.get(EmulatorController.class);
+
+    emuCtrl.setInstructionRegistry(instructionRegistry);
   }
 }
