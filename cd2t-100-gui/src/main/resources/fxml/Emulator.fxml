@@ -76,11 +76,11 @@
                                       <placeholder>
                                         <Label text="Select a node" />
                                       </placeholder>
-                                      <columns>
-                                        <TableColumn prefWidth="75.0" text="Register" />
-                                        <TableColumn prefWidth="88.33331298828125" text="Capacity" />
-                                          <TableColumn prefWidth="211.00006103515625" text="Values" />
-                                      </columns>
+                                      <!--<columns>
+                                        <TableColumn prefWidth="75.0" text="Register" fx:id="registerCol" />
+                                        <TableColumn prefWidth="88.33331298828125" text="Capacity" fx:id="capacityCol" />
+                                        <TableColumn prefWidth="211.00006103515625" text="Values" fx:id="valuesCol" />
+                                      </columns>-->
                                        <columnResizePolicy>
                                           <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                        </columnResizePolicy>

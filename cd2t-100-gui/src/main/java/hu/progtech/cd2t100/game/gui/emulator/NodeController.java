@@ -20,6 +20,7 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import javafx.beans.property.StringProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -31,28 +32,49 @@ import hu.progtech.cd2t100.computation.NodeMemento;
 public class NodeController {
   private final Puzzle puzzle;
 
+  private final StringProperty selectedNodeName;
+
   private GridPane sourceCodeGridPane;
 
   private Tab nodeStatusTab;
 
-  // private final Map<String, NodeMapping>  nodeMappings;
+  private TableView<RegisterMapping> registerTable;
+
+  private final Map<String, NodeMapping>  nodeMappings;
 
   public NodeController(Puzzle puzzle) {
     this.puzzle = puzzle;
 
-    //nodeMappings = new HashMap<>();
+    selectedNodeName = new SimpleStringProperty();
+
+    nodeMappings = new HashMap<>();
   }
 
-  public void link(GridPane sourceCodeGridPane, Tab nodeStatusTab) {
+  public void link(GridPane sourceCodeGridPane, Tab nodeStatusTab,
+                   TableView<RegisterMapping> registerTable)
+  {
     this.sourceCodeGridPane = sourceCodeGridPane;
 
     this.nodeStatusTab = nodeStatusTab;
 
+    this.registerTable = registerTable;
+
     initGridPane();
+
+    initStatusTab();
 
     for (NodeDescriptor descriptor : puzzle.getNodeDescriptors()) {
       linkNode(descriptor);
+
+      nodeMappings.put(descriptor.getGlobalName(),
+                       NodeMapping.fromNodeDescriptor(descriptor));
     }
+
+    selectedNodeName.addListener(
+      (observable, oldValue, newValue) -> {
+        changeStatusTab(nodeMappings.get(newValue));
+      }
+    );
   }
 
   private void initGridPane() {
@@ -74,6 +96,22 @@ public class NodeController {
     }
   }
 
+  private void initStatusTab() {
+    TableColumn<RegisterMapping, String> nameCol = new TableColumn<>("Register");
+    nameCol.setCellValueFactory(
+            new PropertyValueFactory<RegisterMapping, String>("name"));
+
+    TableColumn<RegisterMapping, Integer> capacityCol = new TableColumn<>("Capacity");
+    capacityCol.setCellValueFactory(
+            new PropertyValueFactory<RegisterMapping, Integer>("capacity"));
+
+    TableColumn<RegisterMapping, String> valuesCol = new TableColumn<>("Values");
+    valuesCol.setCellValueFactory(
+            new PropertyValueFactory<RegisterMapping, String>("values"));
+
+    registerTable.getColumns().addAll(nameCol, capacityCol, valuesCol);
+  }
+
   private void linkNode(NodeDescriptor descriptor) {
     VBox container = new VBox();
 
@@ -93,12 +131,18 @@ public class NodeController {
     codeArea.setMaxWidth(Double.MAX_VALUE);
     codeArea.setMaxHeight(Double.MAX_VALUE);
 
+    codeArea.setOnMouseClicked(evt -> selectedNodeName.set(descriptor.getGlobalName()));
+
     container.getChildren().add(codeArea);
     container.setVgrow(codeArea, Priority.ALWAYS);
 
     //codeText.bind(codeArea.textProperty());
 
     sourceCodeGridPane.add(container, descriptor.getColumn() - 1, descriptor.getRow() - 1);
+  }
+
+  private void changeStatusTab(NodeMapping mapping) {
+    registerTable.setItems(mapping.getMappingList());
   }
 
   public String getCodeText() {

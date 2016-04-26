@@ -29,37 +29,7 @@ public class OutputPortController {
 
   @SuppressWarnings("unchecked")
   public void attach() {
-    Tab tab = new Tab(descriptor.getGlobalName());
-
-    backingList = FXCollections.observableArrayList();
-
-    descriptor.getExpectedContents()
-              .stream()
-              .forEach(x -> backingList.add(new OutputPortValueMapping(x)));
-
-    TableView<OutputPortValueMapping> table = new TableView<>();
-
-    table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-
-    TableColumn<OutputPortValueMapping, Integer> expectedCol = new TableColumn<>("Expected");
-    expectedCol.setCellValueFactory(
-            new PropertyValueFactory<OutputPortValueMapping, Integer>("expected"));
-
-    expectedCol.setSortable(false);
-
-    TableColumn<OutputPortValueMapping, Integer> actualCol = new TableColumn<>("Actual");
-    actualCol.setCellValueFactory(
-            new PropertyValueFactory<OutputPortValueMapping, Integer>("actual"));
-
-    actualCol.setSortable(false);
-
-    table.getColumns().setAll(expectedCol, actualCol);
-
-    table.setItems(backingList);
-
-    tab.setContent(table);
-
-    parentTabPane.getTabs().add(tab);
+    
   }
 
   public void addValue(int value) {

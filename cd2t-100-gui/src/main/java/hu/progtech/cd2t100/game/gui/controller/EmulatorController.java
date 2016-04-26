@@ -35,6 +35,7 @@ import hu.progtech.cd2t100.game.model.NodeDescriptor;
 
 import hu.progtech.cd2t100.game.gui.emulator.NodeController;
 import hu.progtech.cd2t100.game.gui.emulator.PortMapping;
+import hu.progtech.cd2t100.game.gui.emulator.RegisterMapping;
 import hu.progtech.cd2t100.game.gui.emulator.PortMappingController;
 import hu.progtech.cd2t100.game.gui.emulator.IOPortController;
 
@@ -74,6 +75,9 @@ public class EmulatorController extends ManagedController {
   @FXML
   private Tab nodeStatusTab;
 
+  @FXML
+  private TableView<RegisterMapping> nodeRegisterTable;
+
   private Puzzle puzzle;
 
   private IOPortController ioPortController;
@@ -97,13 +101,19 @@ public class EmulatorController extends ManagedController {
 
     ioPortController.link(ioTabPane);
 
+    logger.info("IOPortController linked");
+
     portMappingController = new PortMappingController(puzzle);
 
     portMappingController.link(portTable);
 
+    logger.info("PortMappingController linked");
+
     nodeController = new NodeController(puzzle);
 
-    nodeController.link(nodeGridPane, nodeStatusTab);
+    nodeController.link(nodeGridPane, nodeStatusTab, nodeRegisterTable);
+
+    logger.info("NodeController linked");
   }
 
   @FXML

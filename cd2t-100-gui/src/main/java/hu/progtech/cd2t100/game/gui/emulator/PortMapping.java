@@ -1,5 +1,6 @@
 package hu.progtech.cd2t100.game.gui.emulator;
 
+import javafx.beans.property.StringProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class PortMapping {
@@ -9,7 +10,7 @@ public class PortMapping {
 
   private String to;
 
-  private SimpleStringProperty value;
+  private StringProperty value;
 
   public PortMapping(String name, String from, String to) {
     this.name = name;
@@ -53,7 +54,7 @@ public class PortMapping {
     this.value.set(value);
   }
 
-  public SimpleStringProperty valueProperty() {
+  public StringProperty valueProperty() {
     return value;
   }
 }
