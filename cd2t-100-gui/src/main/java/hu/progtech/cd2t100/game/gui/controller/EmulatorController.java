@@ -71,17 +71,16 @@ public class EmulatorController extends ManagedController {
   @FXML
   private TableView<PortMapping> portTable;
 
+  @FXML
+  private Tab nodeStatusTab;
+
   private Puzzle puzzle;
 
   private IOPortController ioPortController;
 
-  private final Map<String, NodeController> nodeControllers;
+  private NodeController nodeController;
 
   private PortMappingController portMappingController;
-
-  public EmulatorController() {
-    nodeControllers = new HashMap<>();
-  }
 
   public void setPuzzle(Puzzle puzzle) {
     this.puzzle = puzzle;
@@ -94,44 +93,17 @@ public class EmulatorController extends ManagedController {
   }
 
   private void linkControllers() {
-    ioPortController =
-      new IOPortController(puzzle);
+    ioPortController = new IOPortController(puzzle);
 
     ioPortController.link(ioTabPane);
 
-    portMappingController =
-      new PortMappingController(portTable, puzzle);
+    portMappingController = new PortMappingController(puzzle);
 
-    portMappingController.attach();
+    portMappingController.link(portTable);
 
-    injectNodes();
-  }
+    nodeController = new NodeController(puzzle);
 
-  private void injectNodes() {
-    List<NodeDescriptor> nodes = puzzle.getNodeDescriptors();
-
-    int gridRows = nodes.stream()
-                        .mapToInt(NodeDescriptor::getRow)
-                        .max().getAsInt(),
-        gridCols = nodes.stream()
-                        .mapToInt(NodeDescriptor::getColumn)
-                        .max().getAsInt();
-
-    for (int i = 0; i < gridRows; ++i) {
-      nodeGridPane.getRowConstraints().add(new RowConstraints(200));
-    }
-
-    for (int i = 0; i < gridCols; ++i) {
-      nodeGridPane.getColumnConstraints().add(new ColumnConstraints(200));
-    }
-
-    for (NodeDescriptor descriptor : nodes) {
-      NodeController controller = new NodeController(nodeGridPane, descriptor);
-
-      controller.attach();
-
-      nodeControllers.put(descriptor.getGlobalName(), controller);
-    }
+    nodeController.link(nodeGridPane, nodeStatusTab);
   }
 
   @FXML

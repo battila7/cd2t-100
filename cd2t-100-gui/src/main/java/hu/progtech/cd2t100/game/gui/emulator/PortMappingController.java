@@ -20,18 +20,20 @@ import hu.progtech.cd2t100.game.model.NodeDescriptor;
 public class PortMappingController {
   private final Puzzle puzzle;
 
-  private final TableView<PortMapping> parentTableView;
+  private TableView<PortMapping> parentTableView;
 
   private ObservableList<PortMapping> backingList;
 
-  public PortMappingController(TableView<PortMapping> parentTableView, Puzzle puzzle) {
+  public PortMappingController(Puzzle puzzle) {
     this.puzzle = puzzle;
 
     this.parentTableView = parentTableView;
   }
 
   @SuppressWarnings("unchecked")
-  public void attach() {
+  public void link(TableView<PortMapping> parentTableView) {
+    this.parentTableView = parentTableView;
+
     parentTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
     TableColumn<PortMapping, String> nameCol = new TableColumn<>("Name");

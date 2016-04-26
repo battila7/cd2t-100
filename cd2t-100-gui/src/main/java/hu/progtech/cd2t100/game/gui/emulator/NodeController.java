@@ -1,5 +1,6 @@
 package hu.progtech.cd2t100.game.gui.emulator;
 
+import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -12,34 +13,68 @@ import javafx.scene.control.Control;
 import javafx.geometry.Insets;
 import javafx.scene.layout.Priority;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 
+import javafx.beans.property.StringProperty;
 import javafx.beans.property.SimpleStringProperty;
 
+import hu.progtech.cd2t100.game.model.Puzzle;
 import hu.progtech.cd2t100.game.model.NodeDescriptor;
 import hu.progtech.cd2t100.computation.NodeMemento;
 
 public class NodeController {
-  private final NodeDescriptor descriptor;
+  private final Puzzle puzzle;
 
-  private final GridPane parentGridPane;
+  private GridPane sourceCodeGridPane;
 
-  private TextArea codeArea;
+  private Tab nodeStatusTab;
 
-  private final SimpleStringProperty codeText;
+  // private final Map<String, NodeMapping>  nodeMappings;
 
-  private final Map<String, RegisterMapping> registerMappings;
+  public NodeController(Puzzle puzzle) {
+    this.puzzle = puzzle;
 
-  public NodeController(GridPane parentGridPane, NodeDescriptor descriptor) {
-    this.parentGridPane = parentGridPane;
-
-    this.descriptor = descriptor;
-
-    codeText = new SimpleStringProperty();
-
-    registerMappings = new HashMap<>();
+    //nodeMappings = new HashMap<>();
   }
 
-  public void attach() {
+  public void link(GridPane sourceCodeGridPane, Tab nodeStatusTab) {
+    this.sourceCodeGridPane = sourceCodeGridPane;
+
+    this.nodeStatusTab = nodeStatusTab;
+
+    initGridPane();
+
+    for (NodeDescriptor descriptor : puzzle.getNodeDescriptors()) {
+      linkNode(descriptor);
+    }
+  }
+
+  private void initGridPane() {
+    List<NodeDescriptor> nodes = puzzle.getNodeDescriptors();
+
+    int gridRows = nodes.stream()
+                        .mapToInt(NodeDescriptor::getRow)
+                        .max().getAsInt(),
+        gridCols = nodes.stream()
+                        .mapToInt(NodeDescriptor::getColumn)
+                        .max().getAsInt();
+
+    for (int i = 0; i < gridRows; ++i) {
+      sourceCodeGridPane.getRowConstraints().add(new RowConstraints(200));
+    }
+
+    for (int i = 0; i < gridCols; ++i) {
+      sourceCodeGridPane.getColumnConstraints().add(new ColumnConstraints(200));
+    }
+  }
+
+  private void linkNode(NodeDescriptor descriptor) {
     VBox container = new VBox();
 
     Label nameLabel = new Label(descriptor.getGlobalName());
@@ -61,16 +96,18 @@ public class NodeController {
     container.getChildren().add(codeArea);
     container.setVgrow(codeArea, Priority.ALWAYS);
 
-    codeText.bind(codeArea.textProperty());
+    //codeText.bind(codeArea.textProperty());
 
-    parentGridPane.add(container, descriptor.getColumn() - 1, descriptor.getRow() - 1);
+    sourceCodeGridPane.add(container, descriptor.getColumn() - 1, descriptor.getRow() - 1);
   }
 
   public String getCodeText() {
-    return codeText.get();
+    return null;
+    //return codeText.get();
   }
 
   public SimpleStringProperty codeTextProperty() {
-    return codeText;
+    return null;
+    //return codeText;
   }
 }

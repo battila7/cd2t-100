@@ -68,7 +68,7 @@
                   </ScrollPane>
                   <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
-                        <Tab text="Current Node">
+                        <Tab fx:id="nodeStatusTab" text="Current Node">
                            <content>
                               <HBox prefHeight="100.0" prefWidth="200.0">
                                  <children>
