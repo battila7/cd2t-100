@@ -31,15 +31,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import hu.progtech.cd2t100.game.model.Puzzle;
-import hu.progtech.cd2t100.game.model.OutputPortDescriptor;
-import hu.progtech.cd2t100.game.model.InputPortDescriptor;
 import hu.progtech.cd2t100.game.model.NodeDescriptor;
 
-import hu.progtech.cd2t100.game.gui.emulator.InputPortController;
-import hu.progtech.cd2t100.game.gui.emulator.OutputPortController;
 import hu.progtech.cd2t100.game.gui.emulator.NodeController;
 import hu.progtech.cd2t100.game.gui.emulator.PortMapping;
 import hu.progtech.cd2t100.game.gui.emulator.PortMappingController;
+import hu.progtech.cd2t100.game.gui.emulator.IOPortController;
+
+/**
+ *  TODO: Refactor into less classes. There's no controller needed
+ *  per port and per node(?).
+ *  IOPortController, PortController, NodeController, that's all,
+ *  and these should provide update methods through an observable binding.
+ *
+ *  Replace the SimpleStringProperty declarations with StringProperty.
+ */
 
 public class EmulatorController extends ManagedController {
   private static final Logger logger = LoggerFactory.getLogger(EmulatorController.class);
@@ -67,30 +73,31 @@ public class EmulatorController extends ManagedController {
 
   private Puzzle puzzle;
 
-  private final Map<String, OutputPortController> outputPortControllers;
+  private IOPortController ioPortController;
 
   private final Map<String, NodeController> nodeControllers;
 
   private PortMappingController portMappingController;
 
   public EmulatorController() {
-    outputPortControllers = new HashMap<>();
-
     nodeControllers = new HashMap<>();
   }
 
   public void setPuzzle(Puzzle puzzle) {
     this.puzzle = puzzle;
 
-    injectPuzzleData();
-  }
-
-  private void injectPuzzleData() {
     puzzleNameLabel.setText(puzzle.getName());
 
     puzzleTaskLabel.setText(puzzle.getTask());
 
-    injectIOPorts();
+    linkControllers();
+  }
+
+  private void linkControllers() {
+    ioPortController =
+      new IOPortController(puzzle);
+
+    ioPortController.link(ioTabPane);
 
     portMappingController =
       new PortMappingController(portTable, puzzle);
@@ -98,24 +105,6 @@ public class EmulatorController extends ManagedController {
     portMappingController.attach();
 
     injectNodes();
-  }
-
-  private void injectIOPorts() {
-    outputPortControllers.clear();
-
-    for (InputPortDescriptor ipd : puzzle.getInputPortDescriptors()) {
-      InputPortController ipc = new InputPortController(ioTabPane, ipd);
-
-      ipc.attach();
-    }
-
-    for (OutputPortDescriptor opd : puzzle.getOutputPortDescriptors()) {
-      OutputPortController opc = new OutputPortController(ioTabPane, opd);
-
-      opc.attach();
-
-      outputPortControllers.put(opd.getGlobalName(), opc);
-    }
   }
 
   private void injectNodes() {
@@ -147,7 +136,7 @@ public class EmulatorController extends ManagedController {
 
   @FXML
   private void handleRunButtonClick() {
-    outputPortControllers.get("OP1").addValue(11);
+    //outputPortControllers.get("OP1").addValue(11);
   }
 
   @FXML

@@ -88,7 +88,7 @@ public class PortMappingController {
     for (NodeDescriptor node : puzzle.getNodeDescriptors()) {
       for (PortNameMapping pm : node.getReadablePorts()) {
         if (pm.getGlobalName().equals(name)) {
-          return node.getGlobalName();
+          return node.getGlobalName() + "(" + pm.getLocalName() + ")";
         }
       }
     }
@@ -100,7 +100,7 @@ public class PortMappingController {
     for (NodeDescriptor node : puzzle.getNodeDescriptors()) {
       for (PortNameMapping pm : node.getWriteablePorts()) {
         if (pm.getGlobalName().equals(name)) {
-          return node.getGlobalName();
+          return node.getGlobalName() + "(" + pm.getLocalName() + ")";
         }
       }
     }
