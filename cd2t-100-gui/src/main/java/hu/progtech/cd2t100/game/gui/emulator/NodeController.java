@@ -3,6 +3,7 @@ package hu.progtech.cd2t100.game.gui.emulator;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
+import static java.util.stream.Collectors.toMap;
 
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -64,10 +65,8 @@ public class NodeController {
     initStatusTab();
 
     for (NodeDescriptor descriptor : puzzle.getNodeDescriptors()) {
-      linkNode(descriptor);
-
       nodeMappings.put(descriptor.getGlobalName(),
-                       NodeMapping.fromNodeDescriptor(descriptor));
+                       linkNode(descriptor));
     }
 
     selectedNodeName.addListener(
@@ -112,7 +111,7 @@ public class NodeController {
     registerTable.getColumns().addAll(nameCol, capacityCol, valuesCol);
   }
 
-  private void linkNode(NodeDescriptor descriptor) {
+  private NodeMapping linkNode(NodeDescriptor descriptor) {
     VBox container = new VBox();
 
     Label nameLabel = new Label(descriptor.getGlobalName());
@@ -136,22 +135,23 @@ public class NodeController {
     container.getChildren().add(codeArea);
     container.setVgrow(codeArea, Priority.ALWAYS);
 
-    //codeText.bind(codeArea.textProperty());
-
     sourceCodeGridPane.add(container, descriptor.getColumn() - 1, descriptor.getRow() - 1);
+
+    NodeMapping nodeMapping = NodeMapping.fromNodeDescriptor(descriptor);
+
+    nodeMapping.bindSourceCode(codeArea.textProperty());
+
+    return nodeMapping;
   }
 
   private void changeStatusTab(NodeMapping mapping) {
     registerTable.setItems(mapping.getMappingList());
   }
 
-  public String getCodeText() {
-    return null;
-    //return codeText.get();
-  }
-
-  public SimpleStringProperty codeTextProperty() {
-    return null;
-    //return codeText;
+  public Map<String, String> getSourceCodes() {
+    return
+      nodeMappings.entrySet()
+                  .stream()
+                  .collect(toMap(Map.Entry::getKey, e -> e.getValue().getSourceCode()));
   }
 }

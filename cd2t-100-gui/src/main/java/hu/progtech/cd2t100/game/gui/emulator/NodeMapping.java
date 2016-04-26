@@ -7,11 +7,16 @@ import static java.util.stream.Collectors.toMap;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import javafx.beans.property.StringProperty;
+import javafx.beans.property.SimpleStringProperty;
+
 import hu.progtech.cd2t100.game.model.NodeDescriptor;
 import hu.progtech.cd2t100.game.model.RegisterDescriptor;
 
 public class NodeMapping {
   private final String globalName;
+
+  private final StringProperty sourceCode;
 
   private final Map<String, RegisterMapping> registerMappings;
 
@@ -23,6 +28,8 @@ public class NodeMapping {
     this.registerMappings = registerMappings;
 
     mappingList = FXCollections.observableArrayList(registerMappings.values());
+
+    sourceCode = new SimpleStringProperty();
   }
 
   public static NodeMapping fromNodeDescriptor(NodeDescriptor descriptor) {
@@ -43,5 +50,13 @@ public class NodeMapping {
 
   public ObservableList<RegisterMapping> getMappingList() {
     return mappingList;
+  }
+
+  public String getSourceCode() {
+    return sourceCode.get();
+  }
+
+  public void bindSourceCode(StringProperty property) {
+    sourceCode.bind(property);
   }
 }
