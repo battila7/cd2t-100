@@ -1,5 +1,8 @@
 package hu.progtech.cd2t100.game.gui.emulator;
 
+import java.util.Map;
+import java.util.HashMap;
+
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
@@ -13,6 +16,7 @@ import javafx.scene.control.TextArea;
 import javafx.beans.property.SimpleStringProperty;
 
 import hu.progtech.cd2t100.game.model.NodeDescriptor;
+import hu.progtech.cd2t100.computation.NodeMemento;
 
 public class NodeController {
   private final NodeDescriptor descriptor;
@@ -23,12 +27,16 @@ public class NodeController {
 
   private final SimpleStringProperty codeText;
 
+  private final Map<String, RegisterMapping> registerMappings;
+
   public NodeController(GridPane parentGridPane, NodeDescriptor descriptor) {
     this.parentGridPane = parentGridPane;
 
     this.descriptor = descriptor;
 
     codeText = new SimpleStringProperty();
+
+    registerMappings = new HashMap<>();
   }
 
   public void attach() {

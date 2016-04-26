@@ -27,6 +27,7 @@ public class OutputPortController {
     this.descriptor = descriptor;
   }
 
+  @SuppressWarnings("unchecked")
   public void attach() {
     Tab tab = new Tab(descriptor.getGlobalName());
 
@@ -52,7 +53,7 @@ public class OutputPortController {
 
     actualCol.setSortable(false);
 
-    table.getColumns().addAll(expectedCol, actualCol);
+    table.getColumns().setAll(expectedCol, actualCol);
 
     table.setItems(backingList);
 

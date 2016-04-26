@@ -39,6 +39,7 @@ import hu.progtech.cd2t100.game.gui.emulator.InputPortController;
 import hu.progtech.cd2t100.game.gui.emulator.OutputPortController;
 import hu.progtech.cd2t100.game.gui.emulator.NodeController;
 import hu.progtech.cd2t100.game.gui.emulator.PortMapping;
+import hu.progtech.cd2t100.game.gui.emulator.PortMappingController;
 
 public class EmulatorController extends ManagedController {
   private static final Logger logger = LoggerFactory.getLogger(EmulatorController.class);
@@ -61,20 +62,21 @@ public class EmulatorController extends ManagedController {
   @FXML
   private GridPane nodeGridPane;
 
+  @FXML
+  private TableView<PortMapping> portTable;
+
   private Puzzle puzzle;
 
   private final Map<String, OutputPortController> outputPortControllers;
 
   private final Map<String, NodeController> nodeControllers;
 
-  private final Map<String, PortMapping> portMappings;
+  private PortMappingController portMappingController;
 
   public EmulatorController() {
     outputPortControllers = new HashMap<>();
 
     nodeControllers = new HashMap<>();
-
-    portMappings = new HashMap<>();
   }
 
   public void setPuzzle(Puzzle puzzle) {
@@ -90,7 +92,10 @@ public class EmulatorController extends ManagedController {
 
     injectIOPorts();
 
-    injectAllPorts();
+    portMappingController =
+      new PortMappingController(portTable, puzzle);
+
+    portMappingController.attach();
 
     injectNodes();
   }
@@ -111,10 +116,6 @@ public class EmulatorController extends ManagedController {
 
       outputPortControllers.put(opd.getGlobalName(), opc);
     }
-  }
-
-  private void injectAllPorts() {
-
   }
 
   private void injectNodes() {

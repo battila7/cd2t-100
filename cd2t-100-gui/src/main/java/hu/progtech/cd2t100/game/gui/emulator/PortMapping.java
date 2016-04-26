@@ -18,7 +18,7 @@ public class PortMapping {
 
     this.to = to;
 
-    this.value = new SimpleStringProperty();
+    this.value = new SimpleStringProperty("???");
   }
 
   public String getName() {
