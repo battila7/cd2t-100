@@ -66,9 +66,7 @@ public class OutputPortController {
       return;
     }
 
-    backingList.set(dataPointer, new OutputPortValueMapping(backingList.get(dataPointer).getExpected(), value));
-
-    ++dataPointer;
+    backingList.get(dataPointer++).setActual(value);
   }
 
   public void reset() {

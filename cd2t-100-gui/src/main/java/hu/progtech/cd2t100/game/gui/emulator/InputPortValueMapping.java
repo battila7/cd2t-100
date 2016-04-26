@@ -1,19 +1,17 @@
 package hu.progtech.cd2t100.game.gui.emulator;
 
-import javafx.beans.property.SimpleIntegerProperty;
-
 public class InputPortValueMapping {
-  private final SimpleIntegerProperty actual;
+  private int actual;
 
   public InputPortValueMapping(int actual) {
-    this.actual = new SimpleIntegerProperty(actual);
+    this.actual = actual;
   }
 
   public void setActual(int value) {
-    actual.set(value);
+    actual = value;
   }
 
   public int getActual() {
-    return actual.get();
+    return actual;
   }
 }

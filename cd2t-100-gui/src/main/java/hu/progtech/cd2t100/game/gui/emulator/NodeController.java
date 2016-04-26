@@ -57,4 +57,12 @@ public class NodeController {
 
     parentGridPane.add(container, descriptor.getColumn() - 1, descriptor.getRow() - 1);
   }
+
+  public String getCodeText() {
+    return codeText.get();
+  }
+
+  public SimpleStringProperty codeTextProperty() {
+    return codeText;
+  }
 }
