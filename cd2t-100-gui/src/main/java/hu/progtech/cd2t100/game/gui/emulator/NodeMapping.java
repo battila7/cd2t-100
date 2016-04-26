@@ -44,6 +44,10 @@ public class NodeMapping {
     return new NodeMapping(descriptor.getGlobalName(), mappings);
   }
 
+  /*
+   *  FIXME
+   *  Acutally only one map is needed, inspiration @ PortMappingController
+   */
   public Map<String, RegisterMapping> getMapping() {
     return registerMappings;
   }

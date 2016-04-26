@@ -162,6 +162,10 @@ public class NodeController {
     }
   }
 
+  /*
+   *  FIXME
+   *  Acutally only one map is needed, inspiration @ PortMappingController
+   */
   private void refreshNode(NodeMemento memento) {
     NodeMapping mapping = nodeMappings.get(memento.getGlobalName());
 

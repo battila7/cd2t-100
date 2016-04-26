@@ -135,6 +135,8 @@ public class EmulatorController extends ManagedController {
                                expectedPortContents,
                                ecd -> refresh(ecd));
 
+    EmulatorFactory.setDefaultClockFrequency(500);
+
     EmulatorFactory emuFactory = EmulatorFactory.newInstance(instructionRegistry);
 
     this.emulator = emuFactory.emulatorFromPuzzle(puzzle, emulatorObserver);

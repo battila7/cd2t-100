@@ -1,7 +1,7 @@
 package hu.progtech.cd2t100.game.gui.emulator;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Map;
 
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -32,6 +32,10 @@ public class PortMappingController {
     this.puzzle = puzzle;
 
     this.parentTableView = parentTableView;
+
+    emulatorCycleData.addListener(
+      (observable, oldValue, newValue) -> refresh(newValue)
+    );
   }
 
   @SuppressWarnings("unchecked")
@@ -74,15 +78,15 @@ public class PortMappingController {
     }
 
     for (OutputPortDescriptor opd : puzzle.getOutputPortDescriptors()) {
-      String from = "???",
-             to   = fillTo(opd.getGlobalName());
+      String from = fillFrom(opd.getGlobalName()),
+             to   = "???";
 
       mappingList.add(new PortMapping(opd.getGlobalName(), from, to));
     }
 
     for (InputPortDescriptor ipd : puzzle.getInputPortDescriptors()) {
-      String from = fillFrom(ipd.getGlobalName()),
-             to   = "???";
+      String from = "???",
+             to   = fillTo(ipd.getGlobalName());
 
       mappingList.add(new PortMapping(ipd.getGlobalName(), from, to));
     }
@@ -90,9 +94,19 @@ public class PortMappingController {
     backingList = FXCollections.observableArrayList(mappingList);
   }
 
+  private void refresh(EmulatorCycleData emulatorCycleData) {
+    Map<String, Integer> portValues = emulatorCycleData.getPortValues();
+
+    for (PortMapping mapping : backingList) {
+      Integer value = portValues.get(mapping.getName());
+
+      mapping.setValue(value == null ? "???" : value.toString());
+    }
+  }
+
   private String fillFrom(String name) {
     for (NodeDescriptor node : puzzle.getNodeDescriptors()) {
-      for (PortNameMapping pm : node.getReadablePorts()) {
+      for (PortNameMapping pm : node.getWriteablePorts()) {
         if (pm.getGlobalName().equals(name)) {
           return node.getGlobalName() + "(" + pm.getLocalName() + ")";
         }
@@ -104,7 +118,7 @@ public class PortMappingController {
 
   private String fillTo(String name) {
     for (NodeDescriptor node : puzzle.getNodeDescriptors()) {
-      for (PortNameMapping pm : node.getWriteablePorts()) {
+      for (PortNameMapping pm : node.getReadablePorts()) {
         if (pm.getGlobalName().equals(name)) {
           return node.getGlobalName() + "(" + pm.getLocalName() + ")";
         }

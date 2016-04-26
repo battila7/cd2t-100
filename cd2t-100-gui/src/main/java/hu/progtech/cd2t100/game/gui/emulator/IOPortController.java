@@ -44,10 +44,18 @@ public class IOPortController {
 
   private final Map<String, ObservableList<OutputPortValueMapping>> outputMappings;
 
+  private final Map<String, Integer> pointerMap;
+
   public IOPortController(Puzzle puzzle, ObjectProperty<EmulatorCycleData> emulatorCycleData) {
     this.puzzle = puzzle;
 
     this.outputMappings = new HashMap<>();
+
+    this.pointerMap = new HashMap<>();
+
+    emulatorCycleData.addListener(
+      (observable, oldValue, newValue) -> refresh(newValue)
+    );
   }
 
   public void link(TabPane parentTabPane) {
@@ -103,6 +111,8 @@ public class IOPortController {
 
     outputMappings.put(descriptor.getGlobalName(), list);
 
+    pointerMap.put(descriptor.getGlobalName(), 0);
+
     TableView<OutputPortValueMapping> table = new TableView<>();
 
     table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -126,5 +136,25 @@ public class IOPortController {
     tab.setContent(table);
 
     parentTabPane.getTabs().add(tab);
+  }
+
+  /*
+   * FIXME
+   *  This part should be refactored.
+   */
+  private void refresh(EmulatorCycleData emulatorCycleData) {
+    Map<String, Integer> values = emulatorCycleData.getPortValues();
+
+    for (String port : outputMappings.keySet()) {
+      if ((values.get(port) != null) && (listCanGrow(port))) {
+        outputMappings.get(port).get(pointerMap.get(port)).setActual(values.get(port));
+
+        pointerMap.put(port, pointerMap.get(port) + 1);
+      }
+    }
+  }
+
+  private boolean listCanGrow(String port) {
+    return pointerMap.get(port) < outputMappings.get(port).size();
   }
 }
