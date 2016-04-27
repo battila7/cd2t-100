@@ -9,6 +9,7 @@ import java.util.HashMap;
 
 import javafx.application.Platform;
 import javafx.scene.control.Label;
+import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.GridPane;
@@ -18,6 +19,7 @@ import javafx.fxml.FXML;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.ReadOnlyObjectProperty;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,6 +61,15 @@ public class EmulatorController extends ManagedController {
   private Label puzzleTaskLabel;
 
   @FXML
+  private Button runButton;
+
+  @FXML
+  private Button stopButton;
+
+  @FXML
+  private Button stepPauseButton;
+
+  @FXML
   private TabPane ioTabPane;
 
   @FXML
@@ -89,7 +100,7 @@ public class EmulatorController extends ManagedController {
 
   private ObjectProperty<EmulatorCycleData> emulatorCycleData;
 
-  private ObjectProperty<EmulatorState> emulatorState;
+  private ReadOnlyObjectProperty<EmulatorState> emulatorState;
 
   /**
    *  Sets the {@code Puzzle} this scene is backed by. The
@@ -103,8 +114,6 @@ public class EmulatorController extends ManagedController {
     this.puzzle = puzzle;
 
     this.emulatorCycleData = new SimpleObjectProperty<>();
-
-    this.emulatorState = new SimpleObjectProperty();
 
     initEmulator();
 
@@ -150,7 +159,11 @@ public class EmulatorController extends ManagedController {
 
     emulatorObserver.initStateProperty();
 
-    emulatorState.bind(emulatorObserver.emulatorStateProperty());
+    emulatorState = emulatorObserver.emulatorStateProperty();
+
+    emulatorState.addListener(
+      (observable, oldValue, newValue) -> emulatorStateChanged(oldValue, newValue)
+    );
   }
 
   private void linkControllers() {
@@ -175,32 +188,61 @@ public class EmulatorController extends ManagedController {
 
   @FXML
   private void handleRunButtonClick() {
-    nodeController.getSourceCodes()
-                  .entrySet()
-                  .forEach(e -> emulator.setSourceCode(e.getKey(), e.getValue()));
+    updateSourceCodes();
 
     emulator.request(StateChangeRequest.RUN);
   }
 
   @FXML
   private void handleStepPauseButtonClick() {
-    /*
-     *  To be implemented - Step/Pause button click
-     */
+    if (stepPauseButton.getText() == "Pause") {
+      emulator.request(StateChangeRequest.PAUSE);
+    } else {
+      updateSourceCodes();
+
+      emulator.request(StateChangeRequest.STEP);
+    }
   }
 
   @FXML
   private void handleStopButtonClick() {
-    /*
-     *  To be implemented - Stop button click
-     */
+    emulator.request(StateChangeRequest.STOP);
   }
 
   @FXML
   private void handleAbortButtonClick() {
-    /*
-     *  To be implemented - Abort button click
-     */
+    emulator.request(StateChangeRequest.STOP);
+
+    cleanUp();
+
+    gameManager.changeScene(SelectPuzzleController.class);
+  }
+
+  private void cleanUp() {
+    ioTabPane.getTabs().clear();
+
+    nodeGridPane.getChildren().clear();
+
+    nodeGridPane.getRowConstraints().clear();
+    nodeGridPane.getColumnConstraints().clear();
+
+    nodeRegisterTable.getItems().clear();
+    nodeRegisterTable.getColumns().clear();
+
+    runButton.setDisable(false);
+
+    stepPauseButton.setText("Step");
+    stepPauseButton.setDisable(false);
+
+    stopButton.setDisable(true);
+  }
+
+  private void updateSourceCodes() {
+    if (emulatorState.get() == EmulatorState.STOPPED) {
+      nodeController.getSourceCodes()
+                    .entrySet()
+                    .forEach(e -> emulator.setSourceCode(e.getKey(), e.getValue()));
+    }
   }
 
   private void refresh(EmulatorCycleData ecd) {
@@ -208,6 +250,26 @@ public class EmulatorController extends ManagedController {
       @Override
       public void run() {
         emulatorCycleData.set(ecd);
+      }
+    });
+  }
+
+  private void emulatorStateChanged(EmulatorState oldValue, EmulatorState newValue) {
+    Platform.runLater(new Runnable() {
+      @Override
+      public void run() {
+        runButton.setDisable((newValue == EmulatorState.RUNNING) ||
+                             (newValue == EmulatorState.SUCCESS));
+
+        stopButton.setDisable((newValue != EmulatorState.RUNNING) &&
+                              (newValue != EmulatorState.PAUSED));
+
+        stepPauseButton.setDisable(newValue == EmulatorState.SUCCESS);
+
+        stepPauseButton.setText(newValue == EmulatorState.RUNNING ? "Pause" : "Step");
+
+        nodeController.setEditable((newValue == EmulatorState.STOPPED) ||
+                                   (newValue == EmulatorState.ERROR));
       }
     });
   }

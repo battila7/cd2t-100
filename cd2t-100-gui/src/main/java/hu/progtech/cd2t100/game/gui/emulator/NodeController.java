@@ -25,6 +25,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import javafx.beans.property.StringProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.ObjectProperty;
 
 import hu.progtech.cd2t100.emulator.EmulatorCycleData;
@@ -51,6 +53,8 @@ public class NodeController {
 
   private final Map<String, NodeMapping>  nodeMappings;
 
+  private final BooleanProperty editable;
+
   /**
    *  Constructs a new {@code NodeController} that builds the UI according to the
    *  specified {@code Puzzle} and listens to the changes of the passed cycle data.
@@ -64,6 +68,8 @@ public class NodeController {
     selectedNodeName = new SimpleStringProperty();
 
     nodeMappings = new HashMap<>();
+
+    editable = new SimpleBooleanProperty(true);
 
     emulatorCycleData.addListener(
       (observable, oldValue, newValue) -> refresh(newValue)
@@ -100,6 +106,10 @@ public class NodeController {
         changeStatusTab(nodeMappings.get(newValue));
       }
     );
+  }
+
+  public void setEditable(boolean editable) {
+    this.editable.set(editable);
   }
 
   private void initGridPane() {
@@ -157,6 +167,8 @@ public class NodeController {
     codeArea.setMaxHeight(Double.MAX_VALUE);
 
     codeArea.setOnMouseClicked(evt -> selectedNodeName.set(descriptor.getGlobalName()));
+
+    codeArea.editableProperty().bind(editable);
 
     container.getChildren().add(codeArea);
     container.setVgrow(codeArea, Priority.ALWAYS);

@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox fx:id="rootHBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.progtech.cd2t100.game.gui.controller.EmulatorController">
+<HBox fx:id="rootHBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.progtech.cd2t100.game.gui.controller.EmulatorController">
    <children>
       <SplitPane dividerPositions="0.2" prefHeight="160.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
          <items>
@@ -33,9 +33,9 @@
                   <Region prefHeight="40.0" prefWidth="136.0" />
                   <VBox spacing="10.0">
                      <children>
-                        <Button fx:id="runButton"       maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Run"    onAction="#handleRunButtonClick"/>
+                        <Button fx:id="runButton"       maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Run"    onAction="#handleRunButtonClick" />
                         <Button fx:id="stepPauseButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Step"   onAction="#handleStepPauseButtonClick" />
-                        <Button fx:id="stopButton"      maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Stop"   onAction="#handleStopButtonClick" />
+                        <Button fx:id="stopButton"      disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Stop"   onAction="#handleStopButtonClick"/>
                         <Button fx:id="abortButton"     maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Abort"  onAction="#handleAbortButtonClick">
                            <VBox.margin>
                               <Insets top="10.0" />

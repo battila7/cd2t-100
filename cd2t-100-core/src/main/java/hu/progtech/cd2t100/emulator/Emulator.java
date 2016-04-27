@@ -101,11 +101,9 @@ public class Emulator {
    *  @param stateChangeRequest the state change request's type
    */
   public void request(StateChangeRequest stateChangeRequest) {
-    synchronized (emulatorState) {
-      logger.debug("State change request {}", stateChangeRequest);
+    logger.debug("State change request {}", stateChangeRequest);
 
-      emulatorState.onRequest(this, stateChangeRequest);
-    }
+    emulatorState.onRequest(this, stateChangeRequest);
   }
 
   /**
