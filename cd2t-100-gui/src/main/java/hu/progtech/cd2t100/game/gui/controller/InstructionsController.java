@@ -27,13 +27,7 @@ import hu.progtech.cd2t100.game.model.InstructionDescriptor;
  */
 public class InstructionsController extends ManagedController {
   private static final Logger logger = LoggerFactory.getLogger(SelectPuzzleController.class);
-
-  @FXML
-  private ResourceBundle resources;
-
-  @FXML
-  private URL location;
-
+  
   @FXML
   private Button backButton;
 

@@ -10,7 +10,6 @@ import javafx.beans.property.StringProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 import hu.progtech.cd2t100.game.model.NodeDescriptor;
-import hu.progtech.cd2t100.game.model.RegisterDescriptor;
 
 /**
  *  Helper class with values bound to properties of the appropiate

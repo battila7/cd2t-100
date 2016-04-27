@@ -16,7 +16,6 @@ import javafx.geometry.Insets;
 import javafx.scene.layout.Priority;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.ColumnConstraints;

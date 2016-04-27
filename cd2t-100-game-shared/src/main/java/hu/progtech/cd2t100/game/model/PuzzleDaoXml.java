@@ -53,13 +53,11 @@ public class PuzzleDaoXml implements PuzzleDao {
   }
 
   public Puzzle getPuzzleByName(String name) {
-    if (puzzleList == null) {
-      /*
-       *  Call just for the side-effect.
-       */
-      if (getAllPuzzles() == null) {
-        return null;
-      }
+    /*
+     *  Call getAllPuzzles just for the side-effect.
+     */
+    if ((puzzleList == null) && (getAllPuzzles() == null)) {
+      return null;
     }
 
     for (Puzzle puzzle : puzzleList) {

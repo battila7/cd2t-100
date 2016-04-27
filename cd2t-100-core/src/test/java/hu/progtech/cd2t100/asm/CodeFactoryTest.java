@@ -3,8 +3,6 @@ package hu.progtech.cd2t100.asm;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import java.nio.file.Paths;
-
 import java.lang.reflect.Type;
 import java.util.Iterator;
 import java.util.List;

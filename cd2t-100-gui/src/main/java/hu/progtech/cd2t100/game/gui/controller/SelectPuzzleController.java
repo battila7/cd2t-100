@@ -34,24 +34,7 @@ public class SelectPuzzleController extends ManagedController {
   private static final String PUZZLE_XML = "xml/puzzles.xml";
 
   @FXML
-  private ResourceBundle resources;
-
-  @FXML
-  private URL location;
-
-  @FXML
-  private Button instructionsButton;
-
-  @FXML
-  private Button helpButton;
-
-  @FXML
-  private Button exitButton;
-
-  @FXML
   private VBox puzzlesVBox;
-
-  private PuzzleDao puzzleDao;
 
   @FXML
   private void handleExitButtonClick() {
@@ -67,7 +50,7 @@ public class SelectPuzzleController extends ManagedController {
    *  Populates the appropiate UI elements with the puzzle data.
    */
   public void populatePuzzles() {
-    puzzleDao = new PuzzleDaoXml(PUZZLE_XML);
+    PuzzleDao puzzleDao = new PuzzleDaoXml(PUZZLE_XML);
 
     List<Puzzle> puzzles = puzzleDao.getAllPuzzles();
 

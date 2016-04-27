@@ -23,7 +23,7 @@ public class InputPortValueMapping {
    *  @param actual the actual value
    */
   public void setActual(int actual) {
-    actual = actual;
+    this.actual = actual;
   }
 
   /**

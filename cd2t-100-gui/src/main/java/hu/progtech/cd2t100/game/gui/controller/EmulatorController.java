@@ -6,25 +6,13 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
-import java.util.Comparator;
 
 import javafx.application.Platform;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Control;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.layout.VBox;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 
 import javafx.fxml.FXML;
 
@@ -42,7 +30,6 @@ import hu.progtech.cd2t100.emulator.EmulatorCycleData;
 import hu.progtech.cd2t100.emulator.StateChangeRequest;
 
 import hu.progtech.cd2t100.game.model.Puzzle;
-import hu.progtech.cd2t100.game.model.NodeDescriptor;
 import hu.progtech.cd2t100.game.model.OutputPortDescriptor;
 
 import hu.progtech.cd2t100.game.util.EmulatorFactory;
@@ -63,12 +50,6 @@ import hu.progtech.cd2t100.game.gui.emulator.EmulatorObserverImpl;
 public class EmulatorController extends ManagedController {
   private static final Logger logger =
     LoggerFactory.getLogger(EmulatorController.class);
-
-  @FXML
-  private ResourceBundle resources;
-
-  @FXML
-  private URL location;
 
   @FXML
   private Label puzzleNameLabel;
@@ -194,17 +175,23 @@ public class EmulatorController extends ManagedController {
 
   @FXML
   private void handleStepPauseButtonClick() {
-
+    /*
+     *  To be implemented - Step/Pause button click
+     */
   }
 
   @FXML
   private void handleStopButtonClick() {
-
+    /*
+     *  To be implemented - Stop button click
+     */
   }
 
   @FXML
   private void handleAbortButtonClick() {
-
+    /*
+     *  To be implemented - Abort button click
+     */
   }
 
   private void refresh(EmulatorCycleData ecd) {
