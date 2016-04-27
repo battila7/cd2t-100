@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 import hu.progtech.cd2t100.computation.InstructionRegistry;
 
 import hu.progtech.cd2t100.emulator.Emulator;
+import hu.progtech.cd2t100.emulator.EmulatorState;
 import hu.progtech.cd2t100.emulator.EmulatorObserver;
 import hu.progtech.cd2t100.emulator.EmulatorCycleData;
 import hu.progtech.cd2t100.emulator.StateChangeRequest;
@@ -76,7 +77,7 @@ public class EmulatorController extends ManagedController {
 
   private Emulator emulator;
 
-  private EmulatorObserver emulatorObserver;
+  private EmulatorObserverImpl emulatorObserver;
 
   private InstructionRegistry instructionRegistry;
 
@@ -87,6 +88,8 @@ public class EmulatorController extends ManagedController {
   private PortMappingController portMappingController;
 
   private ObjectProperty<EmulatorCycleData> emulatorCycleData;
+
+  private ObjectProperty<EmulatorState> emulatorState;
 
   /**
    *  Sets the {@code Puzzle} this scene is backed by. The
@@ -100,6 +103,8 @@ public class EmulatorController extends ManagedController {
     this.puzzle = puzzle;
 
     this.emulatorCycleData = new SimpleObjectProperty<>();
+
+    this.emulatorState = new SimpleObjectProperty();
 
     initEmulator();
 
@@ -142,6 +147,10 @@ public class EmulatorController extends ManagedController {
     EmulatorFactory emuFactory = EmulatorFactory.newInstance(instructionRegistry);
 
     this.emulator = emuFactory.emulatorFromPuzzle(puzzle, emulatorObserver);
+
+    emulatorObserver.initStateProperty();
+
+    emulatorState.bind(emulatorObserver.emulatorStateProperty());
   }
 
   private void linkControllers() {

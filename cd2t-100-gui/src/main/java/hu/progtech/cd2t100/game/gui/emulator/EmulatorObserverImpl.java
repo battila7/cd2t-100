@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.ReadOnlyObjectProperty;
+
 import hu.progtech.cd2t100.emulator.Emulator;
 import hu.progtech.cd2t100.emulator.EmulatorState;
 import hu.progtech.cd2t100.emulator.EmulatorObserver;
@@ -20,6 +23,8 @@ public class EmulatorObserverImpl implements EmulatorObserver {
 
   private Consumer<EmulatorCycleData> cycleDataConsumer;
 
+  private ReadOnlyObjectWrapper<EmulatorState> emulatorState;
+
   public EmulatorObserverImpl(Map<String, List<Integer>> outputPortContents,
                               Map<String, List<Integer>> expectedPortContents,
                               Consumer<EmulatorCycleData> cycleDataConsumer)
@@ -29,10 +34,18 @@ public class EmulatorObserverImpl implements EmulatorObserver {
     this.expectedPortContents = expectedPortContents;
 
     this.cycleDataConsumer = cycleDataConsumer;
+
+    this.emulatorState = new ReadOnlyObjectWrapper<>();
+  }
+
+  public ReadOnlyObjectProperty<EmulatorState> emulatorStateProperty() {
+    return emulatorState.getReadOnlyProperty();
   }
 
   @Override
   public void onStateChanged(EmulatorState newState) {
+    emulatorState.set(emulator.getState());
+
     if (newState == EmulatorState.RUNNING) {
       /*
        *	If in PAUSED state, we reuse the updaterThread.
@@ -72,5 +85,9 @@ public class EmulatorObserverImpl implements EmulatorObserver {
   @Override
   public void setEmulator(Emulator emulator) {
     this.emulator = emulator;
+  }
+
+  public void initStateProperty() {
+      emulatorState.set(emulator.getState());
   }
 }

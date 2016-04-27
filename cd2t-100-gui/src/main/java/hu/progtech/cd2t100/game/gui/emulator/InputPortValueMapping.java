@@ -16,16 +16,7 @@ public class InputPortValueMapping {
   public InputPortValueMapping(int actual) {
     this.actual = actual;
   }
-
-  /**
-   *  Sets the actual value of the mapped input port.
-   *
-   *  @param actual the actual value
-   */
-  public void setActual(int actual) {
-    this.actual = actual;
-  }
-
+  
   /**
    *  Gets the actual value.
    *

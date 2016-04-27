@@ -37,15 +37,6 @@ public class OutputPortValueMapping {
   }
 
   /**
-   *  Sets the expected value.
-   *
-   *  @param expected the expected value
-   */
-  public void setExpected(int expected) {
-    this.expected = expected;
-  }
-
-  /**
    *  Gets the expected value.
    *
    *  @return the expected value
