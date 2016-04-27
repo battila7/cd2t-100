@@ -37,6 +37,11 @@ import hu.progtech.cd2t100.game.model.Puzzle;
 import hu.progtech.cd2t100.game.model.OutputPortDescriptor;
 import hu.progtech.cd2t100.game.model.InputPortDescriptor;
 
+/**
+ *  The {@code IOPortController} can control a UI fragment showing
+ *  the actual input port data and the actual and expected output port
+ *  data.
+ */
 public class IOPortController {
   private final Puzzle puzzle;
 
@@ -46,6 +51,13 @@ public class IOPortController {
 
   private final Map<String, Integer> pointerMap;
 
+  /**
+   *  Constructs a new {@code IOPortController} that builds the UI according to the
+   *  specified {@code Puzzle} and listens to the changes of the passed cycle data.
+   *
+   *  @param puzzle the Puzzle
+   *  @param emulatorCycleData an {@code ObjectProperty} wrapping {@code EmulatorCycleData}
+   */
   public IOPortController(Puzzle puzzle, ObjectProperty<EmulatorCycleData> emulatorCycleData) {
     this.puzzle = puzzle;
 
@@ -58,6 +70,11 @@ public class IOPortController {
     );
   }
 
+  /**
+   *  Links the controller to the specified tab pane.
+   *
+   *  @param parentTabPane the tab pane
+   */
   public void link(TabPane parentTabPane) {
     this.parentTabPane = parentTabPane;
 

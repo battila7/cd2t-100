@@ -8,6 +8,9 @@ import org.slf4j.LoggerFactory;
 
 import hu.progtech.cd2t100.game.gui.controller.GameManager;
 
+/**
+ *  The main class of the GUI application. Launches the JavaFX platform.
+ */
 public class App extends Application {
   private static final Logger logger = LoggerFactory.getLogger(App.class);
 
@@ -19,6 +22,11 @@ public class App extends Application {
     gameManager.start();
   }
 
+  /**
+   *  The entry point of the application.
+   *
+   *  @param args the command line arguments
+   */
   public static void main(String[] args) {
     logger.info("Application has been started.");
 

@@ -1,8 +1,7 @@
 package hu.progtech.cd2t100.game.gui.emulator;
 
-import java.util.Map;
-import java.util.HashMap;
-import static java.util.stream.Collectors.toMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,57 +12,75 @@ import javafx.beans.property.SimpleStringProperty;
 import hu.progtech.cd2t100.game.model.NodeDescriptor;
 import hu.progtech.cd2t100.game.model.RegisterDescriptor;
 
+/**
+ *  Helper class with values bound to properties of the appropiate
+ *  UI elements to ease displaying and collecting the data of the {@code Node}s.
+ */
 public class NodeMapping {
   private final String globalName;
 
   private final StringProperty sourceCode;
 
-  private final Map<String, RegisterMapping> registerMappings;
+  private final ObservableList<RegisterMapping> registerList;
 
-  private final ObservableList<RegisterMapping> mappingList;
-
-  private NodeMapping(String globalName, Map<String, RegisterMapping> registerMappings) {
+  private NodeMapping(String globalName, List<RegisterMapping> registerList) {
     this.globalName = globalName;
 
-    this.registerMappings = registerMappings;
-
-    mappingList = FXCollections.observableArrayList(registerMappings.values());
+    this.registerList = FXCollections.observableArrayList(registerList);
 
     sourceCode = new SimpleStringProperty();
   }
 
+  /**
+   *  Factory method for creating a {@code NodeMapping} instance using an existing
+   *  {@code NodeDescriptor}.
+   *
+   *  @param descriptor the {@code NodeDescriptor}
+   *
+   *  @return a new mapping
+   */
   public static NodeMapping fromNodeDescriptor(NodeDescriptor descriptor) {
-    Map<String, RegisterMapping> mappings = new HashMap<>();
-
-    mappings =
+    List<RegisterMapping> mappings =
       descriptor.getRegisterDescriptors()
                 .stream()
-                .collect(toMap(RegisterDescriptor::getName,
-                               r -> new RegisterMapping(r.getName(), r.getCapacity())));
+                .map(r -> new RegisterMapping(r.getName(), r.getCapacity()))
+                .collect(Collectors.toList());
 
     return new NodeMapping(descriptor.getGlobalName(), mappings);
   }
 
-  /*
-   *  FIXME
-   *  Acutally only one map is needed, inspiration @ PortMappingController
+  /**
+   *  Gets the global name.
+   *
+   *  @return the global name
    */
-  public Map<String, RegisterMapping> getMapping() {
-    return registerMappings;
-  }
-
   public String getGlobalName() {
     return globalName;
   }
 
-  public ObservableList<RegisterMapping> getMappingList() {
-    return mappingList;
+  /**
+   *  Gets the list of register mappings.
+   *
+   *  @return the mapping list
+   */
+  public ObservableList<RegisterMapping> getRegisterList() {
+    return registerList;
   }
 
+  /**
+   *  Gets the source code.
+   *
+   *  @return the source code
+   */
   public String getSourceCode() {
     return sourceCode.get();
   }
 
+  /**
+   *  Binds the source code property to the specified property.
+   *
+   *  @param property the property
+   */
   public void bindSourceCode(StringProperty property) {
     sourceCode.bind(property);
   }

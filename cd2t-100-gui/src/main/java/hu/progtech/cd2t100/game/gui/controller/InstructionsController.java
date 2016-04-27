@@ -22,6 +22,9 @@ import org.slf4j.LoggerFactory;
 
 import hu.progtech.cd2t100.game.model.InstructionDescriptor;
 
+/**
+ *  Controller class for the scene showing the known instructions.
+ */
 public class InstructionsController extends ManagedController {
   private static final Logger logger = LoggerFactory.getLogger(SelectPuzzleController.class);
 
@@ -37,6 +40,11 @@ public class InstructionsController extends ManagedController {
   @FXML
   private VBox instructionsVBox;
 
+  /**
+   *  Populates the appropiate UI element with the specified data.
+   *
+   *  @param list the list to show
+   */
   public void populateList(List<InstructionDescriptor> list) {
     for (InstructionDescriptor descriptor : list) {
       Pane p = createInstructionItem(descriptor);

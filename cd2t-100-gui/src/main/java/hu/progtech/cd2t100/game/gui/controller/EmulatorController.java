@@ -54,8 +54,15 @@ import hu.progtech.cd2t100.game.gui.emulator.PortMappingController;
 import hu.progtech.cd2t100.game.gui.emulator.IOPortController;
 import hu.progtech.cd2t100.game.gui.emulator.EmulatorObserverImpl;
 
+/**
+ *  Controller class for the Emulator scene. Acts as a supercontroller
+ *  over smaller controllers which are responsible for refreshing
+ *  smaller parts of the scene, to keep the classes smaller and
+ *  isolated.
+ */
 public class EmulatorController extends ManagedController {
-  private static final Logger logger = LoggerFactory.getLogger(EmulatorController.class);
+  private static final Logger logger =
+    LoggerFactory.getLogger(EmulatorController.class);
 
   @FXML
   private ResourceBundle resources;
@@ -100,6 +107,14 @@ public class EmulatorController extends ManagedController {
 
   private ObjectProperty<EmulatorCycleData> emulatorCycleData;
 
+  /**
+   *  Sets the {@code Puzzle} this scene is backed by. The
+   *  {@link hu.progtech.cd2t100.emulator.Emulator} instance
+   *  behind this scene is created using the {@code Puzzle} object
+   *  specified with this method.
+   *
+   *  @param puzzle the puzzle
+   */
   public void setPuzzle(Puzzle puzzle) {
     this.puzzle = puzzle;
 
@@ -114,6 +129,12 @@ public class EmulatorController extends ManagedController {
     linkControllers();
   }
 
+  /**
+   *  Sets the {@code InstructionRegistry} the {@code Emulator} behind this
+   *  scene can use.
+   *
+   *  @param instructionRegistry the {@code InstructionRegistry}
+   */
   public void setInstructionRegistry(InstructionRegistry instructionRegistry) {
     this.instructionRegistry = instructionRegistry;
   }

@@ -24,6 +24,10 @@ import hu.progtech.cd2t100.game.model.Puzzle;
 import hu.progtech.cd2t100.game.model.PuzzleDao;
 import hu.progtech.cd2t100.game.model.PuzzleDaoXml;
 
+/**
+ *  Controller class for the scene where the user can select the puzzle they want
+ *  to play with.
+ */
 public class SelectPuzzleController extends ManagedController {
   private static final Logger logger = LoggerFactory.getLogger(SelectPuzzleController.class);
 
@@ -59,6 +63,9 @@ public class SelectPuzzleController extends ManagedController {
     gameManager.changeScene(InstructionsController.class);
   }
 
+  /**
+   *  Populates the appropiate UI elements with the puzzle data.
+   */
   public void populatePuzzles() {
     puzzleDao = new PuzzleDaoXml(PUZZLE_XML);
 

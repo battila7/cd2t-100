@@ -34,6 +34,11 @@ import hu.progtech.cd2t100.game.model.Puzzle;
 import hu.progtech.cd2t100.game.model.NodeDescriptor;
 import hu.progtech.cd2t100.computation.NodeMemento;
 
+/**
+ *  The {@code NodeController} is responsible for supplying node-related
+ *  UI controls with data from the latest cycle and collecting the source
+ *  of the nodes from the UI.
+ */
 public class NodeController {
   private final Puzzle puzzle;
 
@@ -47,6 +52,13 @@ public class NodeController {
 
   private final Map<String, NodeMapping>  nodeMappings;
 
+  /**
+   *  Constructs a new {@code NodeController} that builds the UI according to the
+   *  specified {@code Puzzle} and listens to the changes of the passed cycle data.
+   *
+   *  @param puzzle the Puzzle
+   *  @param emulatorCycleData an {@code ObjectProperty} wrapping {@code EmulatorCycleData}
+   */
   public NodeController(Puzzle puzzle, ObjectProperty<EmulatorCycleData> emulatorCycleData) {
     this.puzzle = puzzle;
 
@@ -59,6 +71,13 @@ public class NodeController {
     );
   }
 
+  /**
+   *  Links the {@code NodeController} to the specified controls.
+   *
+   *  @param sourceCodeGridPane the grid pane the {@code TextArea}s will be placed on
+   *  @param nodeStatusTab a tab the selected node's data will be displayed on
+   *  @param registerTable a {@code TableView} for node register data
+   */
   public void link(GridPane sourceCodeGridPane, Tab nodeStatusTab,
                    TableView<RegisterMapping> registerTable)
   {
@@ -153,7 +172,7 @@ public class NodeController {
   }
 
   private void changeStatusTab(NodeMapping mapping) {
-    registerTable.setItems(mapping.getMappingList());
+    registerTable.setItems(mapping.getRegisterList());
   }
 
   private void refresh(EmulatorCycleData emulatorCycleData) {
@@ -162,17 +181,15 @@ public class NodeController {
     }
   }
 
-  /*
-   *  FIXME
-   *  Acutally only one map is needed, inspiration @ PortMappingController
-   */
   private void refreshNode(NodeMemento memento) {
-    NodeMapping mapping = nodeMappings.get(memento.getGlobalName());
+    NodeMapping node = nodeMappings.get(memento.getGlobalName());
 
-    Map<String, RegisterMapping> registerMapping = mapping.getMapping();
+    Map<String, int[]> registerValues = memento.getRegisterValues();
 
-    for (Map.Entry<String, int[]> entry : memento.getRegisterValues().entrySet()) {
-      registerMapping.get(entry.getKey()).setValues(Arrays.toString(entry.getValue()));
+    for (RegisterMapping register : node.getRegisterList()) {
+      String values = Arrays.toString(registerValues.get(register.getName()));
+
+      register.setValues(values);
     }
   }
 
