@@ -1,6 +1,7 @@
 package hu.progtech.cd2t100.game.gui.emulator;
 
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.property.SimpleStringProperty;
 
 /**
  *  Wrapper class for the expected and the actual value of an output port.
@@ -9,7 +10,7 @@ import javafx.beans.property.SimpleIntegerProperty;
  */
 public class OutputPortValueMapping {
   private int expected;
-  private final SimpleIntegerProperty actual;
+  private final StringProperty actual;
 
   /**
    *  Constructs a new {@code OutputPortValueMapping} with the specified
@@ -20,7 +21,7 @@ public class OutputPortValueMapping {
   public OutputPortValueMapping(int expected) {
     this.expected = expected;
 
-    this.actual = new SimpleIntegerProperty();
+    this.actual = new SimpleStringProperty("???");
   }
 
   /**
@@ -30,10 +31,10 @@ public class OutputPortValueMapping {
    *  @param expected the expected value
    *  @param actual the actual value
    */
-  public OutputPortValueMapping(int expected, int actual) {
+  public OutputPortValueMapping(int expected, String actual) {
     this.expected = expected;
 
-    this.actual = new SimpleIntegerProperty(actual);
+    this.actual = new SimpleStringProperty(actual);
   }
 
   /**
@@ -50,7 +51,7 @@ public class OutputPortValueMapping {
    *
    *  @param actual the actual value
    */
-  public void setActual(int actual) {
+  public void setActual(String actual) {
     this.actual.set(actual);
   }
 
@@ -59,7 +60,7 @@ public class OutputPortValueMapping {
    *
    *  @return the actual value
    */
-  public int getActual() {
+  public String getActual() {
     return actual.get();
   }
 
@@ -68,7 +69,7 @@ public class OutputPortValueMapping {
    *
    *  @return the property
    */
-  public SimpleIntegerProperty actualProperty() {
+  public StringProperty actualProperty() {
     return actual;
   }
 }

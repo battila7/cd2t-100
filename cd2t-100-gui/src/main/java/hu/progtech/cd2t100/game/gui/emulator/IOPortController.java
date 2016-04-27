@@ -147,7 +147,7 @@ public class IOPortController {
 
     for (String port : outputMappings.keySet()) {
       if ((values.get(port) != null) && (listCanGrow(port))) {
-        outputMappings.get(port).get(pointerMap.get(port)).setActual(values.get(port));
+        outputMappings.get(port).get(pointerMap.get(port)).setActual(Integer.toString(values.get(port)));
 
         pointerMap.put(port, pointerMap.get(port) + 1);
       }
