@@ -31,8 +31,7 @@ public final class PreprocessorRuleUnsetException extends LineNumberedException 
 
   @Override
   public String getMessage() {
-    return super.getMessage()
-           + "Preprocessor rule \"" + ruleName
+    return "Preprocessor rule \"" + ruleName
            + "\" is demanded by \"" + opcode + "\".";
   }
 }

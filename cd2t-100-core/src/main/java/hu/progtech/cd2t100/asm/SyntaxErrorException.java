@@ -35,7 +35,7 @@ public final class SyntaxErrorException extends LineNumberedException {
 
   @Override
   public String getMessage() {
-    String msg = super.getMessage() + "Syntax error ";
+    String msg = "Syntax error ";
 
     if (offendingSymbol.isPresent()) {
       Object o = offendingSymbol.get();

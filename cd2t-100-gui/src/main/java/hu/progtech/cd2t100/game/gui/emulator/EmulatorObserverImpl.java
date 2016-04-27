@@ -75,11 +75,7 @@ public class EmulatorObserverImpl implements EmulatorObserver {
       updaterThread.interrupt();
 
       updaterThread = null;
-    } else if (newState == EmulatorState.ERROR) {
-      System.out.println("Now in ERROR state because of the following: ");
-      System.out.println(emulator.getNodeExceptionMap());
-      System.out.println(emulator.getCodeExceptionMap());
-    }
+    } 
   }
 
   @Override

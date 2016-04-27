@@ -36,8 +36,7 @@ public final class UnknownArgumentTypeException extends LineNumberedException {
 
   @Override
   public String getMessage() {
-    return super.getMessage()
-           + "Failed to determine argument type for \"" + argValue
+    return "Failed to determine argument type for \"" + argValue
            + "\". Please check your spelling.";
   }
 }

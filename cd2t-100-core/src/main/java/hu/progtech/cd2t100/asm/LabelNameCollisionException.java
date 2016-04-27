@@ -29,7 +29,7 @@ public final class LabelNameCollisionException extends LineNumberedException {
 
     this.labelName = labelName;
   }
-  
+
   /**
    *  Returns the name of the label causing the exception.
    *
@@ -41,8 +41,7 @@ public final class LabelNameCollisionException extends LineNumberedException {
 
   @Override
   public String getMessage() {
-    return super.getMessage()
-           + "Label with name \"" + labelName
+    return "Label with name \"" + labelName
            + "\" collides with existing port or register name.";
   }
 }

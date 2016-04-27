@@ -43,7 +43,7 @@ public final class RecognitionWrapperException extends LineNumberedException {
 
   @Override
   public String getMessage() {
-    String msg = super.getMessage();
+    String msg = "";
 
     Optional<Token> token =
       Optional.ofNullable(wrappedException.getOffendingToken());

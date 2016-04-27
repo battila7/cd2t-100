@@ -25,6 +25,6 @@ public final class ArgumentMatchingException extends LineNumberedException {
 
   @Override
   public String getMessage() {
-    return super.getMessage() + message;
+    return message;
   }
 }

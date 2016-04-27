@@ -42,8 +42,7 @@ public final class DuplicateLabelNameException extends LineNumberedException {
 
   @Override
   public String getMessage() {
-    return super.getMessage()
-           + "Label with name \"" + labelName
+    return "Label with name \"" + labelName
            + "\" already exists.";
   }
 }

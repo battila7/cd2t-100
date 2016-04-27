@@ -25,7 +25,6 @@ public final class UnknownOpcodeException extends LineNumberedException {
 
   @Override
   public String getMessage() {
-    return super.getMessage()
-           + "Unknown opcode: \"" + opcode + "\".";
+    return "Unknown opcode: \"" + opcode + "\".";
   }
 }

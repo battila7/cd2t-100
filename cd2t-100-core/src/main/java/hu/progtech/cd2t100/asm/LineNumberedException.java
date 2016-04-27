@@ -23,9 +23,4 @@ public abstract class LineNumberedException extends Exception {
   public Location getLocation() {
     return location;
   }
-
-  @Override
-  public String getMessage() {
-    return "At line " + location.getLine() + ", character " + location.getCharPositionInLine() + ": ";
-  }
 }
