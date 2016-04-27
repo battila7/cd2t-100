@@ -1,7 +1,5 @@
 package hu.progtech.cd2t100.game.gui.controller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -28,7 +26,6 @@ import hu.progtech.cd2t100.computation.InstructionRegistry;
 
 import hu.progtech.cd2t100.emulator.Emulator;
 import hu.progtech.cd2t100.emulator.EmulatorState;
-import hu.progtech.cd2t100.emulator.EmulatorObserver;
 import hu.progtech.cd2t100.emulator.EmulatorCycleData;
 import hu.progtech.cd2t100.emulator.StateChangeRequest;
 
@@ -195,7 +192,7 @@ public class EmulatorController extends ManagedController {
 
   @FXML
   private void handleStepPauseButtonClick() {
-    if (stepPauseButton.getText() == "Pause") {
+    if (stepPauseButton.getText().equals("Pause")) {
       emulator.request(StateChangeRequest.PAUSE);
     } else {
       updateSourceCodes();

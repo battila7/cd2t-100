@@ -1,7 +1,5 @@
 package hu.progtech.cd2t100.game.gui.controller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
 import java.util.List;
 
 import javafx.application.Platform;

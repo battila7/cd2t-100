@@ -1,10 +1,7 @@
 package hu.progtech.cd2t100.game.gui.controller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
 import java.util.List;
 
-import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Control;
@@ -17,20 +14,12 @@ import javafx.geometry.Pos;
 
 import javafx.fxml.FXML;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import hu.progtech.cd2t100.game.model.InstructionDescriptor;
 
 /**
  *  Controller class for the scene showing the known instructions.
  */
 public class InstructionsController extends ManagedController {
-  private static final Logger logger = LoggerFactory.getLogger(SelectPuzzleController.class);
-  
-  @FXML
-  private Button backButton;
-
   @FXML
   private VBox instructionsVBox;
 
