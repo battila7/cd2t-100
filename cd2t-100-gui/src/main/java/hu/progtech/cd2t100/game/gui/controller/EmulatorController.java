@@ -68,7 +68,7 @@ public class EmulatorController extends ManagedController {
   private Label puzzleTaskLabel;
 
   @FXML
-  private Button runButton;
+  private Button runClearButton;
 
   @FXML
   private Button stopButton;
@@ -84,6 +84,12 @@ public class EmulatorController extends ManagedController {
 
   @FXML
   private TableView<PortMapping> portTable;
+
+  @FXML
+  private TabPane statusTabPane;
+
+  @FXML
+  private Tab errorTab;
 
   @FXML
   private Tab nodeStatusTab;
@@ -176,10 +182,10 @@ public class EmulatorController extends ManagedController {
     }
 
     this.emulatorObserver =
-      new EmulatorObserverImpl(outputPortContents,
-                               expectedPortContents,
-                               ecd -> refresh(ecd),
-                               (cem, nem) -> refreshErrors(cem, nem));
+      new EmulatorObserverImpl(
+        outputPortContents,
+        expectedPortContents,
+        ecd -> Platform.runLater(() -> emulatorCycleData.set(ecd)));
 
     EmulatorFactory.setDefaultClockFrequency(500);
 
@@ -228,8 +234,12 @@ public class EmulatorController extends ManagedController {
   }
 
   @FXML
-  private void handleRunButtonClick() {
-    updateSourceCodes();
+  private void handleRunClearButtonClick() {
+    if (runClearButton.getText().equals("Clear Errors")) {
+      errorTable.getItems().clear();
+    } else {
+      updateSourceCodes();
+    }
 
     emulator.request(StateChangeRequest.RUN);
   }
@@ -277,7 +287,8 @@ public class EmulatorController extends ManagedController {
     nodeRegisterTable.getItems().clear();
     nodeRegisterTable.getColumns().clear();
 
-    runButton.setDisable(false);
+    runClearButton.setText("Run");
+    runClearButton.setDisable(false);
 
     stepPauseButton.setText("Step");
     stepPauseButton.setDisable(false);
@@ -293,54 +304,43 @@ public class EmulatorController extends ManagedController {
     }
   }
 
-  private void refresh(EmulatorCycleData ecd) {
-    /*Platform.runLater(new Runnable() {
-      @Override
-      public void run() {
-        emulatorCycleData.set(ecd);
-      }
-    });*/
-
-    Platform.runLater(() -> emulatorCycleData.set(ecd));
-  }
-
-  private void refreshErrors(Map<String, Exception> nodeExceptionMap,
-                             Map<String, LineNumberedException> codeExceptionMap)
-  {
-    List<ExceptionMapping> exceptions =
-      nodeExceptionMap.entrySet()
-                      .stream()
-                      .map(entry -> new ExceptionMapping(entry.getKey(), entry.getValue()))
-                      .collect(Collectors.toList());
-
-      codeExceptionMap.entrySet()
-                      .stream()
-                      .map(entry -> new ExceptionMapping(entry.getKey(), entry.getValue()))
-                      .forEach(x -> exceptions.add(x));
-
-    ObservableList<ExceptionMapping> observableExceptions =
-      FXCollections.observableArrayList(exceptions);
-
-    Platform.runLater(() -> errorTable.setItems(observableExceptions));
-  }
-
   private void emulatorStateChanged(EmulatorState oldValue, EmulatorState newValue) {
-    Platform.runLater(new Runnable() {
-      @Override
-      public void run() {
-        runButton.setDisable((newValue == EmulatorState.RUNNING) ||
-                             (newValue == EmulatorState.SUCCESS));
+    Platform.runLater(() -> {
+      if (newValue == EmulatorState.ERROR) {
+        List<ExceptionMapping> exceptions =
+          emulator.getNodeExceptionMap().entrySet()
+                          .stream()
+                          .map(entry -> new ExceptionMapping(entry.getKey(), entry.getValue()))
+                          .collect(Collectors.toList());
 
-        stopButton.setDisable((newValue != EmulatorState.RUNNING) &&
-                              (newValue != EmulatorState.PAUSED));
+          emulator.getCodeExceptionMap().entrySet()
+                          .stream()
+                          .map(entry -> new ExceptionMapping(entry.getKey(), entry.getValue()))
+                          .forEach(x -> exceptions.add(x));
 
-        stepPauseButton.setDisable(newValue == EmulatorState.SUCCESS);
+        ObservableList<ExceptionMapping> observableExceptions =
+          FXCollections.observableArrayList(exceptions);
 
-        stepPauseButton.setText(newValue == EmulatorState.RUNNING ? "Pause" : "Step");
+        errorTable.setItems(observableExceptions);
 
-        nodeController.setEditable((newValue == EmulatorState.STOPPED) ||
-                                   (newValue == EmulatorState.ERROR));
+        statusTabPane.getSelectionModel().select(errorTab);
       }
+
+      runClearButton.setDisable((newValue == EmulatorState.RUNNING) ||
+                                (newValue == EmulatorState.SUCCESS));
+
+      runClearButton.setText(newValue == EmulatorState.ERROR ? "Clear Errors" : "Run");
+
+      stopButton.setDisable((newValue != EmulatorState.RUNNING) &&
+                            (newValue != EmulatorState.PAUSED));
+
+      stepPauseButton.setDisable(newValue == EmulatorState.SUCCESS ||
+                                 newValue == EmulatorState.ERROR);
+
+      stepPauseButton.setText(newValue == EmulatorState.RUNNING ? "Pause" : "Step");
+
+      nodeController.setEditable((newValue == EmulatorState.STOPPED) ||
+                                 (newValue == EmulatorState.ERROR));
     });
   }
 

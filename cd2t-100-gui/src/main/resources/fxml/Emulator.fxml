@@ -33,7 +33,7 @@
                   <Region prefHeight="40.0" prefWidth="136.0" />
                   <VBox spacing="10.0">
                      <children>
-                        <Button fx:id="runButton"       maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Run"    onAction="#handleRunButtonClick" />
+                        <Button fx:id="runClearButton"  maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Run"    onAction="#handleRunClearButtonClick" />
                         <Button fx:id="stepPauseButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Step"   onAction="#handleStepPauseButtonClick" />
                         <Button fx:id="stopButton"      disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Stop"   onAction="#handleStopButtonClick"/>
                         <Button fx:id="abortButton"     maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Abort"  onAction="#handleAbortButtonClick">
@@ -66,7 +66,7 @@
                         </GridPane>
                      </content>
                   </ScrollPane>
-                  <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+                  <TabPane fx:id="statusTabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
                         <Tab fx:id="nodeStatusTab" text="Current Node">
                            <content>
@@ -103,7 +103,7 @@
                               </AnchorPane>
                         </content>
                       </Tab>
-                      <Tab text="Errors">
+                      <Tab fx:id="errorTab" text="Errors">
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
@@ -112,9 +112,9 @@
                                         <Label text="There are no errors" />
                                       </placeholder>
                                       <columns>
-                                        <TableColumn fx:id="errorNodeColumn"      editable="false" prefWidth="124.76544189453125" sortable="false" text="Node" />
-                                        <TableColumn fx:id="errorLocationColumn"  editable="false" prefWidth="202.0" sortable="false" text="Location" />
-                                        <TableColumn fx:id="errorMessageColumn"   editable="false" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="410.0" sortable="false" text="Message" />
+                                        <TableColumn fx:id="errorNodeColumn"      editable="false" minWidth="-Infinity" prefWidth="131.0" sortable="false" text="Node" />
+                                        <TableColumn fx:id="errorLocationColumn"  editable="false" minWidth="-Infinity" prefWidth="113.0" text="Location" />
+                                        <TableColumn fx:id="errorMessageColumn"   editable="false" minWidth="-Infinity" prefWidth="212.0" sortable="false" text="Message" />
                                       </columns>
                                        <columnResizePolicy>
                                           <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

@@ -3,7 +3,6 @@ package hu.progtech.cd2t100.game.gui.emulator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-import java.util.function.BiConsumer;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyObjectProperty;
@@ -26,23 +25,17 @@ public class EmulatorObserverImpl implements EmulatorObserver {
 
   private final Consumer<EmulatorCycleData> cycleDataConsumer;
 
-  private final BiConsumer<Map<String, Exception>,
-                           Map<String, LineNumberedException>> exceptionConsumer;
-
   private final ReadOnlyObjectWrapper<EmulatorState> emulatorState;
 
   public EmulatorObserverImpl(Map<String, List<Integer>> outputPortContents,
                               Map<String, List<Integer>> expectedPortContents,
-                              Consumer<EmulatorCycleData> cycleDataConsumer,
-                              BiConsumer<Map<String, Exception>, Map<String, LineNumberedException>> exceptionConsumer)
+                              Consumer<EmulatorCycleData> cycleDataConsumer)
   {
     this.outputPortContents = outputPortContents;
 
     this.expectedPortContents = expectedPortContents;
 
     this.cycleDataConsumer = cycleDataConsumer;
-
-    this.exceptionConsumer = exceptionConsumer;
 
     this.emulatorState = new ReadOnlyObjectWrapper<>();
   }
@@ -67,9 +60,6 @@ public class EmulatorObserverImpl implements EmulatorObserver {
 
         updaterThread.start();
       }
-
-      exceptionConsumer.accept(emulator.getNodeExceptionMap(),
-                               emulator.getCodeExceptionMap());
     } else if (newState == EmulatorState.STOPPED) {
       /*
        *	If previous state was ERROR, updaterThread is null.
@@ -87,9 +77,6 @@ public class EmulatorObserverImpl implements EmulatorObserver {
       updaterThread.interrupt();
 
       updaterThread = null;
-    } else if (newState == EmulatorState.ERROR) {
-      exceptionConsumer.accept(emulator.getNodeExceptionMap(),
-                               emulator.getCodeExceptionMap());
     }
   }
 
