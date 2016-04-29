@@ -22,6 +22,10 @@ import hu.progtech.cd2t100.game.model.InstructionDescriptorDaoXml;
 import hu.progtech.cd2t100.game.model.PuzzleDao;
 import hu.progtech.cd2t100.game.model.PuzzleDaoXml;
 
+/**
+ *  The manager class responsible for controlling transitions between scenes
+ *  and shared data between scenes.
+ */
 public class GameManager {
   private static final Logger logger =
     LoggerFactory.getLogger(GameManager.class);
@@ -38,6 +42,10 @@ public class GameManager {
 
   private final PuzzleDao puzzleDao;
 
+  /**
+   *  Constructs a new {@code GameManager} object. Instructions are loaded
+   *  and parsed during the construction.
+   */
   public GameManager() {
     scanner = new Scanner(System.in);
 
@@ -52,6 +60,9 @@ public class GameManager {
     loadInstructions();
   }
 
+  /**
+   *  Launches the game loop.
+   */
   public void launch() {
     Scene activeScene = new WelcomeScene();
 
@@ -60,18 +71,38 @@ public class GameManager {
     }
   }
 
+  /**
+   *  Gets the DAO for {@code InstructionDescriptor}s.
+   *
+   *  @return the instruction descriptor DAO
+   */
   public InstructionDescriptorDao getInstructionDescriptorDao() {
     return descriptorDao;
   }
 
+  /**
+   *  Gets the DAO for {@code Puzzle}s.
+   *
+   *  @return the DAO
+   */
   public PuzzleDao getPuzzleDao() {
     return puzzleDao;
   }
 
+  /**
+   *  Gets the shared {@code InstructionRegistry} object.
+   *
+   *  @return the instruction registry
+   */
   public InstructionRegistry getInstructionRegistry() {
     return instructionRegistry;
   }
 
+  /**
+   *  Gets the {@code Scanner} object wrapping {@code System.in}.
+   *
+   *  @return the {@code Scanner} wrapping {@code System.in}
+   */
   public Scanner getStdinScanner() {
     return scanner;
   }

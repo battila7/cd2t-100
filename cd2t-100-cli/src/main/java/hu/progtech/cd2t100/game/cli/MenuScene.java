@@ -2,10 +2,20 @@ package hu.progtech.cd2t100.game.cli;
 
 import java.util.Scanner;
 
+/**
+ *  {@code MenuScene} acts as a main menu in the CLI application.
+ */
 public class MenuScene extends Scene {
   private static final String[] OPTIONS =
     { "Puzzles", "Instructions", "Exit" };
 
+  /**
+   *  Displays the available menu options to the user.
+   *
+   *  @param parent a reference to the parent {@code GameManager} object
+   *
+   *  @return the scene to be displayed next
+   */
   public Scene focus(GameManager parent) {
     Scanner scanner = parent.getStdinScanner();
 

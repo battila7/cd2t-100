@@ -6,15 +6,33 @@ import java.util.NoSuchElementException;
 
 import org.apache.commons.lang3.StringUtils;
 
+/**
+ *  {@code Scene} represents a scene in the CLI session. Along with some static helper
+ *  methods it includes one method that must be implemented child classes.
+ *  {@link Scene#focus(GameManager)} is called when the {@code Scene} instance
+ *  is displayed.
+ */
 public abstract class Scene {
-  public abstract Scene focus(GameManager parent);
-
+  /**
+   *  Prints the provided string and a line under.
+   *
+   *  @param str the string to highlight
+   */
   public static void printHeading(String str) {
     System.out.println("\n" + str);
 
     System.out.println(StringUtils.repeat("-", str.length()) + "\n");
   }
 
+  /**
+   *  Waits for a valid user input when in a numbered menu.
+   *
+   *  @param maximalValidChoice The maximal value of the user input. The minimum
+   *                            is {@code 1}.
+   *  @param scanner the {@code Scanner} the input can be read from
+   *
+   *  @return the choice
+   */
   public static int waitForChoice(int maximalValidChoice, Scanner scanner) {
     String selectedOption = null;
 
@@ -44,4 +62,13 @@ public abstract class Scene {
 
     return integerChoice - 1;
   }
+
+  /**
+   *  Contains the logic for the scene. Called when the scene is displayed.
+   *
+   *  @param parent a reference to the parent {@code GameManager} object
+   *
+   *  @return the scene to be displayed next
+   */
+  public abstract Scene focus(GameManager parent);
 }

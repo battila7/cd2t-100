@@ -15,6 +15,10 @@ import hu.progtech.cd2t100.game.model.NodeDescriptor;
 import hu.progtech.cd2t100.game.model.OutputPortDescriptor;
 import hu.progtech.cd2t100.game.util.EmulatorFactory;
 
+/**
+ *  {@code GameScene} is the interface between the user and the emulator. Runs
+ *  its own game loop that can be controlled with commands.
+ */
 public class GameScene extends Scene {
   private static final HashMap<String, GameSceneCommand> commands;
 
@@ -44,12 +48,27 @@ public class GameScene extends Scene {
 
   private boolean abortRequested;
 
+  /**
+   *  Constructs a new {@code GameScene} using the specified {@code Puzzle}.
+   *
+   *  @param puzzle the {@code Puzzle} to be used
+   */
   public GameScene(Puzzle puzzle) {
     this.puzzle = puzzle;
 
     abortRequested = false;
   }
 
+  /**
+   *  Contains the main loop of the {@code GameScene}. Before entering the game
+   *  loop this method instantiates a new {@code Emulator} object using the
+   *  {@code Puzzle} specified in the constructor. Issuing an {@code AbortCommand}
+   *  breaks the game loop.
+   *
+   *  @param parent a reference to the parent {@code GameManager} object
+   *
+   *  @return the scene to be displayed next
+   */
   public Scene focus(GameManager parent) {
     this.scanner = parent.getStdinScanner();
 
@@ -69,10 +88,17 @@ public class GameScene extends Scene {
     return new MenuScene();
   }
 
+  /**
+   *  Sends a request to the object to exit from the game loop.
+   */
   public void requestAbort() {
     abortRequested = true;
   }
 
+  /**
+   *  Updates the source codes stored in the associated {@code Emulator} object for
+   *  each {@code Node}.
+   */
   public void updateEmulatorSourceCodes() {
     try {
       for (Map.Entry<String, String> entry : nodeSourceCodes.entrySet()) {
@@ -83,22 +109,51 @@ public class GameScene extends Scene {
     }
   }
 
+  /**
+   *  Gets the {@code Puzzle} used in the {@code GameScene}.
+   *
+   *  @return the {@code Puzzle}
+   */
   public Puzzle getPuzzle() {
     return puzzle;
   }
 
+  /**
+   *  Gets the {@code Emulator} running behind the scenes.
+   *
+   *  @return the {@code Emulator}
+   */
   public Emulator getEmulator() {
     return emulator;
   }
 
+  /**
+   *  Gets the {@code Scanner} wrapping {@code System.in}.
+   *
+   *  @return the {@code Scanner}
+   */
   public Scanner getStdinScanner() {
     return scanner;
   }
 
+  /**
+   *  Gets the source code associated with the specified {@code Node}.
+   *
+   *  @param globalName the global name of the {@code Node}
+   *
+   *  @return the source code of the {@code Node} or {@code null} if there's no
+   *          {@code Node} with the specified global name
+   */
   public String getNodeSourceCode(String globalName) {
     return nodeSourceCodes.get(globalName);
   }
 
+  /**
+   *  Sets the source code of the specified {@code Node}.
+   *
+   *  @param globalName the {@code Node}'s global name
+   *  @param sourceCode the source code to be passed to the {@code Node}
+   */
   public void setNodeSourceCode(String globalName, String sourceCode) {
     nodeSourceCodes.put(globalName, sourceCode);
   }

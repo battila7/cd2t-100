@@ -10,6 +10,12 @@ import hu.progtech.cd2t100.emulator.Emulator;
 import hu.progtech.cd2t100.emulator.EmulatorCycleData;
 import hu.progtech.cd2t100.emulator.StateChangeRequest;
 
+/**
+ *  {@code Updater} is intended to run in its own thread and receive the
+ *  data emitted by an {@code Emulator} instance. {@code Updater} does not
+ *  listen for state changes but cycle data. Upon receiving new data {@code Updater}
+ *  prints it to the console.
+ */
 class Updater implements Runnable {
   private Emulator emulator;
 

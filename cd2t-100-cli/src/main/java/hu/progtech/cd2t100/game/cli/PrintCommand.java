@@ -3,6 +3,10 @@ package hu.progtech.cd2t100.game.cli;
 import hu.progtech.cd2t100.game.model.Puzzle;
 import hu.progtech.cd2t100.game.model.NodeDescriptor;
 
+/**
+ *  The execution of {@code PrintCommand} prints the source code
+ *  currently associated with the {@code Node} objects.
+ */
 public class PrintCommand implements GameSceneCommand {
   @Override
   public void execute(GameScene gameScene) {

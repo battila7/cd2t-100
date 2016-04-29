@@ -3,6 +3,10 @@ package hu.progtech.cd2t100.game.cli;
 import hu.progtech.cd2t100.game.model.Puzzle;
 import hu.progtech.cd2t100.game.model.NodeDescriptor;
 
+/**
+ *  {@code InfoCommand} when executed displays information about the
+ *  current {@code Puzzle}.
+ */
 public class InfoCommand implements GameSceneCommand {
   @Override
   public void execute(GameScene gameScene) {

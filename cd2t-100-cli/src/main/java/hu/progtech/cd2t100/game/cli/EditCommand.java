@@ -5,6 +5,10 @@ import java.util.Scanner;
 import hu.progtech.cd2t100.game.model.Puzzle;
 import hu.progtech.cd2t100.game.model.NodeDescriptor;
 
+/**
+ *  {@code EditCommand} implements the source code editing functionality for
+ *  the emulator.
+ */
 public class EditCommand implements GameSceneCommand {
   @Override
   public void execute(GameScene gameScene) {

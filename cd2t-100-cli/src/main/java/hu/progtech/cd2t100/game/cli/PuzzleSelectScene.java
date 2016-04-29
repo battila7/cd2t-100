@@ -6,7 +6,18 @@ import java.util.Scanner;
 import hu.progtech.cd2t100.game.model.Puzzle;
 import hu.progtech.cd2t100.game.model.PuzzleDao;
 
+/**
+ *  {@code PuzzleSelectScene} displays a menu containing puzzles the
+ *  user can choose from when focused.
+ */
 public class PuzzleSelectScene extends Scene {
+  /**
+   *  Display the menu of available puzzles.
+   *
+   *  @param parent a reference to the parent {@code GameManager} object
+   *
+   *  @return the scene to be displayed next
+   */
   public Scene focus(GameManager parent) {
     Scanner scanner = parent.getStdinScanner();
 

@@ -7,6 +7,11 @@ import hu.progtech.cd2t100.emulator.Emulator;
 import hu.progtech.cd2t100.emulator.EmulatorState;
 import hu.progtech.cd2t100.emulator.EmulatorObserver;
 
+/**
+ *  An implementation of the {@code EmulatorObserver} interface for the CLI
+ *  application. Spawns a thread to inform the user about the data produced by
+ *  the emulator and listens for state changes.
+ */
 class EmulatorObserverImpl implements EmulatorObserver {
   private Emulator emulator;
 
