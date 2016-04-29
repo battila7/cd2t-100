@@ -121,6 +121,15 @@ public class GameManager {
     return controllerMap.get(controllerClass);
   }
 
+  /**
+   *  Gets the stage the {@code GameManager} instance is associated with.
+   *
+   *  @return the stage
+   */
+  public Stage getStage() {
+    return stage;
+  }
+
   private void loadResources() {
     Font.loadFont(
       this.getClass().getClassLoader().getResourceAsStream(FONT_PATH), 12);

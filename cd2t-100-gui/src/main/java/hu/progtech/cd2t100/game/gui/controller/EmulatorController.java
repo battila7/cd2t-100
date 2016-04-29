@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.HashMap;
 
 import javafx.application.Platform;
+import javafx.stage.Stage;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
@@ -119,6 +120,14 @@ public class EmulatorController extends ManagedController {
     puzzleTaskLabel.setText(puzzle.getTask());
 
     linkControllers();
+
+    Stage stage = gameManager.getStage();
+
+    stage.setOnCloseRequest(x -> {
+      emulator.request(StateChangeRequest.STOP);
+
+      cleanUp();
+    });
   }
 
   /**
@@ -211,6 +220,13 @@ public class EmulatorController extends ManagedController {
     emulator.request(StateChangeRequest.STOP);
 
     cleanUp();
+
+    Stage stage = gameManager.getStage();
+
+    /*
+     *  Clear the previous handler.
+     */
+    stage.setOnCloseRequest((x) -> {});
 
     gameManager.changeScene(SelectPuzzleController.class);
   }
