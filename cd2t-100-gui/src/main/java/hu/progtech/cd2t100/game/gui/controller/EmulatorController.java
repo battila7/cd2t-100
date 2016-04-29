@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.stream.Collectors;
 
 import javafx.application.Platform;
 import javafx.stage.Stage;
@@ -13,6 +14,8 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import javafx.fxml.FXML;
 
@@ -20,8 +23,13 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import hu.progtech.cd2t100.asm.LineNumberedException;
 
 import hu.progtech.cd2t100.computation.InstructionRegistry;
 
@@ -38,6 +46,7 @@ import hu.progtech.cd2t100.game.util.EmulatorFactory;
 import hu.progtech.cd2t100.game.gui.emulator.NodeController;
 import hu.progtech.cd2t100.game.gui.emulator.PortMapping;
 import hu.progtech.cd2t100.game.gui.emulator.RegisterMapping;
+import hu.progtech.cd2t100.game.gui.emulator.ExceptionMapping;
 import hu.progtech.cd2t100.game.gui.emulator.PortMappingController;
 import hu.progtech.cd2t100.game.gui.emulator.IOPortController;
 import hu.progtech.cd2t100.game.gui.emulator.EmulatorObserverImpl;
@@ -82,6 +91,18 @@ public class EmulatorController extends ManagedController {
   @FXML
   private TableView<RegisterMapping> nodeRegisterTable;
 
+  @FXML
+  private TableView<ExceptionMapping> errorTable;
+
+  @FXML
+  private TableColumn<ExceptionMapping, String> errorNodeColumn;
+
+  @FXML
+  private TableColumn<ExceptionMapping, String> errorLocationColumn;
+
+  @FXML
+  private TableColumn<ExceptionMapping, String> errorMessageColumn;
+
   private Puzzle puzzle;
 
   private Emulator emulator;
@@ -121,6 +142,8 @@ public class EmulatorController extends ManagedController {
 
     linkControllers();
 
+    linkErrorTable();
+
     Stage stage = gameManager.getStage();
 
     stage.setOnCloseRequest(x -> {
@@ -155,7 +178,8 @@ public class EmulatorController extends ManagedController {
     this.emulatorObserver =
       new EmulatorObserverImpl(outputPortContents,
                                expectedPortContents,
-                               ecd -> refresh(ecd));
+                               ecd -> refresh(ecd),
+                               (cem, nem) -> refreshErrors(cem, nem));
 
     EmulatorFactory.setDefaultClockFrequency(500);
 
@@ -190,6 +214,17 @@ public class EmulatorController extends ManagedController {
     nodeController.link(nodeGridPane, nodeStatusTab, nodeRegisterTable);
 
     logger.info("NodeController linked");
+  }
+
+  private void linkErrorTable() {
+    errorNodeColumn.setCellValueFactory(
+            new PropertyValueFactory<ExceptionMapping, String>("node"));
+
+    errorLocationColumn.setCellValueFactory(
+            new PropertyValueFactory<ExceptionMapping, String>("location"));
+
+    errorMessageColumn.setCellValueFactory(
+            new PropertyValueFactory<ExceptionMapping, String>("message"));
   }
 
   @FXML
@@ -259,12 +294,34 @@ public class EmulatorController extends ManagedController {
   }
 
   private void refresh(EmulatorCycleData ecd) {
-    Platform.runLater(new Runnable() {
+    /*Platform.runLater(new Runnable() {
       @Override
       public void run() {
         emulatorCycleData.set(ecd);
       }
-    });
+    });*/
+
+    Platform.runLater(() -> emulatorCycleData.set(ecd));
+  }
+
+  private void refreshErrors(Map<String, Exception> nodeExceptionMap,
+                             Map<String, LineNumberedException> codeExceptionMap)
+  {
+    List<ExceptionMapping> exceptions =
+      nodeExceptionMap.entrySet()
+                      .stream()
+                      .map(entry -> new ExceptionMapping(entry.getKey(), entry.getValue()))
+                      .collect(Collectors.toList());
+
+      codeExceptionMap.entrySet()
+                      .stream()
+                      .map(entry -> new ExceptionMapping(entry.getKey(), entry.getValue()))
+                      .forEach(x -> exceptions.add(x));
+
+    ObservableList<ExceptionMapping> observableExceptions =
+      FXCollections.observableArrayList(exceptions);
+
+    Platform.runLater(() -> errorTable.setItems(observableExceptions));
   }
 
   private void emulatorStateChanged(EmulatorState oldValue, EmulatorState newValue) {

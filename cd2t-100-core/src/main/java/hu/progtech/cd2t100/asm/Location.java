@@ -61,8 +61,8 @@ public final class Location {
 
   @Override
   public String toString() {
-    return "l: " + line
-           + " c: " + charPositionInLine;
+    return "Line: " + line
+           + " Column: " + charPositionInLine;
   }
 
   @Override

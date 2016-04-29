@@ -112,9 +112,9 @@
                                         <Label text="There are no errors" />
                                       </placeholder>
                                       <columns>
-                                        <TableColumn editable="false" prefWidth="124.76544189453125" sortable="false" text="Node" />
-                                        <TableColumn editable="false" prefWidth="202.0" sortable="false" text="Position" />
-                                          <TableColumn editable="false" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="410.0" sortable="false" text="Message" />
+                                        <TableColumn fx:id="errorNodeColumn"      editable="false" prefWidth="124.76544189453125" sortable="false" text="Node" />
+                                        <TableColumn fx:id="errorLocationColumn"  editable="false" prefWidth="202.0" sortable="false" text="Location" />
+                                        <TableColumn fx:id="errorMessageColumn"   editable="false" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="410.0" sortable="false" text="Message" />
                                       </columns>
                                        <columnResizePolicy>
                                           <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

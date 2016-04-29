@@ -43,7 +43,7 @@ public class Emulator {
 
   private final List<CommunicationPort> communicationPorts;
 
-  private Map<String, List<LineNumberedException>> codeExceptionMap;
+  private Map<String, LineNumberedException> codeExceptionMap;
 
   private Map<String, Exception> nodeExceptionMap;
 
@@ -147,11 +147,11 @@ public class Emulator {
   /**
    *  Gets the code exception map. Code exceptions are caused by syntactically
    *  or semantically incorrect source code. The returned map contains the exceptions
-   *  mapped to the global names of the nodes.
+   *  mapped to the name of the nodes.
    *
    *  @return the map of code exceptions
    */
-  public Map<String, List<LineNumberedException>> getCodeExceptionMap() {
+  public Map<String, LineNumberedException> getCodeExceptionMap() {
     return codeExceptionMap;
   }
 
@@ -216,32 +216,34 @@ public class Emulator {
     codeExceptionMap = new HashMap<>();
 
     for (Node node : nodes.values()) {
+      String globalName = node.getGlobalName();
+
       List<LineNumberedException> exceptions;
 
       try {
         exceptions = node.buildCodeElementSet();
+
+        exceptions.stream()
+                  .forEach(x -> codeExceptionMap.put(globalName, x));
       } catch(SourceCodeFormatException e) {
-        nodeExceptionMap.put(node.getGlobalName(), e);
+        nodeExceptionMap.put(globalName, e);
 
         continue;
       }
 
       if (!exceptions.isEmpty()) {
-        codeExceptionMap.put(node.getGlobalName(), exceptions);
-
         continue;
       }
 
       try {
         exceptions = node.buildInstructions();
+
+        exceptions.stream()
+                  .forEach(x -> codeExceptionMap.put(globalName, x));
       } catch (IllegalStateException e) {
-        nodeExceptionMap.put(node.getGlobalName(), e);
+        nodeExceptionMap.put(globalName, e);
 
         continue;
-      }
-
-      if (!exceptions.isEmpty()) {
-        codeExceptionMap.put(node.getGlobalName(), exceptions);
       }
     }
 
