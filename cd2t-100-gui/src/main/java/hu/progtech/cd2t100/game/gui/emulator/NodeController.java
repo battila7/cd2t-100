@@ -108,6 +108,12 @@ public class NodeController {
     );
   }
 
+  /**
+   *  Sets whether the {@code TextArea} storing the source codes
+   *  should be editable.
+   *
+   *  @param editable whether the {@code TextArea}s should be editable
+   */
   public void setEditable(boolean editable) {
     this.editable.set(editable);
   }
@@ -204,6 +210,12 @@ public class NodeController {
     }
   }
 
+  /**
+   *  Gets the source code collected from the {@code TextArea}s.
+   *
+   *  @return a map containing source codes mapped to the global names of the
+   *          {@code Node}s
+   */
   public Map<String, String> getSourceCodes() {
     return
       nodeMappings.entrySet()

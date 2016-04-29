@@ -70,6 +70,21 @@ public class IOPortController {
     }
   }
 
+  /**
+   *  Resets the {@code OutputPortValueMapping}s to their default state and
+   *  updates the UI accordingly.
+   */
+  public void reset() {
+    for (Map.Entry<String, Integer> entry : pointerMap.entrySet()) {
+      pointerMap.put(entry.getKey(), 0);
+    }
+
+    outputMappings.entrySet()
+                  .stream()
+                  .flatMap(entry -> entry.getValue().stream())
+                  .forEach(x -> x.setActual("???"));
+  }
+
   private void linkInputPort(InputPortDescriptor descriptor) {
     Tab tab = new Tab(descriptor.getGlobalName());
 
@@ -138,10 +153,6 @@ public class IOPortController {
     parentTabPane.getTabs().add(tab);
   }
 
-  /*
-   * FIXME
-   *  This part should be refactored.
-   */
   private void refresh(EmulatorCycleData emulatorCycleData) {
     Map<String, Integer> values = emulatorCycleData.getPortValues();
 
@@ -163,16 +174,5 @@ public class IOPortController {
 
   private boolean listCanGrow(String port) {
     return pointerMap.get(port) < outputMappings.get(port).size();
-  }
-
-  public void reset() {
-    for (Map.Entry<String, Integer> entry : pointerMap.entrySet()) {
-      pointerMap.put(entry.getKey(), 0);
-    }
-
-    outputMappings.entrySet()
-                  .stream()
-                  .flatMap(entry -> entry.getValue().stream())
-                  .forEach(x -> x.setActual("???"));
   }
 }

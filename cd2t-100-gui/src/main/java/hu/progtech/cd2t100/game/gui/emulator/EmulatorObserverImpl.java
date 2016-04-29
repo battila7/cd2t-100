@@ -14,6 +14,11 @@ import hu.progtech.cd2t100.emulator.EmulatorState;
 import hu.progtech.cd2t100.emulator.EmulatorObserver;
 import hu.progtech.cd2t100.emulator.EmulatorCycleData;
 
+/**
+ *  An implementation of the {@code EmulatorObserver} interface for the GUI
+ *  application. Can be passed a {@code Consumer} to consume cycle data emitted
+ *  by the {@code Emulator}.
+ */
 public class EmulatorObserverImpl implements EmulatorObserver {
   private Emulator emulator;
 
