@@ -9,6 +9,9 @@ import java.util.stream.Collectors;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -257,23 +260,14 @@ public class EmulatorController extends ManagedController {
 
   @FXML
   private void handleStopButtonClick() {
+    ioPortController.reset();
+
     emulator.request(StateChangeRequest.STOP);
   }
 
   @FXML
   private void handleAbortButtonClick() {
-    emulator.request(StateChangeRequest.STOP);
-
-    cleanUp();
-
-    Stage stage = gameManager.getStage();
-
-    /*
-     *  Clear the previous handler.
-     */
-    stage.setOnCloseRequest((x) -> {});
-
-    gameManager.changeScene(SelectPuzzleController.class);
+    abort();
   }
 
   private void cleanUp() {
@@ -304,6 +298,21 @@ public class EmulatorController extends ManagedController {
     }
   }
 
+  private void abort() {
+    emulator.request(StateChangeRequest.STOP);
+
+    cleanUp();
+
+    Stage stage = gameManager.getStage();
+
+    /*
+     *  Clear the previous handler.
+     */
+    stage.setOnCloseRequest((x) -> {});
+
+    gameManager.changeScene(SelectPuzzleController.class);
+  }
+
   private void emulatorStateChanged(EmulatorState oldValue, EmulatorState newValue) {
     Platform.runLater(() -> {
       if (newValue == EmulatorState.ERROR) {
@@ -324,6 +333,23 @@ public class EmulatorController extends ManagedController {
         errorTable.setItems(observableExceptions);
 
         statusTabPane.getSelectionModel().select(errorTab);
+      } else if (newValue == EmulatorState.SUCCESS) {
+        ButtonType backToMenuButtonType =
+          new ButtonType("Back to the Menu", ButtonData.OK_DONE);
+
+        Dialog<String> dialog = new Dialog<>();
+
+        dialog.setHeaderText("Success");
+
+        dialog.setContentText("You've successfully completed this puzzle!");
+
+        dialog.getDialogPane().getButtonTypes().add(backToMenuButtonType);
+
+        dialog.showAndWait();
+
+        abort();
+
+        return;
       }
 
       runClearButton.setDisable((newValue == EmulatorState.RUNNING) ||

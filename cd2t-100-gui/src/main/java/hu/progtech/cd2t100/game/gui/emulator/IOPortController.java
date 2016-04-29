@@ -146,15 +146,33 @@ public class IOPortController {
     Map<String, Integer> values = emulatorCycleData.getPortValues();
 
     for (String port : outputMappings.keySet()) {
-      if ((values.get(port) != null) && (listCanGrow(port))) {
-        outputMappings.get(port).get(pointerMap.get(port)).setActual(Integer.toString(values.get(port)));
+      Integer portValue = values.get(port);
 
-        pointerMap.put(port, pointerMap.get(port) + 1);
+      if ((portValue != null) && (listCanGrow(port))) {
+        ObservableList<OutputPortValueMapping> portMapping =
+          outputMappings.get(port);
+
+        int pointerValue = pointerMap.get(port);
+
+        portMapping.get(pointerValue).setActual(Integer.toString(portValue));
+
+        pointerMap.put(port, pointerValue + 1);
       }
     }
   }
 
   private boolean listCanGrow(String port) {
     return pointerMap.get(port) < outputMappings.get(port).size();
+  }
+
+  public void reset() {
+    for (Map.Entry<String, Integer> entry : pointerMap.entrySet()) {
+      pointerMap.put(entry.getKey(), 0);
+    }
+
+    outputMappings.entrySet()
+                  .stream()
+                  .flatMap(entry -> entry.getValue().stream())
+                  .forEach(x -> x.setActual("???"));
   }
 }
