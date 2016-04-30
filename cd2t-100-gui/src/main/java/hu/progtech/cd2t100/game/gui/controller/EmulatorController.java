@@ -32,8 +32,6 @@ import javafx.collections.ObservableList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import hu.progtech.cd2t100.asm.LineNumberedException;
-
 import hu.progtech.cd2t100.computation.InstructionRegistry;
 
 import hu.progtech.cd2t100.emulator.Emulator;

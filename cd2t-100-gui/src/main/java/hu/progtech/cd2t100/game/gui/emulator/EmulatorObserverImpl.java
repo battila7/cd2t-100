@@ -10,8 +10,6 @@ import java.util.function.Consumer;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyObjectProperty;
 
-import hu.progtech.cd2t100.asm.LineNumberedException;
-
 import hu.progtech.cd2t100.emulator.Emulator;
 import hu.progtech.cd2t100.emulator.EmulatorState;
 import hu.progtech.cd2t100.emulator.EmulatorObserver;

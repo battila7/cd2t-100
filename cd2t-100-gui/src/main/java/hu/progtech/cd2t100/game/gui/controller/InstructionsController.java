@@ -2,7 +2,6 @@ package hu.progtech.cd2t100.game.gui.controller;
 
 import java.util.List;
 
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Control;
 import javafx.scene.layout.VBox;
