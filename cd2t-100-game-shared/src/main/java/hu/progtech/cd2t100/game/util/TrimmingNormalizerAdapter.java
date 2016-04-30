@@ -4,10 +4,14 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 import org.apache.commons.lang3.StringUtils;
 
+/**
+ *  Helper class for JAXB that normalizes spaces when marshalling and
+ *  unmarshalling text nodes.
+ */
 public class TrimmingNormalizerAdapter extends XmlAdapter<String, String> {
   @Override
   public String marshal(String text) {
-  	return text;
+  	return StringUtils.normalizeSpace(text);
   }
 
   @Override

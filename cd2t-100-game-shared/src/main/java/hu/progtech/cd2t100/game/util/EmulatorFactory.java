@@ -26,6 +26,10 @@ import hu.progtech.cd2t100.game.model.OutputPortDescriptor;
 import hu.progtech.cd2t100.game.model.RegisterDescriptor;
 import hu.progtech.cd2t100.game.model.PortNameMapping;
 
+/**
+ *  {@code EmulatorFactory} is a utility class for instantiating
+ *  an {@code Emulator} according to a {@code Puzzle} instance.
+ */
 public class EmulatorFactory {
   private static final Logger logger =
     LoggerFactory.getLogger(EmulatorFactory.class);
@@ -38,18 +42,47 @@ public class EmulatorFactory {
     this.registry = registry;
   }
 
+  /**
+   *  Returns an {@code EmulatorFactory} instance using the specified
+   *  {@code InstructionRegistry}. {@code Emulator}s constructed by
+   *  the returned factory will have the instruction set contained
+   *  in the registry.
+   *
+   *  @param registry the registry
+   *
+   *  @return a new {@code EmulatorFactory}
+   */
   public static EmulatorFactory newInstance(InstructionRegistry registry) {
     return new EmulatorFactory(registry);
   }
 
+  /**
+   *  Gets the default clock frequency used when instantiating {@code Emulator}s.
+   *
+   *  @return the default clock frequency
+   */
   public static long getDefaultClockFrequency() {
     return defaultClockFrequency;
   }
 
+  /**
+   *  Sets the default clock frequency used when instantiating {@code Emulator}s.
+   *
+   *  @param frequency the frequency (in milliseconds)
+   */
   public static void setDefaultClockFrequency(long frequency) {
     defaultClockFrequency = frequency;
   }
 
+  /**
+   *  Constructs an {@code Emulator} using the specified {@code Puzzle}. The passed
+   *  observer will be bound to the newly created {@code Emulator} instance.
+   *
+   *  @param puzzle the puzzle
+   *  @param observer the observer
+   *
+   *  @return a new {@code Emulator} instance
+   */
   public Emulator emulatorFromPuzzle(Puzzle puzzle, EmulatorObserver observer) {
     EmulatorBuilder emulatorBuilder = new EmulatorBuilder();
 

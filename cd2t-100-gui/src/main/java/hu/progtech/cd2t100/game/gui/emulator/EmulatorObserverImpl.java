@@ -114,6 +114,9 @@ public class EmulatorObserverImpl implements EmulatorObserver {
     this.emulator = emulator;
   }
 
+  /**
+   *  Initializes the property holding the state of the {@code Emulator}.
+   */
   public void initStateProperty() {
       emulatorState.set(emulator.getState());
   }
