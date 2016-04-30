@@ -85,4 +85,9 @@ public class Instruction {
   public Location getLocation() {
     return location;
   }
+
+  @Override
+  public String toString() {
+    return method.getName() + " " + actualArguments.toString();
+  }
 }

@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import hu.progtech.cd2t100.asm.ArgumentElement;
 import hu.progtech.cd2t100.asm.InstructionElement;
 
@@ -27,6 +30,9 @@ import hu.progtech.cd2t100.formal.FormalCall;
  *  can only be instantiated with the correct node configuration.
  */
 final class ArgumentMatcher {
+  public static final Logger logger =
+    LoggerFactory.getLogger(ArgumentMatcher.class);
+
   private final Set<String> registerSet;
 	private final Set<String> readablePortSet;
 	private final Set<String> writeablePortSet;
@@ -113,7 +119,6 @@ final class ArgumentMatcher {
                       .collect(Collectors.toList());
 
     if (possibleCalls.isEmpty()) {
-
       throw new ArgumentMatchingException(
         element.getLocation(),
         "No suitable instruction overload found.");
@@ -121,6 +126,9 @@ final class ArgumentMatcher {
 
     for (int i = 0; i < suppliedArguments.length; ++i) {
       ParameterType matchedType = matchOne(i);
+
+      logger.trace("Value: {}", suppliedArguments[i].getValue());
+      logger.trace("Type: {}", matchedType);
 
       if (matchedType == null) {
         throw new ArgumentMatchingException(
@@ -139,6 +147,8 @@ final class ArgumentMatcher {
     }
 
     matchedCall = possibleCalls.get(0);
+
+    logger.trace("Call: {}", matchedCall);
 
     for (FormalParameter formalParam : matchedCall.getFormalParameterList()) {
       if (formalParam.hasImplicitValue()) {
@@ -188,10 +198,16 @@ final class ArgumentMatcher {
       FormalParameter formalParam =
         formalCall.getFormalParameterList().get(argIndex);
 
+     logger.trace("Formal Param: {}", formalParam);
+
       if (!suppliedAndFormalMatches(argElement, formalParam)) {
+        logger.trace("Match failed");
+
         iterator.remove();
       } else {
         matchedType = formalParam.getParameterType();
+
+        logger.trace("Matched {}", matchedType);
       }
     }
 
@@ -204,19 +220,27 @@ final class ArgumentMatcher {
     ArgumentType argType    = argElement.getArgumentType();
     ParameterType paramType = formalParam.getParameterType();
 
+    logger.trace("ArgType {} paramType {}", argType, paramType);
+
     switch (argType) {
       case NUMBER:
-        return paramType == ParameterType.NUMBER;
+        return paramType.equals(ParameterType.NUMBER);
       case LABEL:
-        return paramType == ParameterType.LABEL;
+        return paramType.equals(ParameterType.LABEL);
       case REGISTER:
-        return paramType == ParameterType.REGISTER;
+        return paramType.equals(ParameterType.REGISTER);
       case PORT:
-        if (paramType == ParameterType.READ_PORT) {
+        logger.trace("Entered PORT");
+
+        if (paramType.equals(ParameterType.READ_PORT)) {
+          logger.trace("Readables: {}", readablePortSet);
+
           return readablePortSet.contains(argElement.getValue());
-        } else {
+        } else if (paramType.equals(ParameterType.WRITE_PORT)) {
           return writeablePortSet.contains(argElement.getValue());
         }
+
+        return false;
       default:
         return false;
     }

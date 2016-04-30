@@ -7,6 +7,9 @@ import java.util.Set;
 import java.util.HashSet;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import hu.progtech.cd2t100.asm.InstructionElement;
 import hu.progtech.cd2t100.asm.CodeElementSet;
 import hu.progtech.cd2t100.asm.LineNumberedException;
@@ -24,6 +27,9 @@ import hu.progtech.cd2t100.computation.io.CommunicationPort;
  *	has its own {@code InstructionFactory} instance.
  */
 public final class InstructionFactory {
+	private static final Logger logger =
+		LoggerFactory.getLogger(InstructionFactory.class);
+
 	private final InstructionRegistry instructionRegistry;
 
 	private final ArgumentMatcher argumentMatcher;
@@ -65,7 +71,7 @@ public final class InstructionFactory {
 	 *	objects can be retrieved using the {@link InstructionFactory#getInstructions()}
 	 *	method.
 	 *
-	 *	@param elementSet the element set used as the source of {@code InstructionElement}s 
+	 *	@param elementSet the element set used as the source of {@code InstructionElement}s
 	 *
 	 *	@return the lis of exceptions thrown during the process
 	 */
@@ -126,13 +132,17 @@ public final class InstructionFactory {
 
 			Set<CommunicationPort> readDependencies =
 					args.stream()
-							.filter(x -> x.getParameterType() == ParameterType.READ_PORT)
+							.filter(x -> x.getParameterType().equals(ParameterType.READ_PORT))
 							.map(x -> readablePortMap.get(x.getValue()))
 							.collect(Collectors.toCollection(HashSet::new));
 
-			instructions.add(new Instruction(matchedCall.getBackingMethod(),
+			Instruction i = new Instruction(matchedCall.getBackingMethod(),
 																			 args, readDependencies,
-																			 element.getLocation()));
+																			 element.getLocation());
+
+		  logger.trace("Instruction: {}", i);
+
+			instructions.add(i);
 
 		} catch (ArgumentMatchingException ame) {
 			exceptionList.add(ame);

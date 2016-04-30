@@ -145,6 +145,8 @@ public class Node {
 
     Instruction currentInstruction = instructions.get(instructionPointer);
 
+    logger.trace("Current instruction: {}", currentInstruction);
+
     if (!readDependenciesFulfilled(currentInstruction)) {
       executionState = ExecutionState.IDLE;
 
@@ -270,6 +272,8 @@ public class Node {
         readyToRun = true;
 
         instructions = instructionFactory.getInstructions();
+
+        logger.trace("Instruction list: {}", instructions);
     }
 
     executionState = ExecutionState.IDLE;
@@ -314,9 +318,9 @@ public class Node {
     int line;
 
     if ((instructions != null) && (instructionPointer < instructions.size())) {
-      Instruction currentInstruction = instructions.get(instructionPointer);
+      Instruction i = instructions.get(instructionPointer);
 
-      line = currentInstruction.getLocation().getLine();
+      line = i.getLocation().getLine();
     } else {
       line = 0;
     }
@@ -465,6 +469,8 @@ public class Node {
 
     private Object[] subsituteArguments() {
       List<Argument> args = instruction.getActualArguments();
+
+      logger.trace("Args: {}", args);
 
       Object[] ret = new Object[args.size() + 1];
 
