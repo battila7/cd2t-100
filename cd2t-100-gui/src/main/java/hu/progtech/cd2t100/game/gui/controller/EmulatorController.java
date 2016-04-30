@@ -173,20 +173,15 @@ public class EmulatorController extends ManagedController {
   }
 
   private void initEmulator() {
-    Map<String, List<Integer>> outputPortContents = new HashMap<>();
-
     Map<String, List<Integer>> expectedPortContents = new HashMap<>();
 
     for (OutputPortDescriptor descriptor : puzzle.getOutputPortDescriptors()) {
-      outputPortContents.put(descriptor.getGlobalName(), new ArrayList<>());
-
       expectedPortContents.put(descriptor.getGlobalName(),
                                clonePortContents(descriptor));
     }
 
     this.emulatorObserver =
       new EmulatorObserverImpl(
-        outputPortContents,
         expectedPortContents,
         ecd -> Platform.runLater(() -> emulatorCycleData.set(ecd)));
 

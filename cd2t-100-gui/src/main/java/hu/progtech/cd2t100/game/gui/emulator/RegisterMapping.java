@@ -71,8 +71,10 @@ public class RegisterMapping {
    *  The {@code String} representation of the
    *  values stored in the mapped {@code Register}.
    *
-   *  @see getValues()
-   *  @see setValues(String)
+   *  @return the property
+   *
+   *  @see #getValues()
+   *  @see #setValues(String)
    */
   public StringProperty valuesProperty() {
     return values;

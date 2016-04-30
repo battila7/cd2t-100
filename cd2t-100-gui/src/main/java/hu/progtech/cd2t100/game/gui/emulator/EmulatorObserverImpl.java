@@ -1,8 +1,11 @@
 package hu.progtech.cd2t100.game.gui.emulator;
 
 import java.util.List;
+import java.util.ArrayList;
+import static java.util.stream.Collectors.toMap;
 import java.util.Map;
 import java.util.function.Consumer;
+
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyObjectProperty;
@@ -32,11 +35,21 @@ public class EmulatorObserverImpl implements EmulatorObserver {
 
   private final ReadOnlyObjectWrapper<EmulatorState> emulatorState;
 
-  public EmulatorObserverImpl(Map<String, List<Integer>> outputPortContents,
-                              Map<String, List<Integer>> expectedPortContents,
+  /**
+   * Constructs a new {@code EmulatorObserverImpl} using the specified
+   * expected output port contents and cycle data consumer. The {@code Consumer}
+   * is called whenever cycle data is available.
+   *
+   *  @param expectedPortContents the map with the expected contents of output ports
+   *  @param cycleDataConsumer a {@code Consumer} to process cycle data
+   */
+  public EmulatorObserverImpl(Map<String, List<Integer>> expectedPortContents,
                               Consumer<EmulatorCycleData> cycleDataConsumer)
   {
-    this.outputPortContents = outputPortContents;
+    this.outputPortContents =
+      expectedPortContents.entrySet()
+                          .stream()
+                          .collect(toMap(Map.Entry::getKey, e -> new ArrayList<Integer>()));
 
     this.expectedPortContents = expectedPortContents;
 
@@ -45,10 +58,21 @@ public class EmulatorObserverImpl implements EmulatorObserver {
     this.emulatorState = new ReadOnlyObjectWrapper<>();
   }
 
+  /**
+   *  Contains the actual state of the {@code Emulator} observed by this
+   *  instance.
+   *
+   *  @return the property
+   */
   public ReadOnlyObjectProperty<EmulatorState> emulatorStateProperty() {
     return emulatorState.getReadOnlyProperty();
   }
 
+  /**
+   *  Processes and handles a state change.
+   *
+   *  @param newState the new state of the {@code Emulator}
+   */
   @Override
   public void onStateChanged(EmulatorState newState) {
     emulatorState.set(emulator.getState());

@@ -87,6 +87,8 @@ public class PortMapping {
   /**
    *  The {@code String} representation of the value stored in this
    *  mapping.
+   *
+   *  @return the property
    */
   public StringProperty valueProperty() {
     return value;

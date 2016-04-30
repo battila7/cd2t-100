@@ -21,6 +21,11 @@ import hu.progtech.cd2t100.game.model.InputPortDescriptor;
 import hu.progtech.cd2t100.game.model.CommunicationPortDescriptor;
 import hu.progtech.cd2t100.game.model.NodeDescriptor;
 
+/**
+ *  {@code PortMappingController} connects the UI with the
+ *  {@code PortMapping}s and refreshes the mappings according to the
+ *  latest emulator cycle.
+ */
 public class PortMappingController {
   private final Puzzle puzzle;
 
@@ -28,6 +33,15 @@ public class PortMappingController {
 
   private ObservableList<PortMapping> backingList;
 
+  /**
+   *  Constructs a new {@code PortMappingController} using the specified
+   *  {@code Puzzle} and property. The {@code PortMapping}s are created using
+   *  the data from the {@code Puzzle} object. A listener is added to the
+   *  passed property which handles the refreshing of the UI.
+   *
+   *  @param puzzle the {@code Puzzle}
+   *  @param emulatorCycleData the property wrapping {@code EmulatorCycleData}
+   */
   public PortMappingController(Puzzle puzzle, ObjectProperty<EmulatorCycleData> emulatorCycleData) {
     this.puzzle = puzzle;
 
@@ -38,6 +52,11 @@ public class PortMappingController {
     );
   }
 
+  /**
+   *  Links the {@code PortMappingController} to the specified controls.
+   *
+   *  @param parentTableView the {@code TableView} to populate with port data
+   */
   @SuppressWarnings("unchecked")
   public void link(TableView<PortMapping> parentTableView) {
     this.parentTableView = parentTableView;
