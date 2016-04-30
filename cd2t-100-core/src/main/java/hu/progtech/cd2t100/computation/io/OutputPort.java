@@ -39,7 +39,7 @@ public class OutputPort extends CommunicationPort {
   public void step() {
     if (contents != null) {
       contents = null;
-    } else {
+    } else if (sourceNode != null) {
       sourceNode.onPortRead(this);
     }
   }
