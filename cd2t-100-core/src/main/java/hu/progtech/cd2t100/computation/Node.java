@@ -511,6 +511,8 @@ public class Node {
 
             break;
           case REGISTER:
+            node.logger.trace("Register ARG: \"{}\"", arg.getValue());
+
             Register register = node.registerMap.get(arg.getValue());
 
             int[] registerContents = register.getContents();

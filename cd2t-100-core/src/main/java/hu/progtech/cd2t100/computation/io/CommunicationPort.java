@@ -115,7 +115,9 @@ public class CommunicationPort extends Port {
 
     containsData = false;
 
-    sourceNode.onPortRead(this);
+    if (sourceNode != null) {
+      sourceNode.onPortRead(this);
+    }
 
     return ret;
   }

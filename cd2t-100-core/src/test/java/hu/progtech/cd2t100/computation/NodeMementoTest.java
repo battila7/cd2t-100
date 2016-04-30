@@ -23,7 +23,7 @@ public class NodeMementoTest {
 
     registerMap.put("ACC", acc);
 
-    HashMap<String, CommunicationPort> portMap = new HashMap();
+    HashMap<String, CommunicationPort> portMap = new HashMap<>();
 
     portMap.put("UP", new CommunicationPort("CP1"));
 
