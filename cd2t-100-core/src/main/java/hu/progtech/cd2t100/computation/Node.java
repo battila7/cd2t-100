@@ -24,6 +24,9 @@ import hu.progtech.cd2t100.formal.ReadResult;
 
 import org.apache.commons.lang3.mutable.MutableInt;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 /**
  *  Represents a processor node that's able to execute instructions. {@code Node}s
  *  can communicate with each other through {@link CommunicationPort}s and store
@@ -310,7 +313,7 @@ public class Node {
 
     int line;
 
-    if (instructionPointer < instructions.size()) {
+    if ((instructions != null) && (instructionPointer < instructions.size())) {
       Instruction currentInstruction = instructions.get(instructionPointer);
 
       line = currentInstruction.getLocation().getLine();
@@ -382,6 +385,38 @@ public class Node {
     }
 
     return lines;
+  }
+
+  public boolean equals(Object o) {
+    if (o == this) {
+      return true;
+    }
+
+    if (!(o instanceof Node)) {
+      return false;
+    }
+
+    Node node = (Node)o;
+
+    return new EqualsBuilder()
+            .append(node.globalName, globalName)
+            .append(node.maximumSourceCodeLines, maximumSourceCodeLines)
+            .append(node.registerMap, registerMap)
+            .append(node.readablePortMap, readablePortMap)
+            .append(node.writeablePortMap, writeablePortMap)
+            .append(node.instructionRegistry, instructionRegistry)
+            .build();
+  }
+
+  public int hashCode() {
+    return new HashCodeBuilder(23, 47)
+            .append(globalName)
+            .append(maximumSourceCodeLines)
+            .append(registerMap)
+            .append(readablePortMap)
+            .append(writeablePortMap)
+            .append(instructionRegistry)
+            .build();
   }
 
   /**
