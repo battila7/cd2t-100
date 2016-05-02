@@ -24,6 +24,8 @@
         <registers>
           <registerDescriptor name="ACC" capacity="1" />
           <registerDescriptor name="BAK" capacity="1" />
+          <registerDescriptor name="QPTR" capacity="1" />
+          <registerDescriptor name="QUEUE" capacity="10" />
         </registers>
         <readablePorts>
           <portNameMapping local="UP" global="CP2" />

@@ -12,4 +12,10 @@ class Mov {
                @Parameter(parameterType = ParameterType.REGISTER) int[] r) {
     r[0] = p.getValue();
   }
+
+  static apply(ExecutionEnvironment execEnv,
+               @Parameter(parameterType = ParameterType.NUMBER) int value,
+               @Parameter(parameterType = ParameterType.REGISTER) int[] r) {
+    r[0] = value;
+  }
 }

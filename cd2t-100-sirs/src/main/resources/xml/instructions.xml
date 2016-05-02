@@ -23,6 +23,22 @@
   </instructionDescriptor>
   <instructionDescriptor>
     <description>
+      Increases the specified register's value by one. If the
+      register stores multiple values decreases the first only.
+    </description>
+    <opcode>INC</opcode>
+    <groovyFile>groovy/Inc.groovy</groovyFile>
+  </instructionDescriptor>
+  <instructionDescriptor>
+    <description>
+      Negates the specified register's value. If the
+      register stores multiple values decreases the first only.
+    </description>
+    <opcode>NEG</opcode>
+    <groovyFile>groovy/Neg.groovy</groovyFile>
+  </instructionDescriptor>
+  <instructionDescriptor>
+    <description>
       Performs an unconditional jump to the specified label.
     </description>
     <opcode>JMP</opcode>
@@ -35,6 +51,30 @@
     </description>
     <opcode>JNZ</opcode>
     <groovyFile>groovy/Jnz.groovy</groovyFile>
+  </instructionDescriptor>
+  <instructionDescriptor>
+    <description>
+      Performs a jump to the specified label if the ACC register's value
+      is zero.
+    </description>
+    <opcode>JEZ</opcode>
+    <groovyFile>groovy/Jez.groovy</groovyFile>
+  </instructionDescriptor>
+  <instructionDescriptor>
+    <description>
+      Performs a jump to the specified label if the ACC register's value
+      is greater than zero.
+    </description>
+    <opcode>JGZ</opcode>
+    <groovyFile>groovy/Jgz.groovy</groovyFile>
+  </instructionDescriptor>
+  <instructionDescriptor>
+    <description>
+      Performs a jump to the specified label if the ACC register's value
+      is less than zero.
+    </description>
+    <opcode>JLZ</opcode>
+    <groovyFile>groovy/Jlz.groovy</groovyFile>
   </instructionDescriptor>
   <instructionDescriptor>
     <description>
@@ -74,7 +114,35 @@
   </instructionDescriptor>
   <instructionDescriptor>
     <description>
-      Sets the specified register's value to the specified number.
+      Adds the ACC's value to the back of the queue.
+    </description>
+    <opcode>Q</opcode>
+    <groovyFile>groovy/Q.groovy</groovyFile>
+  </instructionDescriptor>
+  <instructionDescriptor>
+    <description>
+      Removes the front element from the queue and stores it in the ACC.
+    </description>
+    <opcode>DEQ</opcode>
+    <groovyFile>groovy/Deq.groovy</groovyFile>
+  </instructionDescriptor>
+  <instructionDescriptor>
+    <description>
+      Clears the queue.
+    </description>
+    <opcode>CLRQ</opcode>
+    <groovyFile>groovy/ClrQ.groovy</groovyFile>
+  </instructionDescriptor>
+  <instructionDescriptor>
+    <description>
+     Gets the value stored in the specified register's nth slot and stores it in the ACC register.
+    </description>
+    <opcode>GET</opcode>
+    <groovyFile>groovy/Get.groovy</groovyFile>
+  </instructionDescriptor>
+  <instructionDescriptor>
+    <description>
+      Sets the specified register's nth slot to the specified number.
     </description>
     <opcode>SET</opcode>
     <groovyFile>groovy/Set.groovy</groovyFile>
