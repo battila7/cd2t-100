@@ -56,7 +56,7 @@
                <items>
                   <ScrollPane prefHeight="200.0" prefWidth="200.0">
                      <content>
-                        <GridPane fx:id="nodeGridPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                        <GridPane fx:id="nodeGridPane" Hgap="10" Vgap="10" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                           <columnConstraints>
                           </columnConstraints>
                           <rowConstraints>

@@ -129,11 +129,11 @@ public class NodeController {
                         .max().getAsInt();
 
     for (int i = 0; i < gridRows; ++i) {
-      sourceCodeGridPane.getRowConstraints().add(new RowConstraints(200));
+      sourceCodeGridPane.getRowConstraints().add(new RowConstraints(300));
     }
 
     for (int i = 0; i < gridCols; ++i) {
-      sourceCodeGridPane.getColumnConstraints().add(new ColumnConstraints(200));
+      sourceCodeGridPane.getColumnConstraints().add(new ColumnConstraints(300));
     }
   }
 
@@ -167,8 +167,8 @@ public class NodeController {
     container.setVgrow(nameLabel, Priority.ALWAYS);
 
     TextArea codeArea = new TextArea();
-    codeArea.setPrefWidth(200.0);
-    codeArea.setPrefHeight(200.0);
+    codeArea.setPrefWidth(300.0);
+    codeArea.setPrefHeight(300.0);
     codeArea.setMaxWidth(Double.MAX_VALUE);
     codeArea.setMaxHeight(Double.MAX_VALUE);
 

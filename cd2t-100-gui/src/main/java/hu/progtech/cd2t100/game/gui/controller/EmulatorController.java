@@ -274,6 +274,8 @@ public class EmulatorController extends ManagedController {
     nodeRegisterTable.getItems().clear();
     nodeRegisterTable.getColumns().clear();
 
+    errorTable.getItems().clear();
+
     runClearButton.setText("Run");
     runClearButton.setDisable(false);
 

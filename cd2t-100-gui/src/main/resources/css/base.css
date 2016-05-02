@@ -1,4 +1,62 @@
 .root {
   -fx-font-size: 12pt;
   -fx-font-family: "Nouveau IBM";
+  -fx-background-color: black;
+  -fx-base: black;
+}
+
+.hbox {
+  -fx-background-color: black;
+}
+
+.vbox {
+  -fx-background-color: black;
+}
+
+.button {
+  -fx-background-color: black;
+  -fx-text-fill: gainsboro;
+  -fx-border-color: gainsboro;
+  -fx-border-insets: 0;
+  -fx-border-style: solid;
+  -fx-border-width: 2px;
+}
+
+.button:hover {
+  -fx-text-fill: white;
+  -fx-border-color: white;
+}
+
+.button:pressed {
+  -fx-border-insets: 1px;
+}
+
+.button:disabled {
+  -fx-text-fill: firebrick;
+  -fx-border-color: firebrick;
+  -fx-opacity: 1;
+}
+
+.text-area {
+  -fx-text-fill: #1ec503;
+  -fx-border-color: darkgray;
+  -fx-border-insets: 0;
+  -fx-border-style: solid;
+  -fx-border-width: 2px;
+}
+
+.text-area:focused {
+  -fx-border-color: white;
+  -fx-border-insets: 0;
+  -fx-border-style: solid;
+  -fx-border-width: 2px;
+  -fx-text-fill: #1ec503;
+}
+
+.text-area .content {
+  -fx-background-color: black;
+}
+
+.text-area:focused .content {
+  -fx-background-color: black;
 }
