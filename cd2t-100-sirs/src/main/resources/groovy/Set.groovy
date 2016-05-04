@@ -2,20 +2,20 @@
 @Rules([])
 class Set {
   static apply(ExecutionEnvironment execEnv,
-               @Parameter(parameterType = ParameterType.REGISTER) int[] reg,
+               @Parameter(parameterType = ParameterType.REGISTER) int[] registerDestination,
                @Parameter(parameterType = ParameterType.NUMBER) int index,
-               @Parameter(parameterType = ParameterType.NUMBER) int n) {
-    if ((index >= 1) && (index <= reg.length)) {
-      reg[index - 1] = n;
+               @Parameter(parameterType = ParameterType.NUMBER) int number) {
+    if ((index >= 1) && (index <= registerDestination.length)) {
+      registerDestination[index - 1] = number;
     }
   }
 
   static apply(ExecutionEnvironment execEnv,
-               @Parameter(parameterType = ParameterType.REGISTER) int[] regDest,
+               @Parameter(parameterType = ParameterType.REGISTER) int[] registerDestination,
                @Parameter(parameterType = ParameterType.NUMBER) int index,
-               @Parameter(parameterType = ParameterType.REGISTER) int[] regSrc) {
-    if ((index >= 1) && (index <= regDest.length)) {
-      regDest[index - 1] = regSrc[0];
+               @Parameter(parameterType = ParameterType.REGISTER) int[] registerSource) {
+    if ((index >= 1) && (index <= registerDestination.length)) {
+      registerDestination[index - 1] = registerSource[0];
     }
   }
 }
