@@ -1,7 +1,7 @@
 <instructionDescriptors>
   <instructionDescriptor>
     <description>
-      Adds the specified number to the specified register.
+      Performs an addition on its operands.
     </description>
     <opcode>ADD</opcode>
     <groovyFile>groovy/Add.groovy</groovyFile>
@@ -22,24 +22,21 @@
   </instructionDescriptor>
   <instructionDescriptor>
     <description>
-      Decreases the specified register's value by one. If the
-      register stores multiple values decreases the first only.
+      Decreases its operand by one.
     </description>
     <opcode>DEC</opcode>
     <groovyFile>groovy/Dec.groovy</groovyFile>
   </instructionDescriptor>
   <instructionDescriptor>
     <description>
-      Increases the specified register's value by one. If the
-      register stores multiple values decreases the first only.
+      Increases its operand by one.
     </description>
     <opcode>INC</opcode>
     <groovyFile>groovy/Inc.groovy</groovyFile>
   </instructionDescriptor>
   <instructionDescriptor>
     <description>
-      Negates the specified register's value. If the
-      register stores multiple values decreases the first only.
+      Performs a negation on its operand.
     </description>
     <opcode>NEG</opcode>
     <groovyFile>groovy/Neg.groovy</groovyFile>
@@ -107,14 +104,14 @@
   </instructionDescriptor>
   <instructionDescriptor>
     <description>
-      Pops the top value from the stack into the accumulator.
+      Pops the number on the top of the STACK register into the the ACC register.
     </description>
     <opcode>POP</opcode>
     <groovyFile>groovy/Pop.groovy</groovyFile>
   </instructionDescriptor>
   <instructionDescriptor>
     <description>
-      Pushes the ACC register's value to the top of the stack.
+      Pushes the value stored in the ACC register to the top of the stack. If the stack is full does nothing.
     </description>
     <opcode>PUSH</opcode>
     <groovyFile>groovy/Push.groovy</groovyFile>

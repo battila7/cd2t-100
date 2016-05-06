@@ -38,7 +38,7 @@ class AsmErrorListener extends BaseErrorListener {
   /**
    * Gets the list of exceptions (hopefully empty).
    *
-   * @return The list of exceptions occurred during the lexing and parsing.
+   * @return the list of exceptions occurred during the lexing and parsing
    */
   public List<LineNumberedException> getExceptionList() {
     return exceptionList;

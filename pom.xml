@@ -6,12 +6,12 @@
 	<version>1.0</version>
 	<packaging>pom</packaging>
   <name>CD2T-100</name>
-	<description>CD2T-100 is a TIS-100-like processor with different functionality.</description>
+	<description>CD2T-100 is a TIS-100-like processor architecture emulator with extendable instruction set.</description>
 
 	<organization>
 		<name>Attila Bagossy</name>
 	</organization>
-	
+
 	<inceptionYear>2016</inceptionYear>
 
   <licenses>

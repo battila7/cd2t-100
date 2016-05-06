@@ -1,6 +1,6 @@
 @Opcode("DEQ")
 @Rules([])
-class Q {
+class Deq {
   static void apply(ExecutionEnvironment execEnv,
                     @Parameter(parameterType = ParameterType.REGISTER,
                                implicitValue = "ACC") int[] accumulator,

@@ -242,7 +242,7 @@ class AsmListenerImpl extends AsmBaseListener {
    * @return the new {@code ArgumentElement} with the same type as {@code arg}
    *         but with the evaluated type
    *
-   * @throws UnknownArgumentTypeException When the type of the argument cannot be
+   * @throws UnknownArgumentTypeException If the type of the argument cannot be
    *                                      be determined. For example, when it
    *                                      references an unexistant register or port.
    *

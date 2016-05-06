@@ -36,9 +36,9 @@ public final class CodeFactory {
    * used to ensure that each line of the text ends with a newline character.
    * The method is <b>null-safe</b>.
    *
-   * @param programText The text to be sanitized.
+   * @param programText the text to be sanitized
    *
-   * @return The sanitized text.
+   * @return the sanitized text
    */
   private static String sanitizeText(String programText) {
     /*
@@ -59,8 +59,8 @@ public final class CodeFactory {
    * @param portNameSet A set containing the usable existing port names.
    * @param programText The source code to be processed.
    *
-   * @return The instructions, labels, rules and exceptions extracted from
-   *         the {@code programText} bundled up.
+   * @return the instructions, labels, rules and exceptions extracted from
+   *         the {@code programText} bundled up
    */
   public static CodeElementSet createCodeElementSet(Set<String> registerNameSet,
                                                     Set<String> portNameSet,

@@ -73,6 +73,8 @@ public class SelectPuzzleController extends ManagedController {
 
     Button playButton = new Button("Play");
     playButton.setPrefHeight(45.0);
+    playButton.setMinWidth(70.0);
+    playButton.setPrefWidth(70.0);
     playButton.setMaxHeight(Double.MAX_VALUE);
 
     playButton.setOnAction((evt) -> {
