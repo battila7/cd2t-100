@@ -13,4 +13,21 @@
     <artifactId>cd2t-100-parent</artifactId>
     <version>1.0</version>
   </parent>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>hu.progtech.cd2t100</groupId>
+				<artifactId>instruction-doc-maven-plugin</artifactId>
+				<version>1.0</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>

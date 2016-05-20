@@ -47,6 +47,7 @@
 		<module>cd2t-100-gui</module>
 		<module>cd2t-100-cli</module>
     <module>cd2t-100-sirs</module>
+		<module>instruction-doc-maven-plugin</module>
 		<module>build-tools</module>
 	</modules>
 

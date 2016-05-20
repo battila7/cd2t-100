@@ -8,6 +8,6 @@
 dependency-reduced-pom.xml
 .classpath
 .settings/
-.idea
+.idea/
 .project
 *.iml
