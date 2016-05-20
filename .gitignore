@@ -1,9 +1,5 @@
-/target/
-/cd2t-100-cli/target/
-/cd2t-100-core/target/
-/cd2t-100-sirs/target/
-/cd2t-100-game-shared/target/
-/cd2t-100-gui/target/
+target/
+*/target/
 /build-tools/target/
 dependency-reduced-pom.xml
 .classpath
