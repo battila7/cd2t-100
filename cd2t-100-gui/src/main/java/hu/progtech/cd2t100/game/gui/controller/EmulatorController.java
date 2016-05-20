@@ -154,8 +154,6 @@ public class EmulatorController extends ManagedController {
     Stage stage = gameManager.getStage();
 
     stage.setOnCloseRequest(x -> {
-      emulator.request(StateChangeRequest.STOP);
-
       cleanUp();
     });
   }
@@ -264,6 +262,8 @@ public class EmulatorController extends ManagedController {
   }
 
   private void cleanUp() {
+    emulator.shutdown();
+
     ioTabPane.getTabs().clear();
 
     nodeGridPane.getChildren().clear();
@@ -294,8 +294,6 @@ public class EmulatorController extends ManagedController {
   }
 
   private void abort() {
-    emulator.request(StateChangeRequest.STOP);
-
     cleanUp();
 
     Stage stage = gameManager.getStage();

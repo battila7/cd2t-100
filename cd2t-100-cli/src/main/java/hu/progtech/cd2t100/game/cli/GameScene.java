@@ -83,7 +83,7 @@ public class GameScene extends Scene {
 							.ifPresent(x -> x.execute(this));
 		}
 
-    emulator.request(StateChangeRequest.STOP);
+    emulator.shutdown();
 
     return new MenuScene();
   }

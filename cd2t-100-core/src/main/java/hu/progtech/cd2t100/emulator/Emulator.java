@@ -106,6 +106,16 @@ public class Emulator {
     emulatorState.onRequest(this, stateChangeRequest);
   }
 
+
+  /**
+   *  Initiates the shutdown process of the {@code Emulator}.
+   */
+  public void shutdown() {
+    request(StateChangeRequest.STOP);
+
+    clockGenerator.cancel();
+  }
+
   /**
    *  Gets the time between the clock generator tick in milliseconds.
    *
