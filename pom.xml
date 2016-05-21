@@ -8,6 +8,12 @@
 	<name>CD2T-100</name>
 	<description>CD2T-100 is a TIS-100-like processor architecture emulator with extendable instruction set.</description>
 
+	<scm>
+		<connection>scm:git:https://github.com/battila7/cd2t-100.git</connection>
+		<tag>HEAD</tag>
+		<url>https://github.com/battila7/cd2t-100</url>
+	</scm>
+
 	<organization>
 		<name>Attila Bagossy</name>
 	</organization>
