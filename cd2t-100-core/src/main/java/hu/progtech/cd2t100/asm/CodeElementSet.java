@@ -68,7 +68,7 @@ public final class CodeElementSet {
   /**
    * Returns whether any exception has occurred.
    *
-   * @return {@code true} if no exception has occurred
+   * @return {@code true} if no exception has occurred {@code false} otherwise
    */
   public boolean isExceptionOccurred() {
     return exceptionList.size() > 0;

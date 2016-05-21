@@ -8,8 +8,8 @@ import java.lang.annotation.Target;
 import hu.progtech.cd2t100.formal.ParameterType;
 
 /**
- *  Indicates the type and implicit value of an {@code apply} methods
- *  formal parameter.
+ *  Indicates the type and the implicit value of an {@code apply} method's
+ *  formal parameter in a Groovy instruction class.
  */
 @Target(ElementType.PARAMETER)
 @Retention(RetentionPolicy.RUNTIME)

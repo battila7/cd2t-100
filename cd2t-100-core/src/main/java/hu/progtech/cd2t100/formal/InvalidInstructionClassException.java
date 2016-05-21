@@ -12,17 +12,17 @@ package hu.progtech.cd2t100.formal;
  *          public static T apply(ExecutionEnvironment, zero or more other params)
  *        </pre>
  *        where {@code T} is not restricted, because return values are thrown
- *        away and parameters other than the first one must be of type
+ *        away. The permitted parameter types are the following:
  *        <ul>
- *          <li>{@code int}</li>
- *          <li>{@code int[]}</li>
- *          <li>{@code MutableInt}</li>
- *          <li>{@code ReadResult}</li>
+ *          <li>{@code int},</li>
+ *          <li>{@code int[]},</li>
+ *          <li>{@code MutableInt},</li>
+ *          <li>{@code ReadResult},</li>
  *          <li>{@code String}</li>
  *        </ul>
  *
- *        any other methods are ignored. Only methods with the exactly same syntax as
- *        above are processed.
+ *        Methods with different names are ignored. Only methods with exactly
+ *        the same syntax as above are processed.
  *    </li>
  *  </ul>
  */

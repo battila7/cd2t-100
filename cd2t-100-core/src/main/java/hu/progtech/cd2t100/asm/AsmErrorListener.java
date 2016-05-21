@@ -11,7 +11,7 @@ import org.antlr.v4.runtime.RecognitionException;
  * The error listener class used during the parsing and lexing stage of the
  * {@code Asm} grammar. Whenever an error occurs, the class wraps it
  * into the corresponding exception. After lexing and parsing is done
- * the exceptions can be retrieved and analyzed;
+ * the exceptions can be retrieved and analyzed.
  */
 class AsmErrorListener extends BaseErrorListener {
   private List<LineNumberedException> exceptionList;

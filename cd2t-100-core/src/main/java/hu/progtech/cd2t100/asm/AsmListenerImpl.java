@@ -153,7 +153,7 @@ class AsmListenerImpl extends AsmBaseListener {
   }
 
   /**
-   * Extract the underlying label from the specified {@code AsmParser.LabelContext}
+   * Extracts the underlying label from the specified {@code AsmParser.LabelContext}
    * then adds it to the {code labelMap} if the label was unique and non-colliding.
    * Also checks if the extracted label name collides with a register or
    * port name or if its duplicated in the processed source code.
@@ -196,8 +196,8 @@ class AsmListenerImpl extends AsmBaseListener {
   }
 
   /**
-   * Extract the underlying instruction of the specified {@code AsmParser.InstructionContext}
-   * then adds a new {@code InstructionElement} representing the extracted instruction.
+   * Extracts the underlying instruction from the specified {@code AsmParser.InstructionContext}
+   * and then adds a new {@code InstructionElement} representing the extracted instruction.
    * Since the {@code InstructionElement} must contain {@code ArgumentElement}s
    * corresponding to its arguments, the method also inspects the
    * {@code ArgumentContext}s of {@code ctx}.
@@ -226,6 +226,7 @@ class AsmListenerImpl extends AsmBaseListener {
   }
 
   /**
+   * Evaluates the argument type of the specified {@code ArgumentElement}.
    * The type of the {@code ArgumentElement}s may not be evaluated right at
    * the creation of an {@code InstructionElement}. Such situation occurs
    * when a label is forward-referenced, just like this:
@@ -292,7 +293,7 @@ class AsmListenerImpl extends AsmBaseListener {
    *  }
    *  </pre>
    *
-   *  @param value the new mapped value of the entries with value -1
+   *  @param value the new mapped value of the entries with previous value -1
    */
   private void updateUnsetLabels(Integer value) {
     for (String key : labelMap.keySet()) {
