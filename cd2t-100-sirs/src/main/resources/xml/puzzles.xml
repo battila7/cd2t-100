@@ -10,6 +10,8 @@
         <registers>
           <registerDescriptor name="ACC" capacity="1" />
           <registerDescriptor name="BAK" capacity="1" />
+          <registerDescriptor name="STACK" capacity="10" />
+          <registerDescriptor name="STACKPTR" capacity="1" />
         </registers>
         <readablePorts>
           <portNameMapping local="UP"   global="IP1" />

@@ -15,11 +15,11 @@
 	</parent>
 
 	<dependencies>
-    <dependency>
-      <groupId>hu.progtech.cd2t100</groupId>
-      <artifactId>cd2t-100-core</artifactId>
-      <version>1.0</version>
-    </dependency>
+		<dependency>
+			<groupId>hu.progtech.cd2t100</groupId>
+			<artifactId>cd2t-100-core</artifactId>
+			<version>1.0</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.slf4j</groupId>

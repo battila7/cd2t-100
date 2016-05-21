@@ -5,7 +5,7 @@
 	<artifactId>cd2t-100-parent</artifactId>
 	<version>1.0</version>
 	<packaging>pom</packaging>
-  <name>CD2T-100</name>
+	<name>CD2T-100</name>
 	<description>CD2T-100 is a TIS-100-like processor architecture emulator with extendable instruction set.</description>
 
 	<organization>
@@ -14,7 +14,7 @@
 
 	<inceptionYear>2016</inceptionYear>
 
-  <licenses>
+	<licenses>
 		<license>
 			<name>MIT License</name>
 			<url>http://www.opensource.org/licenses/mit-license.php</url>
@@ -46,109 +46,32 @@
 		<module>cd2t-100-game-shared</module>
 		<module>cd2t-100-gui</module>
 		<module>cd2t-100-cli</module>
-    <module>cd2t-100-sirs</module>
+		<module>cd2t-100-sirs</module>
 		<module>build-tools</module>
 	</modules>
 
-  <profiles>
-    <profile>
-      <id>default-profile</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-    				<groupId>org.jacoco</groupId>
-    				<artifactId>jacoco-maven-plugin</artifactId>
-    				<version>0.7.6.201602180812</version>
-    				<executions>
-    					<execution>
-    						<id>pre-unit-test</id>
-    						<goals>
-    							<goal>prepare-agent</goal>
-    						</goals>
-    						<configuration>
-    							<propertyName>jacocoAgent</propertyName>
-    						</configuration>
-    					</execution>
-    					<execution>
-    						<id>post-unit-test</id>
-    						<goals>
-    							<goal>report</goal>
-    						</goals>
-    					</execution>
-    				</executions>
-    			</plugin>
-        </plugins>
-      </build>
-    </profile>
-
-    <profile>
-      <id>codacy</id>
-      <build>
-        <plugins>
-          <plugin>
-    				<groupId>org.jacoco</groupId>
-    				<artifactId>jacoco-maven-plugin</artifactId>
-    				<version>0.7.6.201602180812</version>
-            <configuration>
-              <skip>${jacoco.merge.skip}</skip>
-              <fileSets>
-                <fileSet>
-                  <directory>${project.build.directory}</directory>
-                  <includes>
-                    <include>*.exec</include>
-                  </includes>
-                </fileSet>
-              </fileSets>
-              <destFile>${project.parent.build.directory}/jacoco.exec</destFile>
-            </configuration>
-    				<executions>
-    					<execution>
-    						<id>pre-unit-test</id>
-    						<goals>
-    							<goal>prepare-agent</goal>
-    						</goals>
-    						<configuration>
-    							<propertyName>jacocoAgent</propertyName>
-    						</configuration>
-    					</execution>
-    					<execution>
-    						<id>post-unit-test</id>
-    						<goals>
-    							<goal>report</goal>
-    						</goals>
-    					</execution>
-    				</executions>
-    			</plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
-
 	<dependencyManagement>
-    <dependencies>
-  		<dependency>
-  			<groupId>org.antlr</groupId>
-  			<artifactId>antlr4-runtime</artifactId>
-  			<version>4.5.2-1</version>
-  		</dependency>
-  		<dependency>
-  			<groupId>org.apache.commons</groupId>
-  			<artifactId>commons-lang3</artifactId>
-  			<version>3.4</version>
-  		</dependency>
-  		<dependency>
-  			<groupId>org.codehaus.groovy</groupId>
-  			<artifactId>groovy</artifactId>
-  			<version>2.4.6</version>
-  		</dependency>
-  		<dependency>
-  			<groupId>commons-io</groupId>
-  			<artifactId>commons-io</artifactId>
-  			<version>2.4</version>
-  		</dependency>
+		<dependencies>
+			<dependency>
+				<groupId>org.antlr</groupId>
+				<artifactId>antlr4-runtime</artifactId>
+				<version>4.5.2-1</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>3.4</version>
+			</dependency>
+			<dependency>
+				<groupId>org.codehaus.groovy</groupId>
+				<artifactId>groovy</artifactId>
+				<version>2.4.6</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>2.4</version>
+			</dependency>
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-api</artifactId>
@@ -166,52 +89,75 @@
 				<version>${logback.version}</version>
 			</dependency>
 
-  		<dependency>
-  			<groupId>com.google.code.gson</groupId>
-  			<artifactId>gson</artifactId>
-  			<version>2.6.2</version>
-  			<scope>test</scope>
-  		</dependency>
-  	</dependencies>
+			<dependency>
+				<groupId>com.google.code.gson</groupId>
+				<artifactId>gson</artifactId>
+				<version>2.6.2</version>
+				<scope>test</scope>
+			</dependency>
+		</dependencies>
 	</dependencyManagement>
 
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.12</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.assertj</groupId>
-      <artifactId>assertj-core</artifactId>
-      <version>3.4.1</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>3.4.1</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 
-  <build>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-  				<groupId>org.antlr</groupId>
-  				<artifactId>antlr4-maven-plugin</artifactId>
-  				<version>4.5.2-1</version>
-        </plugin>
-        <plugin>
-				  <groupId>org.apache.maven.plugins</groupId>
-				  <artifactId>maven-jar-plugin</artifactId>
-				  <version>2.6</version>
-			  </plugin>
-			  <plugin>
-				  <groupId>org.apache.maven.plugins</groupId>
-				  <artifactId>maven-shade-plugin</artifactId>
-				  <version>2.4.3</version>
-			  </plugin>
-      </plugins>
-    </pluginManagement>
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.antlr</groupId>
+					<artifactId>antlr4-maven-plugin</artifactId>
+					<version>4.5.2-1</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>2.6</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-shade-plugin</artifactId>
+					<version>2.4.3</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 
 		<plugins>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.7.6.201602180812</version>
+				<executions>
+					<execution>
+						<id>pre-unit-test</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+						<configuration>
+							<propertyName>jacocoAgent</propertyName>
+						</configuration>
+					</execution>
+					<execution>
+						<id>post-unit-test</id>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
@@ -267,11 +213,11 @@
 				<version>2.9</version>
 			</plugin>
 
-      <plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
 				<version>2.17</version>
-        <dependencies>
+				<dependencies>
 					<dependency>
 						<groupId>hu.progtech.cd2t100</groupId>
 						<artifactId>build-tools</artifactId>
@@ -325,7 +271,7 @@
 		</plugins>
 	</reporting>
 
-  <distributionManagement>
+	<distributionManagement>
 		<site>
 			<id>placeholder</id>
 			<url>file://placeholder</url>

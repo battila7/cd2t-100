@@ -9,8 +9,8 @@
 	<description>The instruction set every CD2T-100 application is shipped with.</description>
 
 	<parent>
-    <groupId>hu.progtech.cd2t100</groupId>
-    <artifactId>cd2t-100-parent</artifactId>
-    <version>1.0</version>
-  </parent>
+		<groupId>hu.progtech.cd2t100</groupId>
+		<artifactId>cd2t-100-parent</artifactId>
+		<version>1.0</version>
+	</parent>
 </project>

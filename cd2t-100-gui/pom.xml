@@ -15,21 +15,21 @@
 	</parent>
 
 	<dependencies>
-    <dependency>
-      <groupId>hu.progtech.cd2t100</groupId>
-      <artifactId>cd2t-100-core</artifactId>
-      <version>1.0</version>
-    </dependency>
 		<dependency>
-      <groupId>hu.progtech.cd2t100</groupId>
-      <artifactId>cd2t-100-sirs</artifactId>
-      <version>1.0</version>
-    </dependency>
-    <dependency>
-      <groupId>hu.progtech.cd2t100</groupId>
-      <artifactId>cd2t-100-game-shared</artifactId>
-      <version>1.0</version>
-    </dependency>
+			<groupId>hu.progtech.cd2t100</groupId>
+			<artifactId>cd2t-100-core</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>hu.progtech.cd2t100</groupId>
+			<artifactId>cd2t-100-sirs</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>hu.progtech.cd2t100</groupId>
+			<artifactId>cd2t-100-game-shared</artifactId>
+			<version>1.0</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -46,7 +46,7 @@
 		</dependency>
 	</dependencies>
 
-  <build>
+	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

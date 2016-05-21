@@ -15,20 +15,20 @@
 	</parent>
 
 	<dependencies>
-    <dependency>
+		<dependency>
 			<groupId>hu.progtech.cd2t100</groupId>
 			<artifactId>cd2t-100-core</artifactId>
-      <version>1.0</version>
+			<version>1.0</version>
 		</dependency>
 		<dependency>
 			<groupId>hu.progtech.cd2t100</groupId>
 			<artifactId>cd2t-100-sirs</artifactId>
-      <version>1.0</version>
+			<version>1.0</version>
 		</dependency>
 		<dependency>
 			<groupId>hu.progtech.cd2t100</groupId>
 			<artifactId>cd2t-100-game-shared</artifactId>
-      <version>1.0</version>
+			<version>1.0</version>
 		</dependency>
 
 		<dependency>
