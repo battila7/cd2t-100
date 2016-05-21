@@ -68,7 +68,7 @@ public class DocumentationCollector {
     return classDocs.stream()
            .collect(Collectors.groupingBy(
             (classDoc) -> {
-              for (GroovyAnnotationRef ref : classDoc.annotations) {
+              for (GroovyAnnotationRef ref : classDoc.annotations()) {
                 if (ref.name().equals("Category")) {
                   return getAnnotationValue(ref);
                 }
@@ -76,7 +76,7 @@ public class DocumentationCollector {
 
               return "";
             }
-           );
+           ));
   }
 
   private String getAnnotationValue(GroovyAnnotationRef annotationRef)
