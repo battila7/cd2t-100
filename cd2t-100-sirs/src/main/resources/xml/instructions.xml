@@ -8,10 +8,24 @@
   </instructionDescriptor>
   <instructionDescriptor>
     <description>
+      Performs an addition on its operands. Supports multi-value registers.
+    </description>
+    <opcode>MADD</opcode>
+    <groovyFile>groovy/Madd.groovy</groovyFile>
+  </instructionDescriptor>
+  <instructionDescriptor>
+    <description>
       Performs a subtraction on its operands.
     </description>
     <opcode>SUB</opcode>
     <groovyFile>groovy/Sub.groovy</groovyFile>
+  </instructionDescriptor>
+  <instructionDescriptor>
+    <description>
+      Performs a subtraction on its operands. Supports multi-value registers.
+    </description>
+    <opcode>MSUB</opcode>
+    <groovyFile>groovy/Msub.groovy</groovyFile>
   </instructionDescriptor>
   <instructionDescriptor>
     <description>
@@ -29,6 +43,13 @@
   </instructionDescriptor>
   <instructionDescriptor>
     <description>
+      Decreases its operand by one. Supports multi-value registers.
+    </description>
+    <opcode>MDEC</opcode>
+    <groovyFile>groovy/Mdec.groovy</groovyFile>
+  </instructionDescriptor>
+  <instructionDescriptor>
+    <description>
       Increases its operand by one.
     </description>
     <opcode>INC</opcode>
@@ -36,10 +57,24 @@
   </instructionDescriptor>
   <instructionDescriptor>
     <description>
+      Increases its operand by one. Supports multi-value registers.
+    </description>
+    <opcode>MINC</opcode>
+    <groovyFile>groovy/Minc.groovy</groovyFile>
+  </instructionDescriptor>
+  <instructionDescriptor>
+    <description>
       Performs a negation on its operand.
     </description>
     <opcode>NEG</opcode>
     <groovyFile>groovy/Neg.groovy</groovyFile>
+  </instructionDescriptor>
+  <instructionDescriptor>
+    <description>
+      Performs a negation on its operand. Supports multi-value registers.
+    </description>
+    <opcode>MNEG</opcode>
+    <groovyFile>groovy/Mneg.groovy</groovyFile>
   </instructionDescriptor>
   <instructionDescriptor>
     <description>

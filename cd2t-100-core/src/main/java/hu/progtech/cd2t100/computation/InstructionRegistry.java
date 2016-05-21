@@ -51,7 +51,9 @@ public final class InstructionRegistry {
   public void registerInstruction(InstructionInfo info)
     throws OpcodeAlreadyRegisteredException {
 
-    logger.info("Attempt to register info for {}", info);
+    logger.info("Attempt to register info for {}.", info.getOpcode());
+
+    logger.trace("{}", info);
 
     if (instructionMap.putIfAbsent(info.getOpcode(), info) != null) {
       throw new OpcodeAlreadyRegisteredException(

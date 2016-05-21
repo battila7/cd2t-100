@@ -166,8 +166,6 @@ public class GameManager {
         if (is == null) {
           logger.warn("Failed to load instruction from {}", descriptor.getGroovyFile());
 
-          logger.warn("Skipping");
-
           continue;
         }
 
@@ -180,8 +178,6 @@ public class GameManager {
         logger.warn("Failed to load instruction from {}", descriptor.getGroovyFile());
 
         logger.warn("Details: {}", e.getMessage());
-
-        logger.warn("Skipping");
       }
     }
 
