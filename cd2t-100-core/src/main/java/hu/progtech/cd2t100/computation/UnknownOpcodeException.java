@@ -4,8 +4,9 @@ import hu.progtech.cd2t100.asm.Location;
 import hu.progtech.cd2t100.asm.LineNumberedException;
 
 /**
- *  An {@code UnknownOpcodeException} occurs if there's no {@code InstructionInfo}
- *  object mapped to an opcode in the {@code InstructionRegistry}.
+ *  An {@code UnknownOpcodeException} occurs if the {@code InstructionRegistry}
+ *  does not contain an {@code InstructionInfo} object mapped
+ *  to an opcode present in the source code.
  */
 public final class UnknownOpcodeException extends LineNumberedException {
   private String opcode;

@@ -17,7 +17,7 @@ public final class Argument {
   private final ParameterType parameterType;
 
   /**
-   *  Construct a new {@code Argument} from the given {@code value} and
+   *  Constructs a new {@code Argument} from the given {@code value} and
    *  parameter type.
    *
    *  @param value the value of the argument

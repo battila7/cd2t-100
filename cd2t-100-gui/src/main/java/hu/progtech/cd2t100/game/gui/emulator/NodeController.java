@@ -37,7 +37,7 @@ import hu.progtech.cd2t100.computation.NodeMemento;
 
 /**
  *  The {@code NodeController} is responsible for supplying node-related
- *  UI controls with data from the latest cycle and collecting the source
+ *  UI controls with data from the latest cycle and collecting the source code
  *  of the nodes from the UI.
  */
 public class NodeController {

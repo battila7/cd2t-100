@@ -29,7 +29,7 @@ public class Instruction {
   private final Location location;
 
   /**
-   *  Constructs a new {@code Instruction} with the specified method, arguments
+   *  Constructs a new {@code Instruction} with the specified method, arguments,
    *  read dependencies and location.
    *
    *  @param method the executable method of the instruction
@@ -50,16 +50,16 @@ public class Instruction {
   }
 
   /**
-   *  Gets the method containing the executable code of this instruction.
+   *  Gets the method containing the executable code of this {@code Instruction}.
    *
-   *  @return the method backing this instruction
+   *  @return the method backing this {@code Instruction}
    */
   public Method getMethod() {
     return method;
   }
 
   /**
-   *  Gets the actual arguments that will be passed to the method.
+   *  Gets the actual arguments that will be passed to the backing method.
    *
    *  @return the list of actual arguments
    */
@@ -77,7 +77,7 @@ public class Instruction {
   }
 
   /**
-   *  Gets the location of the {@link hu.progtech.cd2t100.asm.InstructionElement}
+   *  Gets the location of the original {@link hu.progtech.cd2t100.asm.InstructionElement}
    *  this instance is constructed from.
    *
    *  @return the location

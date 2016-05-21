@@ -13,7 +13,7 @@ public class ExecutionEnvironment {
   private final Map<String, String> rules;
 
   /**
-   *  Construct a new {@code ExecutionEnvironment} based on the specified {@code Node}.
+   *  Constructs a new {@code ExecutionEnvironment} based on the specified {@code Node}.
    *
    *  @param node the {@code Node} object to be hidden behind
    *              the new {@code ExecutionEnvironment} instance

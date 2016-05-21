@@ -18,16 +18,16 @@ import hu.progtech.cd2t100.formal.FormalParameter;
 import hu.progtech.cd2t100.formal.FormalCall;
 
 /**
- *  The class responsible for matching the actual arguments
+ *  <p>This class is responsible for matching the actual arguments
  *  with the formal parameters and choosing the correct
  *  {@code apply} method overload. {@code ArgumentMatcher} pairs up
  *  an {@code InstructionElement} with a {@link hu.progtech.cd2t100.formal.FormalCall}
  *  that can be executed on a node. An instance is created for each node by the
- *  node's {link InstructionFactory}.
+ *  node's {@link InstructionFactory}.</p>
  *
- *  Matching cannot be done without node-specific knowledge
+ *  <p>Matching cannot be done without node-specific knowledge
  *  (registers, readable/writeable ports), so {@code ArgumentMatcher}
- *  can only be instantiated with the correct node configuration.
+ *  can only be instantiated with the correct node configuration.</p>
  */
 final class ArgumentMatcher {
   public static final Logger logger =
@@ -89,8 +89,8 @@ final class ArgumentMatcher {
 
   /**
    *  Sets the label set that can be used during matching.
-   *  Because there's only one instance created per node, the labels
-   *  cannot be passed to the constructor.
+   *  {@code ArgumentMatcher} instances are created together with {@code Node}s,
+   *  therefore source code specific information cannot be passed to the constructor.
    *
    *  @param labelSet the labels extracted from the source code
    */
@@ -99,13 +99,13 @@ final class ArgumentMatcher {
   }
 
   /**
-   *  Does the actual matching after the class the
-   *  instruction element and instruction info have been set.
+   *  Does the actual matching after the
+   *  {@code InstructionElement} and {@code InstructionInfo} have been set.
    *  If the matching was successful, the chosen {@code FormalCall} and
    *  actual arguments can be retrieved with the corresponding getter methods.
    *  If the matching fails, an exception is thrown.
    *
-   *  @throws ArgumentMatchingException If there were no matching {code FormalCall}.
+   *  @throws ArgumentMatchingException if there were no matching {@code FormalCall}
    *
    *  @see hu.progtech.cd2t100.formal.FormalCall
    *  @see Argument
@@ -176,10 +176,10 @@ final class ArgumentMatcher {
 
   /**
    *  Gets the matched {@code FormalCall}. If the {@code match} method was not
-   *  succesful, the method returns {@code null}.
+   *  succesful, this method returns {@code null}.
    *
    *  @return the matched call or {@code null} if an exception was thrown
-   *          in the {@code match} method.
+   *          in the {@code match} method
    */
   public FormalCall getMatchedCall() {
     return matchedCall;

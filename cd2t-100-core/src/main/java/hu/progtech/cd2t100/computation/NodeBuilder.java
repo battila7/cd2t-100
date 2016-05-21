@@ -10,7 +10,8 @@ import hu.progtech.cd2t100.computation.io.CommunicationPort;
 
 /**
  *  A builder class that makes easier the instantiation of
- *  {@code Node} objects. 
+ *  {@code Node} objects. A new {@code NodeBuilder} must be instantiated
+ *  for each {@code Node}.
  */
 public class NodeBuilder {
   private static final Logger	logger = LoggerFactory.getLogger(NodeBuilder.class);
@@ -105,7 +106,7 @@ public class NodeBuilder {
   }
 
   /**
-   *  Sets the instruction registry of the {@code Node}.
+   *  Sets the {@code InstructionRegistry} used by the {@code Node}.
    *
    *  @param instructionRegistry the instruction registry
    *

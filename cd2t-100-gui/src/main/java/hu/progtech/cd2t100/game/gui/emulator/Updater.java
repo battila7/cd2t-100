@@ -35,7 +35,7 @@ class Updater implements Runnable {
    *  The newly constructed {@code Updater} will check in every emulator cycle
    *  if the port contents match the expected port contents.
    *
-   *  @param emulator the watched {code Emulator}
+   *  @param emulator the observed {@code Emulator}
    *  @param outputPortContents Map containing the acutal output port contents.
    *                            Initially only contains the port names as keys.
    *  @param expectedPortContents the expected contents of the output ports

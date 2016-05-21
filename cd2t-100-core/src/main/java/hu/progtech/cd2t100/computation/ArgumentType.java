@@ -31,7 +31,7 @@ public enum ArgumentType {
   RULE_VALUE,
 
   /**
-   *  Indicates the unevaluted state of the argument. 
+   *  Indicates the unevaluated state of the argument. 
    */
   NOT_EVALUATED
 }

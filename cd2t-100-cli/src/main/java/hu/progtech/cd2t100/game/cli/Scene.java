@@ -8,7 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 
 /**
  *  {@code Scene} represents a scene in the CLI session. Along with some static helper
- *  methods it includes one method that must be implemented child classes.
+ *  methods it includes one method that must be implemented by child classes.
  *  {@link Scene#focus(GameManager)} is called when the {@code Scene} instance
  *  is displayed.
  */

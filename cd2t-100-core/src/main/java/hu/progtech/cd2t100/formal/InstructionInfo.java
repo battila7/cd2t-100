@@ -25,7 +25,7 @@ public class InstructionInfo {
    *
    *  @param opcode the opcode of the instruction
    *  @param usedRules the rules used by the instruction
-   *  @param instructionClass the {@code Class} object create from the Groovy code
+   *  @param instructionClass the {@code Class} object created from the Groovy code
    *  @param possibleCalls the list of {@code FormalCall}s representing the
    *                       {@code apply} methods of the {@code instructionClass}
    */
@@ -70,7 +70,7 @@ public class InstructionInfo {
   }
 
   /**
-   *  Gets the list of possible valid {@code FormalCall}s of this instruction.
+   *  Gets the list of possible valid {@code FormalCall}s.
    *
    *  @return the list of possible calls
    */

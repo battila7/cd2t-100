@@ -3,11 +3,11 @@ package hu.progtech.cd2t100.computation.io;
 import java.util.Arrays;
 
 /**
- *  {@code InputPort} can store an arbitrary number of values and
+ *  <p>{@code InputPort} can store an arbitrary number of values and
  *  publish one at a time per emulator cycle. {@code InputPort} is not
- *  writeable.
+ *  writeable.</p>
  *
- *  It uses an internal data pointer to determine which value to publish next.
+ *  <p>It uses an internal data pointer to determine which value to publish next.</p>
  */
 public class InputPort extends CommunicationPort {
   private int dataPointer;

@@ -5,7 +5,7 @@ import hu.progtech.cd2t100.emulator.EmulatorState;
 import hu.progtech.cd2t100.emulator.StateChangeRequest;
 
 /**
- *  {@code RunCommand} can be used to send a step request to the
+ *  {@code StepCommand} can be used to send a step request to the
  *  underlying {@code Emulator} when in the {@code GameScene}'s
  *  main loop.
  */

@@ -23,8 +23,8 @@ import hu.progtech.cd2t100.game.model.PuzzleDao;
 import hu.progtech.cd2t100.game.model.PuzzleDaoXml;
 
 /**
- *  The manager class responsible for controlling transitions between scenes
- *  and shared data between scenes.
+ *  The manager class responsible for controlling transitions and shared data
+ *  between scenes.
  */
 public class GameManager {
   private static final Logger logger =

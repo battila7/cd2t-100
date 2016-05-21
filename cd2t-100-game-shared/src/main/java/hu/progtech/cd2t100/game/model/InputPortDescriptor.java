@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.XmlList;
  *  {@code InputPortDescriptor} represents an
  *  {@link hu.progtech.cd2t100.computation.io.InputPort} with its
  *  global name and contents. Can be used to serialize or deserialize
- *  {@code InputPort} objects,
+ *  {@code InputPort} objects.
  */
 @XmlRootElement(name="inputPortDescriptor")
 public class InputPortDescriptor {

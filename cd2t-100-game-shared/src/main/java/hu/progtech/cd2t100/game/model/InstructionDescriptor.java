@@ -6,7 +6,7 @@ import hu.progtech.cd2t100.game.util.TrimmingNormalizerAdapter;
 
 /**
  *  {@code InstructionDescriptor} contains metadata about instructions
- *  along with the Groovy file containing them.
+ *  along with the path to the Groovy file containing them.
  */
 public class InstructionDescriptor {
   private String opcode;
@@ -35,7 +35,7 @@ public class InstructionDescriptor {
   }
 
   /**
-   *  Gets the Groovy file containing the code.
+   *  Gets the path to the Groovy file containing the code.
    *
    *  @return the Groovy file
    */
@@ -62,7 +62,7 @@ public class InstructionDescriptor {
   }
 
   /**
-   *  Sets the Groovy file.
+   *  Sets the path to the Groovy file.
    *
    *  @param groovyFile the Groovy file
    */

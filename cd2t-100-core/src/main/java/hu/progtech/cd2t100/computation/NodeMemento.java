@@ -5,16 +5,16 @@ import java.util.Set;
 import java.util.Arrays;
 
 /**
- *  Stores the state of a {@code Node} object. Used to externalize and save the fields
- *  of a node. Note that the actual {@code Instructions} objects are not contained within
+ *  <p>Stores the state of a {@code Node} object. Used to externalize and save the fields
+ *  of a {@code Node}. Note that the actual {@code Instruction} objects are not stored in
  *  the {@code NodeMemento}, only the source code. Although this makes harder to restore
- *  a node, it makes this object more lightweight. This class should be used to get
+ *  a {@code Node}, it makes this object more lightweight. This class should be used to get
  *  runtime data of the nodes instead of restoring them into a previous state although that's
- *  possible too as stated.
+ *  possible too as stated.</p>
  *
- *  {@code NodeMemento} can be safely passed around between threads since it holds no references
+ *  <p>{@code NodeMemento} can be safely passed around between threads since it holds no references
  *  to its originator (the {@code Node}). But the inner maps should be used carefully because
- *  they are mutable.
+ *  they are mutable.</p>
  */
 public class NodeMemento {
   private final Map<String, int[]> registerValues;

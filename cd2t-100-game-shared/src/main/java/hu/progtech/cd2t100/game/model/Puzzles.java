@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  *  Container object for a list of {@code Puzzle}s. Introduced
  *  as a helper class for JAXB to represent the root element of the XML file
- *  for {@code Puzzle}s.
+ *  of {@code Puzzle}s.
  */
 @XmlRootElement(name = "puzzles")
 class Puzzles {

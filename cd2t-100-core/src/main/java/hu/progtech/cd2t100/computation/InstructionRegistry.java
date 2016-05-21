@@ -45,8 +45,8 @@ public final class InstructionRegistry {
    *  @param info the instruction info to be registered
    *
    *  @throws OpcodeAlreadyRegisteredException
-   *           If there's an {@code InstructionInfo} object already associated
-   *           with the parameter's opcode.
+   *           if there's an {@code InstructionInfo} object already associated
+   *           with the parameter's opcode
    */
   public void registerInstruction(InstructionInfo info)
     throws OpcodeAlreadyRegisteredException {
@@ -61,7 +61,7 @@ public final class InstructionRegistry {
   }
 
   /**
-   *  Resets the (effective) preprocessor map to the default map.
+   *  Resets the (effective) preprocessor rule map to the default map.
    */
   public void resetRules() {
     effectiveRuleMap.clear();
@@ -87,14 +87,14 @@ public final class InstructionRegistry {
    *  @param opcode the opcode
    *
    *  @return the {@code InstructionInfo} object associated with the opcode or
-   *          {@code null} if the opcode is not registered yet.
+   *          {@code null} if the opcode is not registered yet
    */
   public InstructionInfo getInstructionInfoFor(String opcode) {
     return instructionMap.get(opcode);
   }
 
   /**
-   *  Returns the effective rule map of this registry.
+   *  Gets the effective rule map of this registry.
    *
    *  @return the effective rule map
    */

@@ -1,12 +1,12 @@
 package hu.progtech.cd2t100.computation.io;
 
 /**
- *  {@code Register} is a general purpose storage register that can
+ *  <p>{@code Register} is a general purpose storage register that can
  *  store an arbitrary number of integers. It's a special port that can
- *  always be written or read.
+ *  always be written or read.</p>
  *
- *  A {@code Register} can be used to implement a stack, a queue or even
- *  some sort of a random access memory.
+ *  <p>A {@code Register} can be used to implement a stack, a queue or even
+ *  some sort of a random access memory.</p>
  */
 public class Register extends Port {
   private final String name;

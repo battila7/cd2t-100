@@ -3,7 +3,7 @@ package hu.progtech.cd2t100.game.cli;
 import java.util.Scanner;
 
 /**
- *  {@code MenuScene} acts as a main menu in the CLI application.
+ *  {@code MenuScene} acts as the main menu in the CLI application.
  */
 public class MenuScene extends Scene {
   private static final String[] OPTIONS =

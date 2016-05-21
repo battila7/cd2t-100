@@ -17,8 +17,8 @@ import hu.progtech.cd2t100.emulator.EmulatorCycleData;
 
 /**
  *  An implementation of the {@code EmulatorObserver} interface for the GUI
- *  application. Can be passed a {@code Consumer} to consume cycle data emitted
- *  by the {@code Emulator}.
+ *  application. A {@code Consumer} can be passed to this calss
+ *  to consume cycle data emitted by the {@code Emulator}.
  */
 public class EmulatorObserverImpl implements EmulatorObserver {
   private Emulator emulator;

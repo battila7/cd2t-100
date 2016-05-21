@@ -68,7 +68,7 @@ public class GameManager {
    *  Initiates the startup process of the {@code GameManager}. After
    *  loading the appropiate resources, the JavaFX platform takes control.
    *  The method may fail and result in the termination of the application
-   *  if a fatal {@code I/O} error occurs during startup the process.
+   *  if a fatal {@code I/O} error occurs during the startup.
    */
   public void start() {
     loadResources();

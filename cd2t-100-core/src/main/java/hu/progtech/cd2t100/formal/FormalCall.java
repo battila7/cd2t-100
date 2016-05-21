@@ -50,7 +50,7 @@ public class FormalCall {
   /**
    *  Gets the backing method of this {@code FormalCall} instance.
    *
-   *  @return the backing methdo
+   *  @return the backing method
    */
   public Method getBackingMethod() {
     return backingMethod;

@@ -20,15 +20,15 @@ import hu.progtech.cd2t100.computation.SourceCodeFormatException;
 import hu.progtech.cd2t100.computation.io.CommunicationPort;
 
 /**
- *  Emulates a multi-node processor architecture by controlling
+ *  <p>Emulates a multi-node processor architecture by controlling
  *  {@code Node}s and ports. The state changes of the {@code Emulator}
  *  can be observed with an {@code EmulatorObserver}. The actual execution
  *  data of the last processor cycle (the nodes' mementos and the contents of the ports)
- *  is published in a blocking queue.
+ *  is published in a blocking queue.</p>
  *
- *  If the emulator is in {@code RUNNING} state, its driven by a clock generator
+ *  <p>If the emulator is in {@code RUNNING} state, its driven by a clock generator
  *  ticking at a specified frequency passed to the constructor. That way the
- *  emulator can operate as fast as one may wish.
+ *  emulator can operate as fast as one may wish.</p>
  */
 public class Emulator {
   private static final Logger	logger = LoggerFactory.getLogger(Emulator.class);
@@ -60,7 +60,7 @@ public class Emulator {
    *
    *  @param nodes the nodes
    *  @param communicationPorts the ports between the nodes
-   *  @param emulatorObserver the observer obversing the state changes
+   *  @param emulatorObserver the observer observing the state changes
    *  @param clockFrequency the time between the clock generator's ticks in milliseconds
    */
   Emulator(Map<String, Node> nodes, List<CommunicationPort> communicationPorts,
@@ -94,7 +94,7 @@ public class Emulator {
   }
 
   /**
-   *  Sends a request to the {@code Emulator} to change it's state.
+   *  Sends a request to the {@code Emulator} to change its state.
    *  The states react differently to the request types, please refer to the
    *  documentation of the {@link EmulatorState}.
    *
@@ -117,7 +117,7 @@ public class Emulator {
   }
 
   /**
-   *  Gets the time between the clock generator tick in milliseconds.
+   *  Gets the time between the clock generator ticks in milliseconds.
    *
    *  @return the time between clock generator ticks
    */
@@ -131,8 +131,8 @@ public class Emulator {
    *  @param nodeName the global name if the {@code Node}
    *  @param sourceCode the source code
    *
-   *  @throws IllegalStateException If the {@code Emulator} is not in
-   *                                {@code STOPPED} state.
+   *  @throws IllegalStateException if the {@code Emulator} is not in
+   *                                {@code STOPPED} state
    */
   public void setSourceCode(String nodeName, String sourceCode)
     throws IllegalStateException
@@ -178,7 +178,7 @@ public class Emulator {
 
   /**
    *  Starts the {@code Emulator} in the specified execution mode. Schedules
-   *  an @{code EmulatorCycle} at a fixed rate on the clock generator of the
+   *  an {@code EmulatorCycle} at a fixed rate on the clock generator of the
    *  {@code Emulator}.
    *
    *  @param executionMode the execution mode

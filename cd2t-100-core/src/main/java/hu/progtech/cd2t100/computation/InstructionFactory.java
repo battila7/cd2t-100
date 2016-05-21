@@ -73,7 +73,7 @@ public final class InstructionFactory {
 	 *
 	 *	@param elementSet the element set used as the source of {@code InstructionElement}s
 	 *
-	 *	@return the lis of exceptions thrown during the process
+	 *	@return the list of exceptions thrown during the process
 	 */
 	public List<LineNumberedException> makeInstructions(CodeElementSet elementSet) {
 		argumentMatcher.setLabels(elementSet.getLabelMap().keySet());

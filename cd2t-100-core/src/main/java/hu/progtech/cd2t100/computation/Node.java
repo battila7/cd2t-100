@@ -28,12 +28,12 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
- *  Represents a processor node that's able to execute instructions. {@code Node}s
+ *  <p>Represents a processor node that's able to execute instructions. {@code Node}s
  *  can communicate with each other through {@link CommunicationPort}s and store
- *  data in {@link Register}s.
+ *  data in {@link Register}s.</p>
  *
- *  It's guaranteed that every {@code Node} has at least two registers,
- *  {@code ACC} and {@code BAK} to ensure compatibility with {@code TIS-100}.'
+ *  <p>It's guaranteed that every {@code Node} has at least two registers,
+ *  {@code ACC} and {@code BAK} to ensure compatibility with {@code TIS-100}.</p>
  */
 public class Node {
   private static final Logger	logger = LoggerFactory.getLogger(Node.class);
@@ -126,8 +126,8 @@ public class Node {
    *  The instruction can be executed if and only if all of its read dependencies
    *  are fulfilled and no writeable port contains data.
    *
-   *  @throws IllegalStateException If there were errors during the instruction
-   *                                 generation.
+   *  @throws IllegalStateException if there were errors during the instruction
+   *                                generation
    */
   public void step() throws IllegalStateException {
     if (!readyToRun) {
@@ -195,7 +195,7 @@ public class Node {
   }
 
   /**
-   *  Sets the source code of this node.
+   *  Sets the source code of this {@code Node}.
    *
    *  @param sourceCode the source code
    */
@@ -204,7 +204,7 @@ public class Node {
   }
 
   /**
-   *  Builds the code element set of the node and returns the
+   *  Builds the code element set of the {@code Node} and returns the
    *  list of exceptions occurred during the process.
    *  Be aware that as a side effect, if the code element set
    *  have been built succesfully then any preprocessor rule found
@@ -214,8 +214,8 @@ public class Node {
    *
    *  @return the list of exceptions
    *
-   *  @throws SourceCodeFormatException If the source code is {@code null}
-   *                                    or longer than the permitted maximal size.
+   *  @throws SourceCodeFormatException if the source code is {@code null}
+   *                                    or longer than the permitted maximal size
    */
   public List<LineNumberedException> buildCodeElementSet()
     throws SourceCodeFormatException
@@ -244,12 +244,12 @@ public class Node {
    *  Using the code element set built from the source code, builds the actual
    *  executable instructions. A call to this method must be preceded by
    *  a successful invocation of the {@link Node#buildCodeElementSet} method.
-   *  Otherwise it throws a {@code IllegalStateException} exception.
+   *  Otherwise this method throws a {@code IllegalStateException} exception.
    *
    *  @return the list of exceptions
    *
-   *  @throws IllegalStateException If instructions cannot be built from the
-   *                                {@code Node}'s code element set.
+   *  @throws IllegalStateException if instructions cannot be built from the
+   *                                {@code Node}'s code element set
    */
   public List<LineNumberedException> buildInstructions()
     throws IllegalStateException
@@ -292,7 +292,7 @@ public class Node {
   }
 
   /**
-   *  Gets the maximum number of source code lines this node can store.
+   *  Gets the maximum number of source code lines this {@code Node} can store.
    *
    *  @return the maximum number of source code lines
    */

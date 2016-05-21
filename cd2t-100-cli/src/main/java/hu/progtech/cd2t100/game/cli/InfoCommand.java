@@ -4,8 +4,8 @@ import hu.progtech.cd2t100.game.model.Puzzle;
 import hu.progtech.cd2t100.game.model.NodeDescriptor;
 
 /**
- *  {@code InfoCommand} when executed displays information about the
- *  current {@code Puzzle}.
+ *  {@code InfoCommand} displays information about the
+ *  current {@code Puzzle} when executed.
  */
 public class InfoCommand implements GameSceneCommand {
   @Override

@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  *  Container object for a list of {@code InstructionDescriptor}s. Introduced
  *  as a helper class for JAXB to represent the root element of the XML file
- *  for {@code InstructionDescriptor}s.
+ *  of {@code InstructionDescriptor}s.
  */
 @XmlRootElement(name = "instructionDescriptors")
 class InstructionDescriptors {

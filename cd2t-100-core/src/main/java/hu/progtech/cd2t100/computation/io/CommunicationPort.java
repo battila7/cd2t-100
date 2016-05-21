@@ -5,12 +5,12 @@ import java.util.Arrays;
 import hu.progtech.cd2t100.computation.Node;
 
 /**
- *  A communication port that can be used for internode data exchange.
- *  Although it extends the {@code Port} class, its capacity is limited to
- *  one.
+ *  <p>A communication port that can be used for internode data exchange.
+ *  Although it extends the {@code Port} class, by default its capacity
+ *  is limited to one. Bigger capacity is only used for {@link InputPort}s.</p>
  *
- *  The data written to a {@code CommunicationPort} is only reachable after
- *  the port's {@code step()} method has been called.
+ *  <p>The data written to a {@code CommunicationPort} is only reachable after
+ *  the port's {@code step()} method has been called.</p>
  */
 public class CommunicationPort extends Port {
   private static final int COM_PORT_CAPACITY = 1;
@@ -74,7 +74,7 @@ public class CommunicationPort extends Port {
   }
 
   /**
-   *  Performs a <i>soft</i> read operation i.e. does not destroy the contents.
+   *  Performs a <i>soft</i> read operation i.e.<!-- --> does not destroy the contents.
    *  Used for display purposes.
    *
    *  @return the contents
@@ -99,7 +99,7 @@ public class CommunicationPort extends Port {
   }
 
   /**
-   *  Performs a <i>hard</i> read operation i.e. destroys the contents. Used by
+   *  Performs a <i>hard</i> read operation i.e.<!-- --> destroys the contents. Used by
    *  node reads.
    *
    *  @return the contents

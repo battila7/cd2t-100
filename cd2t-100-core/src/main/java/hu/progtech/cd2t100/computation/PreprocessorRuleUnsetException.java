@@ -4,7 +4,7 @@ import hu.progtech.cd2t100.asm.Location;
 import hu.progtech.cd2t100.asm.LineNumberedException;
 
 /**
- *  An exception of this type os thrown when a rule demanded by an instruction
+ *  An exception of this type is thrown when a rule demanded by an instruction
  *  has not been set.
  */
 public final class PreprocessorRuleUnsetException extends LineNumberedException {
