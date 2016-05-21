@@ -35,7 +35,7 @@ public enum ParameterType {
 
   private final Class<?> requiredClass;
 
-  ParameterType(Class<?> requiredClass) {
+  private ParameterType(Class<?> requiredClass) {
     this.requiredClass = requiredClass;
   }
 

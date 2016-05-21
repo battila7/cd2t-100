@@ -176,6 +176,13 @@ public class Emulator {
     return nodeExceptionMap;
   }
 
+  /**
+   *  Starts the {@code Emulator} in the specified execution mode. Schedules
+   *  an @{code EmulatorCycle} at a fixed rate on the clock generator of the
+   *  {@code Emulator}.
+   *
+   *  @param executionMode the execution mode
+   */
   /* package */ void start(ExecutionMode executionMode) {
     currentCycle = new EmulatorCycle(executionMode);
 
@@ -184,12 +191,20 @@ public class Emulator {
   }
 
 
+  /**
+   *  Pauses the {@code Emulator}. Preserves the state of the {@code Port}s
+   *  and {@code Node}s.
+   */
   /* package */ void pause() {
     currentCycle.cancel();
 
     currentCycle = null;
   }
 
+  /**
+   *  Stops the {@code Emulator} and resets the {@code Port}s and {@code Node}s
+   *  to their default states.
+   */
   /* package */ void stop() {
     if (currentCycle != null) {
       currentCycle.cancel();
@@ -210,6 +225,12 @@ public class Emulator {
     }
   }
 
+  /**
+   *  Directly sets the state of the {@code Emulator}. After the state's been
+   *  changed informs the attached {@code EmulatorObserver} instance.
+   *
+   *  @param emulatorState the new state
+   */
   /* package */ void setState(EmulatorState emulatorState) {
     synchronized (emulatorState) {
       this.emulatorState = emulatorState;
@@ -220,6 +241,13 @@ public class Emulator {
     emulatorObserver.onStateChanged(emulatorState);
   }
 
+  /**
+   *  Generates instructions for all {@code Node}s contained within the
+   *  {@code Emulator} instance.
+   *
+   *  @return {@code true} if the generation process completed successfully,
+   *          {@code false} otherwise
+   */
   /* package */ boolean generateInstructions() {
     nodeExceptionMap = new HashMap<>();
 

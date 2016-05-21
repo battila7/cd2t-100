@@ -19,10 +19,23 @@ abstract class Port {
     this.capacity = capacity;
   }
 
+  /**
+   *  Gets the contents stored in the {@code Port}.
+   *
+   *  @return the contents
+   */
   public abstract int[] getContents();
 
+  /**
+   *  Whether the port has data or empty.
+   *
+   *  @return {@code true} if the port has data, {@code false} otherwise
+   */
   public abstract boolean hasData();
 
+  /**
+   *  Resets the {@code Port} to its defaults.
+   */
   public abstract void reset();
 
   /**

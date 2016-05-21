@@ -178,5 +178,11 @@ public enum EmulatorState {
     }
   };
 
+  /**
+   *  Handles a state change request sent to the specified {@code Emulator} instance.
+   *
+   *  @param emulator the subject of the state change
+   *  @param changeRequest the change request signal
+   */
   /* package */ abstract void onRequest(Emulator emulator, StateChangeRequest changeRequest);
 }

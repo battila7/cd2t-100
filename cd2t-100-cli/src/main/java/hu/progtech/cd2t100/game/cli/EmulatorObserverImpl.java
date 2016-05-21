@@ -21,6 +21,13 @@ class EmulatorObserverImpl implements EmulatorObserver {
 
   private Map<String, List<Integer>> outputPortContents;
 
+  /**
+   *  Constructs a new {@code EmulatorObserverImpl} instance with the specified
+   *  output port contents and expected contents.
+   *
+   *  @param outputPortContents the contents of the output ports
+   *  @param expectedPortContents the expected contents of the output ports
+   */
   public EmulatorObserverImpl(Map<String, List<Integer>> outputPortContents,
                               Map<String, List<Integer>> expectedPortContents)
   {

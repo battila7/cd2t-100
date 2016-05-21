@@ -14,19 +14,33 @@ import hu.progtech.cd2t100.emulator.StateChangeRequest;
 /**
  *  {@code Updater} is intended to run in its own thread and receive the
  *  data emitted by an {@code Emulator} instance. {@code Updater} does not
- *  listen for state changes but cycle data.
+ *  listen for state changes but cycle data. The {@code Updater} observes the
+ *  actual output port contents and checks if they match the expected port
+ *  contents. Upon receiving new data {@code Updater} passes it to a specified
+ *  {@code Consumer}.
  */
 class Updater implements Runnable {
-  private Emulator emulator;
+  private final Emulator emulator;
 
-  private BlockingQueue<EmulatorCycleData> cycleDataQueue;
+  private final BlockingQueue<EmulatorCycleData> cycleDataQueue;
 
-  private Map<String, List<Integer>> expectedPortContents;
+  private final Map<String, List<Integer>> expectedPortContents;
 
-  private Map<String, List<Integer>> outputPortContents;
+  private final Map<String, List<Integer>> outputPortContents;
 
-  private Consumer<EmulatorCycleData> cycleDataConsumer;
+  private final Consumer<EmulatorCycleData> cycleDataConsumer;
 
+  /**
+   *  Constructs a new {@code Updater} for the specified {@code Emulator}.
+   *  The newly constructed {@code Updater} will check in every emulator cycle
+   *  if the port contents match the expected port contents.
+   *
+   *  @param emulator the watched {code Emulator}
+   *  @param outputPortContents Map containing the acutal output port contents.
+   *                            Initially only contains the port names as keys.
+   *  @param expectedPortContents the expected contents of the output ports
+   *  @param cycleDataConsumer a consumer to process the cycle data
+   */
   public Updater(Emulator emulator,
                  Map<String, List<Integer>> outputPortContents,
                  Map<String, List<Integer>> expectedPortContents,
