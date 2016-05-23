@@ -9,6 +9,7 @@
 	<description>CD2T-100 is a TIS-100-like processor architecture emulator with extendable instruction set.</description>
 
 	<scm>
+		<developerConnection>scm:git:https://github.com/battila7/cd2t-100.git</developerConnection>
 		<connection>scm:git:https://github.com/battila7/cd2t-100.git</connection>
 		<tag>HEAD</tag>
 		<url>https://github.com/battila7/cd2t-100</url>
@@ -129,13 +130,8 @@
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-jar-plugin</artifactId>
+					<artifactId>maven-assembly-plugin</artifactId>
 					<version>2.6</version>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-shade-plugin</artifactId>
-					<version>2.4.3</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>
