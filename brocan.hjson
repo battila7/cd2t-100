@@ -1,0 +1,18 @@
+{
+    base: maven
+    owner: battila7
+    steps: [
+        {
+            name: compile
+            commands: [
+                mvn clean compile
+            ]
+        }
+        {
+            name: test
+            commands: [
+                mvn test
+            ]
+        }
+    ]
+}
