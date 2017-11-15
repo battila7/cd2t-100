@@ -5,6 +5,7 @@
         {
             name: compile
             commands: [
+                echo compile
                 mvn clean compile
             ]
         }
